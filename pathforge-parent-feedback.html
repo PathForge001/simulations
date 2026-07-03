@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PathForge — Parent Feedback</title>
+<meta property="og:title" content="PathForge — Tell us what your child thought" />
+<meta property="og:description" content="Two minutes. Six questions. Your feedback directly shapes what we build next." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="PathForge" />
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xbl1zshvdm");
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#4300CB;
+  --purple-dark:#2D0090;
+  --purple-soft:#EDE8FF;
+  --purple-mid:rgba(67,0,203,0.08);
+  --ink:#0A0612;
+  --ink-mid:#2D1F4A;
+  --ink-dim:#7A6A9A;
+  --bg:#FAFAF8;
+  --surface:#FFFFFF;
+  --border:#E8E0F5;
+  --green:#0D9352;
+  --green-soft:#E6F7EF;
+  --green-border:#86EFAC;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+}
+
+html,body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden}
+
+/* ── NAV ── */
+.nav{padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--surface)}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-icon{width:28px;height:28px;background:var(--purple);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.nav-icon svg{width:15px;height:15px}
+.nav-text{font-family:var(--sans);font-weight:600;font-size:15px;color:var(--ink)}
+.nav-back{font-size:13px;color:var(--ink-dim);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color 0.2s}
+.nav-back:hover{color:var(--purple)}
+
+/* ── WRAPPER ── */
+.wrapper{min-height:calc(100vh - 60px);display:flex;flex-direction:column;align-items:center;padding:3rem 1.5rem 5rem}
+
+/* ── PROGRESS ── */
+.progress-wrap{width:100%;max-width:560px;margin-bottom:2.5rem}
+.progress-steps{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:10px}
+.step-dot{width:10px;height:10px;border-radius:50%;background:var(--border);transition:all 0.4s ease;flex-shrink:0}
+.step-dot.done{background:var(--purple)}
+.step-dot.active{background:var(--purple);box-shadow:0 0 0 4px rgba(67,0,203,0.15);transform:scale(1.2)}
+.step-line{flex:1;height:2px;background:var(--border);transition:background 0.4s ease;max-width:60px}
+.step-line.done{background:var(--purple)}
+.progress-label{text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.08em}
+
+/* ── CARD ── */
+.form-card{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2.5rem 2rem;box-shadow:0 4px 32px rgba(67,0,203,0.06)}
+
+/* ── STEP CONTENT ── */
+.step{display:none;animation:slideIn 0.35s ease}
+.step.active{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.step-eyebrow{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--purple);margin-bottom:0.85rem;display:block}
+.step-q{font-family:var(--serif);font-size:clamp(1.3rem,4vw,1.6rem);font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:0.5rem}
+.step-q em{font-style:italic;color:var(--purple)}
+.step-hint{font-size:13px;color:var(--ink-dim);line-height:1.6;margin-bottom:1.75rem;font-weight:300}
+.step-hint strong{color:var(--ink-mid);font-weight:500}
+
+/* ── OPTION BUTTONS ── */
+.options{display:flex;flex-direction:column;gap:10px;margin-bottom:1.75rem}
+.opt-btn{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;text-align:left;font-family:var(--sans);transition:all 0.2s;width:100%}
+.opt-btn:hover{border-color:var(--purple);background:var(--purple-soft)}
+.opt-btn.selected{border-color:var(--purple);background:var(--purple-soft);box-shadow:0 0 0 3px rgba(67,0,203,0.1)}
+.opt-btn.selected .opt-check{background:var(--purple);border-color:var(--purple)}
+.opt-btn.selected .opt-check::after{opacity:1}
+.opt-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;position:relative;transition:all 0.2s}
+.opt-check::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:white;opacity:0;transition:opacity 0.2s}
+.opt-label{font-size:14px;font-weight:500;color:var(--ink);line-height:1.4}
+.opt-sub{font-size:12px;color:var(--ink-dim);margin-top:2px;font-weight:300}
+
+/* ── MULTI SELECT ── */
+.multi-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.75rem}
+@media(max-width:420px){.multi-options{grid-template-columns:1fr}}
+.multi-btn{padding:12px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink);transition:all 0.2s;line-height:1.35}
+.multi-btn:hover{border-color:var(--purple);background:var(--purple-soft)}
+.multi-btn.selected{border-color:var(--purple);background:var(--purple-soft);color:var(--purple);font-weight:600}
+
+/* ── PRICE SELECTOR ── */
+.price-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.75rem}
+@media(max-width:420px){.price-options{grid-template-columns:1fr}}
+.price-btn{padding:1.1rem 1rem;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;text-align:center;font-family:var(--sans);transition:all 0.2s}
+.price-btn:hover{border-color:var(--purple);background:var(--purple-soft)}
+.price-btn.selected{border-color:var(--purple);background:var(--purple-soft);box-shadow:0 0 0 3px rgba(67,0,203,0.1)}
+.price-amount{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--ink);display:block;margin-bottom:3px}
+.price-btn.selected .price-amount{color:var(--purple)}
+.price-desc{font-size:11px;color:var(--ink-dim);font-weight:300}
+
+/* ── TEXTAREA ── */
+.text-area{width:100%;min-height:110px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;font-family:var(--sans);font-size:14px;color:var(--ink);resize:vertical;line-height:1.65;transition:border-color 0.2s;margin-bottom:1.75rem}
+.text-area::placeholder{color:var(--ink-dim)}
+.text-area:focus{outline:none;border-color:var(--purple);background:var(--surface)}
+
+/* ── TEXT INPUT ── */
+.text-input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;font-family:var(--sans);font-size:14px;color:var(--ink);line-height:1.5;transition:border-color 0.2s;margin-bottom:1.75rem}
+.text-input::placeholder{color:var(--ink-dim)}
+.text-input:focus{outline:none;border-color:var(--purple);background:var(--surface)}
+
+/* ── NAV BUTTONS ── */
+.btn-row{display:flex;gap:10px;align-items:center}
+.btn-next{background:var(--purple);color:white;border:none;border-radius:10px;padding:13px 28px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;flex:1}
+.btn-next:hover{background:var(--purple-dark);transform:translateY(-1px)}
+.btn-next:disabled{background:var(--border);color:var(--ink-dim);cursor:not-allowed;transform:none}
+.btn-back{background:transparent;color:var(--ink-dim);border:1.5px solid var(--border);border-radius:10px;padding:12px 20px;font-family:var(--sans);font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s}
+.btn-back:hover{border-color:var(--ink);color:var(--ink)}
+.btn-skip{background:transparent;color:var(--ink-dim);border:none;font-family:var(--sans);font-size:13px;cursor:pointer;text-decoration:underline;padding:0;margin-left:4px}
+.btn-skip:hover{color:var(--purple)}
+
+/* ── SCALE ── */
+.scale-wrap{margin-bottom:1.75rem}
+.scale-labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+.scale-btns{display:flex;gap:8px}
+.scale-btn{flex:1;padding:12px 4px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;cursor:pointer;text-align:center;font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink);transition:all 0.2s}
+.scale-btn:hover{border-color:var(--purple)}
+.scale-btn.selected{border-color:var(--purple);background:var(--purple-soft);color:var(--purple);font-weight:700}
+
+/* ── THANK YOU ── */
+.thankyou{display:none;text-align:center;padding:1rem 0}
+.thankyou.active{display:block;animation:slideIn 0.4s ease}
+.ty-icon{font-size:3rem;margin-bottom:1rem}
+.ty-title{font-family:var(--serif);font-size:clamp(1.5rem,5vw,2.25rem);font-weight:700;color:var(--ink);margin-bottom:0.75rem;line-height:1.15}
+.ty-title em{font-style:italic;color:var(--purple)}
+.ty-body{font-size:14px;color:var(--ink-mid);line-height:1.75;max-width:420px;margin:0 auto 2rem;font-weight:300}
+.ty-body strong{color:var(--ink);font-weight:500}
+.ty-promise{background:var(--purple-soft);border:1px solid rgba(67,0,203,0.15);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.75rem;text-align:left}
+.ty-promise-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--purple);margin-bottom:6px}
+.ty-promise-text{font-size:13px;color:var(--ink-mid);line-height:1.65}
+.ty-sims{margin-top:1rem}
+.ty-sims-label{font-size:13px;color:var(--ink-dim);margin-bottom:12px}
+.ty-sim-links{display:flex;flex-direction:column;gap:8px}
+.ty-sim-link{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:all 0.2s}
+.ty-sim-link:hover{border-color:var(--purple);background:var(--purple-soft)}
+.ty-sim-name{font-size:13px;font-weight:500;color:var(--ink)}
+.ty-sim-age{font-family:var(--mono);font-size:10px;color:var(--ink-dim)}
+.ty-arrow{color:var(--purple);font-size:12px}
+
+/* ── FOOTER NOTE ── */
+.footer-note{margin-top:2rem;text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-dim);line-height:1.6}
+
+@media(max-width:560px){
+  .form-card{padding:1.75rem 1.25rem;border-radius:16px}
+  .wrapper{padding:2rem 1rem 4rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <a href="pathforge-landing.html" class="nav-logo">
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 4h7a5 5 0 0 1 0 10H4V4z" fill="white" opacity="0.9"/>
+        <rect x="4" y="16" width="4" height="4" rx="1" fill="white" opacity="0.7"/>
+        <path d="M15 10 Q20 10 20 16 Q20 20 16 20" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="nav-text">PathForge</span>
+  </a>
+  <a href="pathforge-landing.html" class="nav-back">← Back to PathForge</a>
+</div>
+
+<!-- WRAPPER -->
+<div class="wrapper">
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-steps" id="progress-steps"></div>
+    <div class="progress-label" id="progress-label">Question 1 of 6</div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="form-card" id="form-card">
+
+    <!-- STEP 1 — Completion -->
+    <div class="step active" id="step-1">
+      <span class="step-eyebrow">After the simulation</span>
+      <h2 class="step-q">Did your child complete the simulation?</h2>
+      <p class="step-hint">We want to understand how far young people get — this helps us know what is working and what is not.</p>
+      <div class="options">
+        <button class="opt-btn" onclick="selectOpt(this, 1)" data-val="all">
+          <div class="opt-check"></div>
+          <div><div class="opt-label">Yes — all the way through</div><div class="opt-sub">Including the debrief questions at the end</div></div>
+        </button>
+        <button class="opt-btn" onclick="selectOpt(this, 1)" data-val="most">
+          <div class="opt-check"></div>
+          <div><div class="opt-label">Yes — most of it</div><div class="opt-sub">Got through the main story but may not have finished the debrief</div></div>
+        </button>
+        <button class="opt-btn" onclick="selectOpt(this, 1)" data-val="partial">
+          <div class="opt-check"></div>
+          <div><div class="opt-label">They stopped partway through</div><div class="opt-sub">Something did not land or they ran out of time</div></div>
+        </button>
+        <button class="opt-btn" onclick="selectOpt(this, 1)" data-val="notstarted">
+          <div class="opt-check"></div>
+          <div><div class="opt-label">They did not really start it</div><div class="opt-sub">Opened it but did not engage</div></div>
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-next" id="next-1" onclick="goNext(2)" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 — Child reaction -->
+    <div class="step" id="step-2">
+      <span class="step-eyebrow">The most important question</span>
+      <h2 class="step-q">What did your child <em>say or do</em> after finishing?</h2>
+      <p class="step-hint">Be as specific as you can — did they talk about it? Did they want to replay it? Did they go quiet and think? Did they say something that surprised you? <strong>There are no wrong answers here.</strong></p>
+      <textarea class="text-area" id="answer-2" placeholder="e.g. They kept talking about what would have happened if they'd chosen differently. / They asked me if Louis Braille was a real person. / They seemed to just close it without saying much..." oninput="checkText(2)"></textarea>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goBack(1)">← Back</button>
+        <button class="btn-next" id="next-2" onclick="goNext(3)" disabled>Next →</button>
+        <button class="btn-skip" onclick="skipTo(3)">Skip</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 — Engagement rating -->
+    <div class="step" id="step-3">
+      <span class="step-eyebrow">Your honest view</span>
+      <h2 class="step-q">How engaged did your child seem during the simulation?</h2>
+      <p class="step-hint">1 = barely interested · 5 = completely absorbed</p>
+      <div class="scale-wrap">
+        <div class="scale-labels"><span>Barely interested</span><span>Completely absorbed</span></div>
+        <div class="scale-btns">
+          <button class="scale-btn" onclick="selectScale(this, 3)" data-val="1">1</button>
+          <button class="scale-btn" onclick="selectScale(this, 3)" data-val="2">2</button>
+          <button class="scale-btn" onclick="selectScale(this, 3)" data-val="3">3</button>
+          <button class="scale-btn" onclick="selectScale(this, 3)" data-val="4">4</button>
+          <button class="scale-btn" onclick="selectScale(this, 3)" data-val="5">5</button>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goBack(2)">← Back</button>
+        <button class="btn-next" id="next-3" onclick="goNext(4)" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 — What they value -->
+    <div class="step" id="step-4">
+      <span class="step-eyebrow">What matters to you</span>
+      <h2 class="step-q">What would make PathForge genuinely valuable to your family?</h2>
+      <p class="step-hint">Select everything that resonates — there is no limit.</p>
+      <div class="multi-options">
+        <button class="multi-btn" onclick="toggleMulti(this)" data-val="careers">Discovering real career paths early</button>
+        <button class="multi-btn" onclick="toggleMulti(this)" data-val="decisions">Building decision-making skills</button>
+        <button class="multi-btn" onclick="toggleMulti(this)" data-val="confidence">Growing confidence and self-belief</button>
+        <button class="multi-btn" onclick="toggleMulti(this)" data-val="history">Learning history in an engaging way</button>
+        <button class="multi-btn" onclick="toggleMulti(this)" data-val="screen">Meaningful screen time with purpose</button>
+        <button class="multi-btn" onclick="toggleMulti(this)" data-val="pshe">Supporting PSHE and life skills</button>
+        <button class="multi-btn" onclick="toggleMulti(this)" data-val="values">Teaching values through experience</button>
+        <button class="multi-btn" onclick="toggleMulti(this)" data-val="conversations">Starting conversations at home</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goBack(3)">← Back</button>
+        <button class="btn-next" id="next-4" onclick="goNext(5)">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5 — Willingness to pay -->
+    <div class="step" id="step-5">
+      <span class="step-eyebrow">The honest question</span>
+      <h2 class="step-q">If PathForge had a full library of 30 inventor stories and simulations, what would feel fair to pay per month?</h2>
+      <p class="step-hint">This covers all age groups from 7–18, all six career fields, new stories added regularly. <strong>Your honest answer — even if it is free — genuinely helps us.</strong></p>
+      <div class="price-options">
+        <button class="price-btn" onclick="selectPrice(this)" data-val="free">
+          <span class="price-amount">Free</span>
+          <span class="price-desc">Only if it costs nothing</span>
+        </button>
+        <button class="price-btn" onclick="selectPrice(this)" data-val="3-5">
+          <span class="price-amount">£3–5</span>
+          <span class="price-desc">Per month, per family</span>
+        </button>
+        <button class="price-btn" onclick="selectPrice(this)" data-val="6-10">
+          <span class="price-amount">£6–10</span>
+          <span class="price-desc">Per month, per family</span>
+        </button>
+        <button class="price-btn" onclick="selectPrice(this)" data-val="11-15">
+          <span class="price-amount">£11–15</span>
+          <span class="price-desc">Per month, per family</span>
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goBack(4)">← Back</button>
+        <button class="btn-next" id="next-5" onclick="goNext(6)" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 6 — Would they share + email -->
+    <div class="step" id="step-6">
+      <span class="step-eyebrow">Almost done</span>
+      <h2 class="step-q">Would you recommend PathForge to another family?</h2>
+      <p class="step-hint">No judgement either way — your honest answer helps us understand where we are.</p>
+      <div class="options" style="margin-bottom:1.25rem">
+        <button class="opt-btn" onclick="selectOpt(this, 6)" data-val="definitely">
+          <div class="opt-check"></div>
+          <div><div class="opt-label">Yes — definitely</div><div class="opt-sub">I would share this with other parents right now</div></div>
+        </button>
+        <button class="opt-btn" onclick="selectOpt(this, 6)" data-val="maybe">
+          <div class="opt-check"></div>
+          <div><div class="opt-label">Maybe — if it develops further</div><div class="opt-sub">The idea is right, the product needs more</div></div>
+        </button>
+        <button class="opt-btn" onclick="selectOpt(this, 6)" data-val="probably-not">
+          <div class="opt-check"></div>
+          <div><div class="opt-label">Probably not at this stage</div><div class="opt-sub">Not yet — honest feedback is more useful than politeness</div></div>
+        </button>
+      </div>
+      <p style="font-size:13px;color:var(--ink-dim);margin-bottom:8px;font-weight:300">Optional — leave your email if you would like to hear when new simulations and inventor story videos are added. We will never spam you.</p>
+      <input type="email" class="text-input" id="email-input" placeholder="your@email.com (optional)" style="margin-bottom:1.25rem">
+      <div class="btn-row">
+        <button class="btn-back" onclick="goBack(5)">← Back</button>
+        <button class="btn-next" id="next-6" onclick="submitForm()" disabled>Send feedback ✓</button>
+      </div>
+    </div>
+
+  </div><!-- end form-card -->
+
+  <!-- THANK YOU -->
+  <div class="form-card thankyou" id="thankyou">
+    <div class="ty-icon">💜</div>
+    <h2 class="ty-title">Thank you.<br><em>This matters.</em></h2>
+    <p class="ty-body">You have just helped shape what PathForge becomes. Every response we receive directly influences what we build next — which simulations, which inventor stories, and how we price it. <strong>You are part of building this.</strong></p>
+
+    <div class="ty-promise">
+      <div class="ty-promise-label">What happens next</div>
+      <div class="ty-promise-text">We read every single response — not a machine, us. When new inventor story videos and simulations are ready, the families who tested early hear first. We will not email you unless you asked us to, and when we do it will be worth reading.</div>
+    </div>
+
+    <div class="ty-sims">
+      <div class="ty-sims-label" style="font-size:13px;color:var(--ink-dim);margin-bottom:12px;">Want to try another simulation while you're here?</div>
+      <div class="ty-sim-links">
+        <a href="https://the-bridge-that-shook.netlify.app/" target="_blank" rel="noopener" class="ty-sim-link">
+          <div><div class="ty-sim-name">The Bridge That Shook</div><div class="ty-sim-age">Ages 13–15 · Engineering</div></div>
+          <span class="ty-arrow">→</span>
+        </a>
+        <a href="https://the-flood.netlify.app/" target="_blank" rel="noopener" class="ty-sim-link">
+          <div><div class="ty-sim-name">The River is Rising</div><div class="ty-sim-age">Ages 7–10 · Environmental Science</div></div>
+          <span class="ty-arrow">→</span>
+        </a>
+        <a href="https://the-wrong-verdict.netlify.app/" target="_blank" rel="noopener" class="ty-sim-link">
+          <div><div class="ty-sim-name">The Wrong Verdict</div><div class="ty-sim-age">Ages 13–16 · Law & Justice</div></div>
+          <span class="ty-arrow">→</span>
+        </a>
+        <a href="https://the-startup-era.netlify.app/" target="_blank" rel="noopener" class="ty-sim-link">
+          <div><div class="ty-sim-name">The Offer</div><div class="ty-sim-age">Ages 16–18+ · Business</div></div>
+          <span class="ty-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">PathForge · usepathforge.io · Feedback is anonymous unless you share your email</div>
+
+</div><!-- end wrapper -->
+
+<script>
+const TOTAL = 6;
+const answers = {};
+
+// ── Build progress dots ───────────────────────────────────────
+function buildProgress() {
+  const wrap = document.getElementById('progress-steps');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= TOTAL; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'step-dot';
+    dot.id = `dot-${i}`;
+    wrap.appendChild(dot);
+    if (i < TOTAL) {
+      const line = document.createElement('div');
+      line.className = 'step-line';
+      line.id = `line-${i}`;
+      wrap.appendChild(line);
+    }
+  }
+  updateProgress(1);
+}
+
+function updateProgress(current) {
+  for (let i = 1; i <= TOTAL; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    if (!dot) continue;
+    dot.className = 'step-dot' + (i < current ? ' done' : i === current ? ' active' : '');
+    if (i < TOTAL) {
+      const line = document.getElementById(`line-${i}`);
+      if (line) line.className = 'step-line' + (i < current ? ' done' : '');
+    }
+  }
+  const label = document.getElementById('progress-label');
+  if (label) label.textContent = `Question ${current} of ${TOTAL}`;
+}
+
+// ── Navigation ────────────────────────────────────────────────
+function goNext(nextStep) {
+  const current = nextStep - 1;
+  document.getElementById(`step-${current}`).classList.remove('active');
+  document.getElementById(`step-${nextStep}`).classList.add('active');
+  updateProgress(nextStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack(prevStep) {
+  const current = prevStep + 1;
+  document.getElementById(`step-${current}`).classList.remove('active');
+  document.getElementById(`step-${prevStep}`).classList.add('active');
+  updateProgress(prevStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function skipTo(nextStep) {
+  goNext(nextStep);
+}
+
+// ── Single select options ─────────────────────────────────────
+function selectOpt(btn, step) {
+  const parent = btn.closest('.options');
+  parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[`step${step}`] = btn.dataset.val;
+  const nextBtn = document.getElementById(`next-${step}`);
+  if (nextBtn) nextBtn.disabled = false;
+}
+
+// ── Scale ─────────────────────────────────────────────────────
+function selectScale(btn, step) {
+  const parent = btn.closest('.scale-btns');
+  parent.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[`step${step}`] = btn.dataset.val;
+  const nextBtn = document.getElementById(`next-${step}`);
+  if (nextBtn) nextBtn.disabled = false;
+}
+
+// ── Multi select ──────────────────────────────────────────────
+function toggleMulti(btn) {
+  btn.classList.toggle('selected');
+  const selected = [...document.querySelectorAll('.multi-btn.selected')].map(b => b.dataset.val);
+  answers['step4'] = selected;
+  // Step 4 next is always enabled (can skip all)
+}
+
+// ── Price select ──────────────────────────────────────────────
+function selectPrice(btn) {
+  document.querySelectorAll('.price-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers['step5'] = btn.dataset.val;
+  document.getElementById('next-5').disabled = false;
+}
+
+// ── Text area ─────────────────────────────────────────────────
+function checkText(step) {
+  const val = document.getElementById(`answer-${step}`)?.value.trim();
+  const nextBtn = document.getElementById(`next-${step}`);
+  if (nextBtn) nextBtn.disabled = val.length < 3;
+  if (val) answers[`step${step}`] = val;
+}
+
+// ── Step 6 special — opt btn enables submit ───────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  buildProgress();
+
+  // Watch step 6 options
+  document.querySelectorAll('#step-6 .opt-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('next-6').disabled = false;
+    });
+  });
+});
+
+// ── Submit ────────────────────────────────────────────────────
+function submitForm() {
+  const email = document.getElementById('email-input')?.value.trim();
+  if (email) answers['email'] = email;
+
+  // Log to console for now — replace with your backend endpoint
+  console.log('PathForge Parent Feedback:', JSON.stringify(answers, null, 2));
+
+  // Show thank you
+  document.getElementById('form-card').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('thankyou').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

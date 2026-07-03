@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Courtroom — Ages 13–16</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f3ee;--surface:#faf8f4;--surface2:#ede9e0;
+  --border:#ccc5b0;--ink:#1a1512;--ink-mid:#4a4030;
+  --ink-dim:#8a7a60;--accent:#8b1a1a;--accent2:#6b0f0f;
+  --gold:#b8860b;--gold-soft:#fdf5dc;
+  --green:#1a5c2a;--green-soft:#e8f5ec;
+  --blue:#1a3a6b;--blue-soft:#e8eef8;
+  --serif:'Libre Baskerville',Georgia,serif;
+  --sans:'Source Sans 3',system-ui,sans-serif;
+  --mono:'Courier Prime',monospace;
+}
+html,body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--sans)}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='none'/%3E%3Cpath d='M0 30h60M30 0v60' stroke='rgba(180,160,120,0.08)' stroke-width='1'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem 1rem 5rem}
+.wrap{width:100%;max-width:650px}
+.hdr{display:flex;justify-content:space-between;align-items:center;padding-bottom:0.75rem;border-bottom:3px double var(--ink);margin-bottom:1.75rem}
+.sim-tag{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:0.05em}
+.sim-career{font-family:var(--serif);font-size:12px;color:var(--accent);font-style:italic}
+.prog-wrap{margin-bottom:1.75rem}
+.prog-meta{font-family:var(--mono);font-size:10px;color:var(--ink-dim);display:flex;justify-content:space-between;margin-bottom:5px;letter-spacing:0.05em}
+.prog-track{height:4px;background:var(--border);border-radius:0}
+.prog-fill{height:100%;background:var(--accent);transition:width 0.7s ease}
+.scene{display:none;animation:appear 0.45s ease}
+.scene.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.scene-eyebrow{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-dim);margin-bottom:0.85rem}
+.scene-title{font-family:var(--serif);font-size:clamp(2rem,6vw,3rem);line-height:1.05;margin-bottom:0.35rem;color:var(--ink)}
+.scene-title em{font-style:italic;color:var(--accent)}
+.scene-sub{font-family:var(--mono);font-size:11px;color:var(--ink-dim);margin-bottom:1.75rem;letter-spacing:0.05em}
+.narrative{font-size:1.02rem;line-height:1.82;color:var(--ink-mid);margin-bottom:0.9rem;font-weight:300}
+.narrative strong{color:var(--ink);font-weight:600}
+.narrative em{color:var(--accent);font-style:normal;font-weight:500}
+/* Legal doc style */
+.legal-doc{background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin:1.5rem 0;box-shadow:3px 3px 0 var(--border)}
+.legal-header{font-family:var(--serif);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;text-align:center;color:var(--ink-dim);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border)}
+.legal-body{font-family:var(--mono);font-size:0.88rem;line-height:1.75;color:var(--ink-mid)}
+.legal-body strong{color:var(--ink)}
+/* Witness statement */
+.witness{background:var(--gold-soft);border-left:4px solid var(--gold);padding:1rem 1.25rem;margin:1.25rem 0}
+.witness-name{font-family:var(--serif);font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
+.witness-text{font-size:0.93rem;font-family:var(--mono);line-height:1.7;color:var(--ink-mid);font-style:italic}
+/* Tension */
+.tension{border:1px solid var(--accent);background:rgba(139,26,26,0.04);padding:1rem 1.25rem;margin:1.5rem 0}
+.tension p{font-size:1rem;line-height:1.75;color:var(--ink)}
+.tension p+p{margin-top:0.5rem}
+/* Choices */
+.decision-prompt{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin:1.75rem 0 0.85rem}
+.choices{display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2rem}
+.choice-btn{display:flex;align-items:flex-start;gap:12px;padding:0.95rem 1.1rem;background:var(--surface);border:1.5px solid var(--border);cursor:pointer;text-align:left;font-family:var(--sans);transition:all 0.2s}
+.choice-btn:hover{background:var(--surface2);border-color:var(--ink)}
+.choice-btn:hover .cletter{background:var(--ink);color:var(--surface)}
+.cletter{width:28px;height:28px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink-dim);flex-shrink:0;transition:all 0.2s}
+.ctext{font-size:0.93rem;font-weight:500;color:var(--ink);line-height:1.45}
+.csub{font-size:0.8rem;color:var(--ink-dim);margin-top:3px;font-weight:300}
+/* Outcomes */
+.outcome-block{padding:1rem 1.25rem;margin:1.25rem 0;border:1px solid}
+.ob-green{background:var(--green-soft);border-color:#86c795}
+.ob-amber{background:var(--gold-soft);border-color:#daa520}
+.ob-red{background:#fdf0f0;border-color:#cd7070}
+.ob-blue{background:var(--blue-soft);border-color:#8090c0}
+.ob-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.6rem;display:flex;align-items:center;gap:5px}
+.ob-green .ob-label{color:var(--green)}.ob-amber .ob-label{color:var(--gold)}.ob-red .ob-label{color:var(--accent)}.ob-blue .ob-label{color:var(--blue)}
+.ob-dot{width:5px;height:5px;border-radius:50%;display:inline-block}
+.ob-green .ob-dot{background:var(--green)}.ob-amber .ob-dot{background:var(--gold)}.ob-red .ob-dot{background:var(--accent)}.ob-blue .ob-dot{background:var(--blue)}
+.ob-text{font-size:0.92rem;font-family:var(--sans);line-height:1.7;color:var(--ink-mid)}
+.ob-text strong{color:var(--ink)}
+.skill-tag{display:inline-flex;align-items:center;gap:5px;margin-top:0.65rem;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-dim);background:var(--surface2);border:1px solid var(--border);padding:3px 9px}
+.memory-badge{display:flex;align-items:flex-start;gap:10px;padding:0.75rem 1rem;background:var(--surface);border:1px solid var(--border);margin-bottom:1.5rem;font-size:0.85rem;font-family:var(--sans);color:var(--ink-mid);line-height:1.55}
+.memory-badge strong{color:var(--accent)}
+.continue-btn{display:inline-flex;align-items:center;gap:8px;margin-top:1.5rem;padding:0.85rem 1.75rem;background:var(--ink);color:var(--surface);border:none;font-family:var(--serif);font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:0.03em;font-style:italic}
+.continue-btn:hover{background:var(--accent)}
+/* Career path cards */
+.career-paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:1.5rem 0}
+.cp-card{background:var(--surface);border:1px solid var(--border);padding:1rem;cursor:pointer;transition:all 0.2s;font-family:var(--sans)}
+.cp-card:hover{background:var(--surface2);border-color:var(--ink)}
+.cp-card.selected{background:var(--gold-soft);border-color:var(--gold);border-width:2px}
+.cp-icon{font-size:1.5rem;margin-bottom:8px}
+.cp-title{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.cp-desc{font-size:11px;color:var(--ink-dim);line-height:1.5}
+/* Debrief */
+.dq-list{display:flex;flex-direction:column;gap:1rem;margin:1.5rem 0}
+.dq{background:var(--surface);border:1px solid var(--border);padding:1.1rem 1.25rem}
+.dq-num{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:0.45rem}
+.dq-text{font-size:0.97rem;font-weight:500;color:var(--ink);line-height:1.5;margin-bottom:0.65rem}
+.dq textarea{width:100%;min-height:88px;background:var(--bg);border:1px solid var(--border);padding:0.7rem 0.9rem;font-family:var(--sans);font-size:0.88rem;color:var(--ink);resize:vertical;line-height:1.6;transition:border-color 0.2s}
+.dq textarea::placeholder{color:var(--ink-dim)}
+.dq textarea:focus{outline:none;border-color:var(--ink)}
+.final-btn{width:100%;padding:1rem;background:var(--ink);color:var(--surface);border:none;font-family:var(--serif);font-size:0.95rem;font-weight:700;cursor:pointer;font-style:italic;transition:all 0.2s;margin-top:0.5rem}
+.final-btn:hover{background:var(--accent)}
+.completion{text-align:center;padding:1.5rem 0}
+.c-icon{font-size:2.5rem;margin-bottom:1rem}
+.completion h2{font-family:var(--serif);font-size:clamp(1.75rem,5vw,2.5rem);color:var(--ink);margin-bottom:0.65rem}
+.completion p{font-size:0.93rem;color:var(--ink-mid);line-height:1.7;max-width:460px;margin:0 auto 1rem}
+.law-careers{background:var(--surface);border:1px solid var(--border);padding:1.25rem;margin:1.5rem 0;text-align:left}
+.lc-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:0.85rem}
+.lc-row:last-child{margin-bottom:0}
+.lc-icon{font-size:1.1rem;flex-shrink:0;margin-top:2px}
+.lc-title{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;font-style:italic}
+.lc-desc{font-size:12px;color:var(--ink-dim);line-height:1.5}
+.replay-btn{display:inline-flex;align-items:center;gap:7px;padding:0.8rem 1.6rem;background:transparent;border:1.5px solid var(--ink);color:var(--ink);font-family:var(--serif);font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.2s;font-style:italic}
+.replay-btn:hover{background:var(--surface2)}
+@media(max-width:480px){.scene-title{font-size:1.85rem}}
+
+.pf-home-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:11px;font-weight:600;color:inherit;opacity:0.65;transition:opacity 0.2s;letter-spacing:0.03em}
+.pf-home-link:hover{opacity:1}
+.completion-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:0.5rem}
+</style>
+    <!-- Open Graph / Social Preview Tags -->
+    <meta property="og:title" content="The Wrong Verdict — Can you prove he didn't do it?" />
+    <meta property="og:description" content="A career exploration simulation for ages 13–16. One hour to prepare. One question in court. Discover real careers in law and justice." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://usepathforge.io/simulations/courtroom" />
+    <meta property="og:site_name" content="PathForge" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="The Wrong Verdict — Can you prove he didn't do it?" />
+    <meta name="twitter:description" content="A career exploration simulation for ages 13–16. One hour to prepare. One question in court. Discover real careers in law and justice." />
+    <!-- Microsoft Clarity Tracking -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xbl1zshvdm");
+    </script>
+</head>
+<body>
+<div id="app"><div class="wrap">
+
+<!-- SCENE 1 -->
+<div class="scene active" id="scene-intro">
+<div class="hdr"><span class="sim-tag">Simulation 06 · Ages 13–16</span><span class="sim-career">Law, Justice &amp; Public Policy</span> <a href="pathforge-landing.html" class="pf-home-link">← All simulations</a></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 1 of 3</span></div><div class="prog-track"><div class="prog-fill" id="pbar" style="width:5%"></div></div></div>
+
+<div class="scene-eyebrow">Scene 1 · The Defendant</div>
+<h1 class="scene-title">The Wrong<br><em>Verdict</em></h1>
+<p class="scene-sub">What do you do when the system gets it wrong?</p>
+
+<p class="narrative">Your school runs a mock trial. You have been assigned to defend a student called Omar, who is accused of something he says he did not do.</p>
+<p class="narrative">The charge: Omar allegedly vandalised the school library — spray-painted a wall. The evidence against him: one witness who says they saw him, and a can of paint found near his locker.</p>
+<p class="narrative">You know Omar. He is quiet. He reads more than anyone in your year. He would not vandalise the library.</p>
+<p class="narrative">But knowing something and proving it are different things.</p>
+
+<div class="legal-doc">
+  <div class="legal-header">CASE SUMMARY · MOORSIDE ACADEMY MOCK TRIAL</div>
+  <div class="legal-body">
+    <strong>DEFENDANT:</strong> Omar Khalil, Year 10<br>
+    <strong>CHARGE:</strong> Wilful damage to school property<br>
+    <strong>EVIDENCE FOR PROSECUTION:</strong><br>
+    — Witness testimony (Jade T, Year 10)<br>
+    — Red spray paint can found in proximity to defendant's locker<br><br>
+    <strong>EVIDENCE FOR DEFENCE:</strong><br>
+    — Defendant's denial<br>
+    — <em>[You must find more]</em>
+  </div>
+</div>
+
+<p class="narrative">You have one hour before the trial begins. You can do one thing.</p>
+
+<div class="decision-prompt">— What is your first move? —</div>
+<div class="choices">
+  <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Interview the prosecution's witness — Jade — before the trial</div><div class="csub">Find out exactly what she saw. Look for gaps in her account.</div></div></button>
+  <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Find out who else was near the library that day</div><div class="csub">The witness saw someone. Was it definitely Omar — or could it have been someone else?</div></div></button>
+  <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Investigate the paint can — where did it actually come from?</div><div class="csub">Found "near" his locker. How near? When was it put there?</div></div></button>
+  <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Build Omar's character defence — he is a library regular, not a vandal</div><div class="csub">Show who he is. Make the accusation feel implausible.</div></div></button>
+</div>
+</div>
+
+<!-- OUTCOME 1 -->
+<div class="scene" id="scene-out1">
+<div class="hdr"><span class="sim-tag">Simulation 06 · Ages 13–16</span><span class="sim-career">Law, Justice &amp; Public Policy</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 1 — Outcome</span></div><div class="prog-track"><div class="prog-fill" style="width:28%"></div></div></div>
+<div class="scene-eyebrow">One hour before the trial...</div>
+<h2 class="scene-title" id="o1-title"></h2>
+<div id="o1-body"></div>
+<button class="continue-btn" onclick="goS2()">Enter the courtroom →</button>
+</div>
+
+<!-- SCENE 2 -->
+<div class="scene" id="scene-2">
+<div class="hdr"><span class="sim-tag">Simulation 06 · Ages 13–16</span><span class="sim-career">Law, Justice &amp; Public Policy</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 2 of 3</span></div><div class="prog-track"><div class="prog-fill" style="width:50%"></div></div></div>
+<div id="s2-memory"></div>
+
+<div class="scene-eyebrow">Scene 2 · The Courtroom</div>
+<h2 class="scene-title">The <em>Cross-Examination</em></h2>
+
+<p class="narrative">The trial begins. The prosecution presents their case. Jade gives her witness statement confidently: she saw someone in a red hoodie near the library at 4pm. Omar owns a red hoodie.</p>
+<p class="narrative">The prosecution rests. Now it is your turn.</p>
+<p class="narrative">You stand up. The panel of three teachers who are acting as the jury look at you.</p>
+
+<div class="witness">
+  <div class="witness-name">Witness Statement — Jade T., for the Prosecution</div>
+  <div class="witness-text">"I was walking past the library at approximately 4pm on Tuesday. I saw a person in a red hoodie crouching by the side wall. I did not see their face clearly but I recognised their posture and build. I am fairly confident it was Omar."</div>
+</div>
+
+<div class="tension">
+  <p><em>"Fairly confident."</em></p>
+  <p>You notice that phrase. You circle it in your notes.</p>
+  <p><strong>You have one question you can ask her. What is it?</strong></p>
+</div>
+
+<div class="decision-prompt">— What do you ask? —</div>
+<div class="choices">
+  <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">"You said 'fairly confident.' What would make you fully confident?"</div><div class="csub">Challenge the strength of her certainty directly.</div></div></button>
+  <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">"How many students at this school own a red hoodie?"</div><div class="csub">The identification is based on clothing. Clothing is not identity.</div></div></button>
+  <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">"Where exactly were you standing, and how far away were you?"</div><div class="csub">Distance and angle affect what a witness can reliably see.</div></div></button>
+  <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">"Have you and Omar ever had a disagreement?"</div><div class="csub">Establish whether the witness has a reason to misidentify.</div></div></button>
+</div>
+</div>
+
+<!-- FINAL OUTCOME -->
+<div class="scene" id="scene-final">
+<div class="hdr"><span class="sim-tag">Simulation 06 · Ages 13–16</span><span class="sim-career">Law, Justice &amp; Public Policy</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 2 — Outcome</span></div><div class="prog-track"><div class="prog-fill" style="width:75%"></div></div></div>
+<div class="scene-eyebrow">The verdict...</div>
+<h2 class="scene-title" id="final-title"></h2>
+<div id="final-body"></div>
+<button class="continue-btn" onclick="goDebrief()">Reflect on the case →</button>
+</div>
+
+<!-- DEBRIEF -->
+<div class="scene" id="scene-debrief">
+<div class="hdr"><span class="sim-tag">Simulation 06 · Ages 13–16</span><span class="sim-career">Law, Justice &amp; Public Policy</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Chambers</span></div><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div></div>
+<div style="text-align:center;padding:0.5rem 0 1.75rem">
+  <div style="font-size:2rem;margin-bottom:0.75rem">⚖️</div>
+  <h2 style="font-family:var(--serif);font-size:clamp(1.5rem,4vw,2rem);margin-bottom:0.65rem;font-style:italic">Think like a lawyer.</h2>
+  <p style="font-size:0.93rem;color:var(--ink-dim);max-width:420px;margin:0 auto;line-height:1.65">Lawyers, judges, policy makers, and investigators all use the thinking you just practised. Take a moment to examine what you did.</p>
+</div>
+<div style="background:var(--surface);border:1px solid var(--border);padding:1rem 1.25rem;margin-bottom:1.5rem" id="skills-panel"></div>
+<div class="dq-list">
+  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">What is the difference between believing someone is guilty and being able to prove it? Why does that difference matter?</div><textarea placeholder="Think about what would happen if courts only needed belief, not proof..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">Jade said "fairly confident." In a criminal trial, that phrase could set someone free. Why are words so important in law?</div><textarea placeholder="Lawyers are sometimes called 'wordsmiths' — what do you think that means?"></textarea></div>
+  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">Think of a situation you know about — in school, in the news, in your community — where you think justice was not done. What would it take to change that?</div><textarea placeholder="This is your opinion. There is no wrong answer."></textarea></div>
+</div>
+<button class="final-btn" onclick="goComplete()">Close the case ✓</button>
+</div>
+
+<!-- COMPLETE -->
+<div class="scene" id="scene-complete">
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Case Closed</span></div><div class="prog-track"><div class="prog-fill" style="width:100%"></div></div></div>
+<div class="completion">
+  <div class="c-icon">⚖️</div>
+  <h2 style="font-family:var(--serif);font-style:italic">Case closed.</h2>
+  <p>You just used the same thinking that lawyers, judges, detectives, and policymakers use every single day. Every question you asked was a real legal technique.</p>
+  <p id="c-summary" style="color:var(--accent);font-weight:600;font-style:italic;font-family:var(--serif)"></p>
+  <div class="law-careers">
+    <div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-dim);margin-bottom:0.85rem">Careers that use this thinking every day</div>
+    <div class="lc-row"><div class="lc-icon">⚖️</div><div><div class="lc-title">Barrister / Solicitor</div><div class="lc-desc">Builds and challenges legal cases. Requires sharp questioning, evidence analysis, and the ability to argue without emotion.</div></div></div>
+    <div class="lc-row"><div class="lc-icon">🔍</div><div><div class="lc-title">Criminal Investigator / Detective</div><div class="lc-desc">Gathers evidence, interviews witnesses, builds the case before it reaches court.</div></div></div>
+    <div class="lc-row"><div class="lc-icon">📜</div><div><div class="lc-title">Policy Analyst / Legislator</div><div class="lc-desc">Examines whether laws are working fairly. Writes new ones when they are not.</div></div></div>
+    <div class="lc-row"><div class="lc-icon">🏛️</div><div><div class="lc-title">Judge / Magistrate</div><div class="lc-desc">Weighs evidence and arguments from both sides. Makes the final call — and lives with that responsibility.</div></div></div>
+    <div class="lc-row"><div class="lc-icon">✊</div><div><div class="lc-title">Human Rights Lawyer</div><div class="lc-desc">Defends people whose rights have been violated — often people who cannot afford their own defence.</div></div></div>
+  </div>
+  <div class="completion-actions">
+  <button class="replay-btn" onclick="resetAll()">↺ Retry the case</button>
+  <a href="pathforge-landing.html" class="replay-btn" style="text-decoration:none;">← Try another simulation</a>
+</div>
+</div>
+</div>
+
+</div></div>
+<script>
+let c1=null,c2=null;
+const O1={
+  A:{title:"You talked to Jade.",cls:"ob-blue",
+    body:`<p class="narrative">Jade is guarded at first. Then you ask: "When you say 'fairly confident' — what does that mean exactly?"</p>
+    <p class="narrative">She pauses. "I mean... I didn't see his face. But the hoodie, the posture..."</p>
+    <p class="narrative">You write that down. You have something.</p>
+    <div class="outcome-block ob-blue"><div class="ob-label"><span class="ob-dot"></span> What you found</div><div class="ob-text">You discovered that Jade's identification is <strong>based on inference, not direct observation</strong>. She saw a hoodie and a posture — not a face. In law, this is called circumstantial evidence. It can support a conviction but it cannot stand alone.</div><span class="skill-tag">🔵 Cross-examination · Identifying weak evidence</span></div>`,
+    mem:"Jade admitted she did not see Omar's face. Her identification is based on a red hoodie and posture. That is your opening."
+  },
+  B:{title:"You searched for other witnesses.",cls:"ob-green",
+    body:`<p class="narrative">You ask around. Three students were near the library at 4pm. One of them — a Year 9 student — says they saw "someone tall in a red hoodie." Omar is average height.</p>
+    <p class="narrative">Another says they saw two people, not one.</p>
+    <p class="narrative">The picture is already messier than the prosecution thinks.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What you found</div><div class="ob-text">You found <strong>contradicting evidence</strong> — two different accounts that do not match the prosecution's version. This is called conflicting testimony. When witnesses disagree, it creates "reasonable doubt" — the standard required to acquit in criminal law.</div><span class="skill-tag">💚 Evidence gathering · Creating reasonable doubt</span></div>`,
+    mem:"Two other witnesses give accounts that contradict each other and do not match Jade's version. The picture is messier than the prosecution claims."
+  },
+  C:{title:"You investigated the paint can.",cls:"ob-green",
+    body:`<p class="narrative">You ask the teacher who found it exactly where it was. "About three metres from his locker," she says. "But the same distance from five other lockers."</p>
+    <p class="narrative">You ask when it was found. "The morning after." The library was vandalised at 4pm. The can appeared the next morning.</p>
+    <p class="narrative"><em>Appeared.</em> You write that word down.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What you found</div><div class="ob-text">The paint can is <strong>not definitively linked to Omar's locker</strong> — it was found in a shared area, the morning after the incident. In law, evidence that could have been planted or placed after the fact is called "tainted evidence." It weakens the prosecution's case significantly.</div><span class="skill-tag">💚 Physical evidence analysis · Chain of custody</span></div>`,
+    mem:"The paint can was found three metres from Omar's locker — but the same distance from five others. And it appeared the morning after, not immediately."
+  },
+  D:{title:"You built his character defence.",cls:"ob-amber",
+    body:`<p class="narrative">You gather five students who confirm Omar visits the library every day. You find the librarian who says he is the most regular reader in Year 10.</p>
+    <p class="narrative">It is compelling. But character evidence in law is tricky — it shows who someone usually is, not what they did on one specific day.</p>
+    <div class="outcome-block ob-amber"><div class="ob-label"><span class="ob-dot"></span> What you found</div><div class="ob-text">Character evidence is real and important — but <strong>it works best alongside evidence about the specific incident, not instead of it</strong>. Lawyers call this "supporting evidence." It reinforces a case but rarely wins one on its own. You have the right instinct; it needs a stronger anchor.</div><span class="skill-tag">🟡 Character evidence · Needs stronger anchor</span></div>`,
+    mem:"You have strong character evidence — Omar is known and loved in that library. But character shows who someone is, not what they did that day."
+  }
+};
+const O2={
+  A:{title:"You challenged her certainty.",cls:"ob-green",
+    body:`<p class="narrative">"You said 'fairly confident,'" you say quietly. "What would it take to be completely certain?"</p>
+    <p class="narrative">Jade hesitates. "I... I suppose seeing his face."</p>
+    <p class="narrative">"And you did not see his face."</p>
+    <p class="narrative">"No."</p>
+    <p class="narrative">The jury shifts. You have created a crack in the certainty.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> Verdict</div><div class="ob-text">The jury finds Omar not guilty on the grounds of insufficient evidence. <strong>You found the two most powerful words in the witness's statement and made her acknowledge what they meant.</strong> This technique — called "testing the witness" — is one of the most important skills in cross-examination. Barristers spend years mastering it.</div><span class="skill-tag">💚 Cross-examination technique · Reasonable doubt established</span></div>`
+  },
+  B:{title:"You challenged the identification.",cls:"ob-green",
+    body:`<p class="narrative">"How many students at this school own a red hoodie?"</p>
+    <p class="narrative">Jade blinks. "I... don't know."</p>
+    <p class="narrative">"Roughly?"</p>
+    <p class="narrative">"Maybe... fifty? A hundred?"</p>
+    <p class="narrative">You nod and sit down. You say nothing else. You do not need to.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> Verdict</div><div class="ob-text">The jury acquits Omar. <strong>You did not prove his innocence — you proved that the identification was too weak to be certain.</strong> In law, this is the standard: the prosecution must prove guilt beyond reasonable doubt. You created that doubt with one question.</div><span class="skill-tag">💚 Identification challenge · Reasonable doubt</span></div>`
+  },
+  C:{title:"You challenged the sightline.",cls:"ob-amber",
+    body:`<p class="narrative">"Where exactly were you standing, and how far away?"</p>
+    <p class="narrative">Jade says: "About fifteen metres."</p>
+    <p class="narrative">You ask if the light was good. She says it was late afternoon. You note the library faces west — the sun would have been in her eyes.</p>
+    <p class="narrative">The jury looks uncertain. The teacher-judge calls for more evidence before a verdict.</p>
+    <div class="outcome-block ob-amber"><div class="ob-label"><span class="ob-dot"></span> Verdict</div><div class="ob-text">The case is adjourned — no verdict yet. You raised serious questions about the reliability of the identification, but the jury needed more to acquit. <strong>Environmental conditions are powerful in law — lighting, distance, angle all affect what a witness can reliably see.</strong> You planted the doubt. It was not quite enough — but it was close.</div><span class="skill-tag">🟡 Witness reliability · Almost — needs more</span></div>`
+  },
+  D:{title:"You challenged her motive.",cls:"ob-amber",
+    body:`<p class="narrative">"Have you and Omar ever had a disagreement?"</p>
+    <p class="narrative">Jade stiffens slightly. "We had a... project dispute. Last term."</p>
+    <p class="narrative">The jury notices. The teacher-judge writes something down.</p>
+    <div class="outcome-block ob-amber"><div class="ob-label"><span class="ob-dot"></span> Verdict</div><div class="ob-text">The jury finds Omar not guilty — but narrowly. <strong>Establishing that a witness has a motive to lie or misidentify is called "challenging credibility."</strong> It works. But it can also backfire — it looks like an attack on the witness's character, which some juries do not like. You got the right result; the method is risky.</div><span class="skill-tag">🟡 Credibility challenge · Works but risky</span></div>`
+  }
+};
+const summaries={
+  AA:"You went to the source and then cut to the precise weakness in her testimony. Two direct, sharp moves. That is the profile of a natural cross-examiner.",
+  AB:"You found the weakness in the witness and then exposed the absurdity of a clothing-based identification. Two questions. Both landed. Economical and effective.",
+  AC:"You found the crack in her certainty and then challenged the reliability of her observation. Building a case layer by layer.",
+  AD:"You established her doubt and then challenged her motive. The combination works — but the second move carries risk. You will need to learn when to use it and when not to.",
+  BA:"You found contradicting testimony and then cut through the witness's certainty. Multiple angles, one coherent defence.",
+  BB:"You found other witnesses and then asked the simplest, most devastating question. Good preparation, clean execution.",
+  BC:"You built a factual case from multiple sources and then questioned the conditions of the identification. Thorough.",
+  BD:"You gathered independent testimony and then challenged the witness's reliability. Two different lines of attack that reinforce each other.",
+  CA:"You analysed the physical evidence and then challenged the certainty of the identification. Evidence first, then testimony. A methodical approach.",
+  CB:"You questioned the physical evidence and then exposed the identification as clothing-based. Both moves attack the same weakness from different directions.",
+  CC:"You investigated the chain of custody and then challenged the sightline. Physical and observational evidence — both lines of enquiry, both productive.",
+  CD:"You challenged the evidence and then the motive. Comprehensive — but the motive challenge carries risk.",
+  DA:"Character evidence plus a direct challenge to certainty. The character work supports the cross-examination. Good combination.",
+  DB:"Character evidence plus an identification challenge. The hoodie question lands harder because you have already made the jury like Omar.",
+  DC:"Character evidence then sightline challenge. The jury likes Omar and doubts the identification. Both things help.",
+  DD:"Character evidence and a motive challenge. You built Omar up and then undermined the witness. The jury saw both clearly."
+};
+function s1(c){c1=c;const o=O1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-out1')}
+function goS2(){const o=O1[c1];document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>📋</span><span><strong>Your preparation:</strong> ${o.mem}</span></div>`;show('scene-2')}
+function s2(c){c2=c;const o=O2[c];document.getElementById('final-title').textContent=o.title;document.getElementById('final-body').innerHTML=o.body;show('scene-final')}
+function goDebrief(){const k=c1+c2;document.getElementById('skills-panel').innerHTML=`<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-dim);margin-bottom:8px">Your approach to this case</div><div style="font-size:0.9rem;line-height:1.65;color:var(--ink-mid)">${summaries[k]||''}</div>`;show('scene-debrief')}
+async function goComplete(){await saveDebrief('the-wrong-verdict');document.getElementById('c-summary').textContent=summaries[c1+c2]||'';show('scene-complete')}
+function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(t=>t.value='');show('scene-intro')}
+function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
+
+async function saveDebrief(simulationName) {
+  const textareas = document.querySelectorAll('textarea');
+  const answer1 = textareas[0] ? textareas[0].value.trim() : '';
+  const answer2 = textareas[1] ? textareas[1].value.trim() : '';
+  const answer3 = textareas[2] ? textareas[2].value.trim() : '';
+  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
+  try {
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
+    });
+  } catch(e) { console.log('Debrief save failed silently', e); }
+}
+</script>
+</body></html>

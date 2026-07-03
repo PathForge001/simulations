@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bridge That Shook</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1e28;
+    --border: #252a38;
+    --accent: #f5a623;
+    --accent2: #e84545;
+    --text: #e8eaf0;
+    --text-dim: #7a8099;
+    --text-mid: #b0b8d0;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --blue: #60a5fa;
+  }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  #app {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem 1rem 4rem;
+  }
+
+  /* Header bar */
+  .sim-header {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sim-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.3);
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+
+  .sim-career {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    width: 100%;
+    max-width: 680px;
+    margin-bottom: 2rem;
+  }
+
+  .progress-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .progress-track {
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  /* Scene container */
+  .scene {
+    width: 100%;
+    max-width: 680px;
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .scene.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scene label */
+  .scene-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scene-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Title */
+  .scene-title {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .scene-title span { color: var(--accent); }
+
+  /* Narrative text */
+  .narrative {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-mid);
+    margin-bottom: 0.85rem;
+  }
+
+  .narrative strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .narrative em {
+    color: var(--text);
+    font-style: italic;
+  }
+
+  /* Tension block — highlighted moment */
+  .tension {
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    background: rgba(245,166,35,0.05);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .tension p {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* Decision prompt */
+  .decision-prompt {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 2rem 0 1rem;
+  }
+
+  /* Choice buttons */
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .choice-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .choice-btn:hover {
+    background: var(--surface2);
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .choice-btn:hover .choice-letter {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .choice-letter {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    margin-top: 1px;
+  }
+
+  .choice-text {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .choice-sub {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+
+  /* Outcome block */
+  .outcome-block {
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    border: 1px solid var(--border);
+  }
+
+  .outcome-block.good { border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.05); }
+  .outcome-block.risk { border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.05); }
+  .outcome-block.danger { border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.05); }
+  .outcome-block.neutral { border-color: rgba(96,165,250,0.3); background: rgba(96,165,250,0.05); }
+
+  .outcome-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .outcome-block.good .outcome-label { color: var(--green); }
+  .outcome-block.risk .outcome-label { color: var(--amber); }
+  .outcome-block.danger .outcome-label { color: var(--red); }
+  .outcome-block.neutral .outcome-label { color: var(--blue); }
+
+  .outcome-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .outcome-block.good .outcome-dot { background: var(--green); }
+  .outcome-block.risk .outcome-dot { background: var(--amber); }
+  .outcome-block.danger .outcome-dot { background: var(--red); }
+  .outcome-block.neutral .outcome-dot { background: var(--blue); }
+
+  .outcome-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-mid);
+  }
+
+  .outcome-text strong { color: var(--text); }
+
+  /* Skill tag */
+  .skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.25);
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+
+  /* Continue button */
+  .continue-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.5rem;
+    padding: 0.85rem 1.75rem;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .continue-btn:hover {
+    background: #ffc04d;
+    transform: translateY(-1px);
+  }
+
+  .continue-btn .arrow { font-size: 1rem; transition: transform 0.2s; }
+  .continue-btn:hover .arrow { transform: translateX(4px); }
+
+  /* Memory badge — carries previous choice into scene 2 */
+  .memory-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.75rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  .memory-badge .memory-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .memory-badge strong { color: var(--accent); }
+
+  /* Debrief section */
+  .debrief-intro {
+    text-align: center;
+    padding: 1.5rem 0 2rem;
+  }
+
+  .debrief-intro .big-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .debrief-intro h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .debrief-intro p {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  .debrief-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin: 2rem 0;
+  }
+
+  .debrief-q {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .debrief-q-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .debrief-q-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+
+  .debrief-textarea {
+    width: 100%;
+    min-height: 90px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    resize: vertical;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+
+  .debrief-textarea::placeholder { color: var(--text-dim); }
+  .debrief-textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  /* Skills unlocked panel */
+  .skills-unlocked {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .skills-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.85rem;
+  }
+
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.25);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Final submit */
+  .final-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .final-btn:hover { background: #ffc04d; transform: translateY(-1px); }
+
+  /* Completion screen */
+  .completion {
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .completion-icon {
+    font-size: 3rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .completion h2 {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .completion p {
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+    max-width: 460px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .replay-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.85rem 1.75rem;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .replay-btn:hover { background: rgba(245,166,35,0.1); }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2rem 0;
+  }
+
+  /* Shake animation for bridge moment */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 50%, 90% { transform: translateX(-3px); }
+    30%, 70% { transform: translateX(3px); }
+  }
+
+  .shaking { animation: shake 0.6s ease; }
+
+  /* Pulse on tension */
+  @keyframes pulse-border {
+    0%, 100% { border-color: rgba(245,166,35,0.3); }
+    50% { border-color: rgba(245,166,35,0.9); }
+  }
+
+  .tension { animation: pulse-border 2s ease infinite; }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .choice-btn { padding: 0.85rem 1rem; }
+    .scene-title { font-size: 1.6rem; }
+  }
+
+.pf-home-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:11px;font-weight:600;color:inherit;opacity:0.65;transition:opacity 0.2s;letter-spacing:0.03em}
+.pf-home-link:hover{opacity:1}
+.completion-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:0.5rem}
+</style>
+    <!-- Open Graph / Social Preview Tags -->
+    <meta property="og:title" content="The Bridge That Shook — Can you prevent the collapse?" />
+    <meta property="og:description" content="A 15-minute decision simulation for ages 13–15. You're an engineering intern when the bridge starts shaking. No app, no login — just a link." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://usepathforge.io/simulations/bridge" />
+    <meta property="og:site_name" content="PathForge" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="The Bridge That Shook — Can you prevent the collapse?" />
+    <meta name="twitter:description" content="A 15-minute decision simulation for ages 13–15. You're an engineering intern when the bridge starts shaking. No app, no login — just a link." />
+    <!-- Microsoft Clarity Tracking -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xbl1zshvdm");
+    </script>
+</head>
+<body>
+<div id="app">
+
+  <!-- ============================================================ -->
+  <!-- SCENE: TITLE / INTRO                                          -->
+  <!-- ============================================================ -->
+  <div class="scene active" id="scene-intro">
+    <div class="sim-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div><span class="sim-tag">Simulation 01</span>
+      <span class="sim-career">Civil Engineering · Ages 13–15</span></div>
+      <a href="pathforge-landing.html" class="pf-home-link">← All simulations</a>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Progress</span><span>Scene 1 of 3</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-bar" style="width:0%"></div></div>
+    </div>
+
+    <div class="scene-label">Opening</div>
+    <h1 class="scene-title">The Bridge<br><span>That Shook</span></h1>
+
+    <p class="narrative">It's early morning. The construction site is quiet except for the grind of a distant forklift and the smell of damp concrete.</p>
+    <p class="narrative">You're an intern — first week on the job — carrying a clipboard to the site supervisor on the other side of a half-built footbridge.</p>
+    <p class="narrative">You step onto the metal deck. Halfway across—</p>
+
+    <div class="tension" id="tension-intro">
+      <p>The bridge <strong>trembles</strong> beneath your feet.</p>
+      <p style="margin-top:0.5rem; font-size:0.95rem; color:var(--text-mid); font-weight:400;">Not wind. Not a truck passing. A pulse — one second — then nothing.</p>
+      <p style="margin-top:0.5rem; font-size:0.95rem; color:var(--text-mid); font-weight:400;">You stop walking. Look down. The metal is still.</p>
+      <p style="margin-top:0.5rem; font-size:0.95rem; color:var(--text-mid); font-weight:400;">Around you, the crew keeps working. <em>No one looked up.</em></p>
+    </div>
+
+    <p class="narrative">You felt it. You know you did.</p>
+
+    <div class="decision-prompt">— What do you do? —</div>
+
+    <div class="choices">
+      <button class="choice-btn" onclick="scene1Choose('A')">
+        <span class="choice-letter">A</span>
+        <div>
+          <div class="choice-text">Get closer and check the structure</div>
+          <div class="choice-sub">Kneel down. Look at the beams and bolts.</div>
+        </div>
+      </button>
+      <button class="choice-btn" onclick="scene1Choose('B')">
+        <span class="choice-letter">B</span>
+        <div>
+          <div class="choice-text">Keep walking — it was probably nothing</div>
+          <div class="choice-sub">You have a job to do. Bridges vibrate sometimes.</div>
+        </div>
+      </button>
+      <button class="choice-btn" onclick="scene1Choose('C')">
+        <span class="choice-letter">C</span>
+        <div>
+          <div class="choice-text">Ask the workers nearby if they felt it</div>
+          <div class="choice-sub">Maybe someone else noticed. Get another opinion first.</div>
+        </div>
+      </button>
+      <button class="choice-btn" onclick="scene1Choose('D')">
+        <span class="choice-letter">D</span>
+        <div>
+          <div class="choice-text">Go straight to the supervisor</div>
+          <div class="choice-sub">Don't wait. Tell someone in charge immediately.</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SCENE: OUTCOMES — SCENE 1                                     -->
+  <!-- ============================================================ -->
+  <div class="scene" id="scene-outcome1">
+    <div class="sim-header">
+      <span class="sim-tag">Simulation 01</span>
+      <span class="sim-career">Civil Engineering · Ages 13–15</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Progress</span><span>Scene 1 outcome</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:33%"></div></div>
+    </div>
+
+    <div class="scene-label">Scene 1 — Outcome</div>
+    <h2 class="scene-title" id="outcome1-title"></h2>
+    <div id="outcome1-content"></div>
+
+    <button class="continue-btn" onclick="goToScene2()">
+      Continue to Scene 2 <span class="arrow">→</span>
+    </button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SCENE 2 — THE SECOND SHAKE                                    -->
+  <!-- ============================================================ -->
+  <div class="scene" id="scene-2">
+    <div class="sim-header">
+      <span class="sim-tag">Simulation 01</span>
+      <span class="sim-career">Civil Engineering · Ages 13–15</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Progress</span><span>Scene 2 of 3</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:50%"></div></div>
+    </div>
+
+    <div class="scene-label">Scene 2</div>
+    <h2 class="scene-title">The Second <span>Shake</span></h2>
+
+    <div id="scene2-memory"></div>
+
+    <p class="narrative">That afternoon, the crew runs a test. A concrete mixer starts up on the far end of the bridge — heavy, grinding, loud.</p>
+    <p class="narrative">The moment the engine hits full power—</p>
+
+    <div class="tension" id="tension-scene2">
+      <p>The vibration is <strong>back</strong>. Stronger this time.</p>
+      <p style="margin-top:0.5rem; font-size:0.95rem; color:var(--text-mid); font-weight:400;">A metal beam lets out a low <em>groan</em>.</p>
+      <p style="margin-top:0.5rem; font-size:0.95rem; color:var(--text-mid); font-weight:400;">The supervisor is fifty metres away, back turned. The workers are focused on their tasks.</p>
+      <p style="margin-top:0.5rem; font-size:0.95rem; color:var(--text-mid); font-weight:400;"><strong>You are the closest person to the shaking point.</strong></p>
+    </div>
+
+    <p class="narrative">You have seconds.</p>
+
+    <div class="decision-prompt">— What do you do? —</div>
+
+    <div class="choices">
+      <button class="choice-btn" onclick="scene2Choose('A')">
+        <span class="choice-letter">A</span>
+        <div>
+          <div class="choice-text">Shout for everyone to stop the machinery</div>
+          <div class="choice-sub">Loud. Now. Get the mixer shut down before anything else.</div>
+        </div>
+      </button>
+      <button class="choice-btn" onclick="scene2Choose('B')">
+        <span class="choice-letter">B</span>
+        <div>
+          <div class="choice-text">Grab a wrench and try to tighten the bolt yourself</div>
+          <div class="choice-sub">You saw it earlier. You know where the problem is.</div>
+        </div>
+      </button>
+      <button class="choice-btn" onclick="scene2Choose('C')">
+        <span class="choice-letter">C</span>
+        <div>
+          <div class="choice-text">Step back and film it on your phone</div>
+          <div class="choice-sub">Document the evidence. The supervisor will need proof.</div>
+        </div>
+      </button>
+      <button class="choice-btn" onclick="scene2Choose('D')">
+        <span class="choice-letter">D</span>
+        <div>
+          <div class="choice-text">Clear the area and sprint to the supervisor</div>
+          <div class="choice-sub">Get people away from danger first, then get help.</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SCENE: FINAL OUTCOME                                          -->
+  <!-- ============================================================ -->
+  <div class="scene" id="scene-final-outcome">
+    <div class="sim-header">
+      <span class="sim-tag">Simulation 01</span>
+      <span class="sim-career">Civil Engineering · Ages 13–15</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Progress</span><span>Scene 2 outcome</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:75%"></div></div>
+    </div>
+
+    <div class="scene-label">Scene 2 — Final Outcome</div>
+    <h2 class="scene-title" id="final-outcome-title"></h2>
+    <div id="final-outcome-content"></div>
+
+    <button class="continue-btn" onclick="goToDebrief()">
+      Reflect on what happened <span class="arrow">→</span>
+    </button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DEBRIEF                                                        -->
+  <!-- ============================================================ -->
+  <div class="scene" id="scene-debrief">
+    <div class="sim-header">
+      <span class="sim-tag">Simulation 01</span>
+      <span class="sim-career">Civil Engineering · Ages 13–15</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Progress</span><span>Debrief</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:90%"></div></div>
+    </div>
+
+    <div class="debrief-intro">
+      <div class="big-icon">🔩</div>
+      <h2>Now think about it.</h2>
+      <p>Engineers make decisions under pressure every day. There's no single right answer — but every choice has consequences. Take a moment to reflect on yours.</p>
+    </div>
+
+    <div id="debrief-skills-panel"></div>
+
+    <div class="debrief-questions">
+
+      <div class="debrief-q">
+        <div class="debrief-q-num">Question 01</div>
+        <div class="debrief-q-text">What did you choose at each moment — and why did those choices feel right at the time?</div>
+        <textarea class="debrief-textarea" id="answer1" placeholder="Write your thoughts here..."></textarea>
+      </div>
+
+      <div class="debrief-q">
+        <div class="debrief-q-num">Question 02</div>
+        <div class="debrief-q-text">Think about the workers on the bridge. What happened to them because of the choices you made?</div>
+        <textarea class="debrief-textarea" id="answer2" placeholder="Think about the people around you in the simulation..."></textarea>
+      </div>
+
+      <div class="debrief-q">
+        <div class="debrief-q-num">Question 03</div>
+        <div class="debrief-q-text">If you could go back to the first shake — knowing what happened next — what would you do differently?</div>
+        <textarea class="debrief-textarea" id="answer3" placeholder="There's no wrong answer here..."></textarea>
+      </div>
+
+    </div>
+
+    <button class="final-btn" onclick="finish()">Complete Simulation ✓</button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- COMPLETION SCREEN                                             -->
+  <!-- ============================================================ -->
+  <div class="scene" id="scene-complete">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Progress</span><span>Complete</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+
+    <div class="completion">
+      <div class="completion-icon">🏗️</div>
+      <h2>Simulation Complete.</h2>
+      <p>You made real decisions under pressure — and faced their consequences. That's exactly what engineers, safety officers, and problem-solvers do every day.</p>
+      <p id="completion-skills-text" style="color:var(--accent); font-weight:600;"></p>
+
+      <div style="margin: 2rem 0; background: var(--surface); border: 1px solid var(--border); border-radius:10px; padding:1.5rem; text-align:left;">
+        <div class="skills-title" style="margin-bottom:1rem;">What this simulation tested</div>
+        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+          <div style="display:flex; gap:10px; align-items:flex-start;">
+            <span style="color:var(--accent); font-size:1rem; flex-shrink:0;">→</span>
+            <div>
+              <div style="font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:2px;">Observation</div>
+              <div style="font-size:0.82rem; color:var(--text-dim); line-height:1.5;">Noticing something others missed. Paying attention when it matters.</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; align-items:flex-start;">
+            <span style="color:var(--accent); font-size:1rem; flex-shrink:0;">→</span>
+            <div>
+              <div style="font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:2px;">Decision-making under pressure</div>
+              <div style="font-size:0.82rem; color:var(--text-dim); line-height:1.5;">Choosing fast, with incomplete information, when it counts.</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; align-items:flex-start;">
+            <span style="color:var(--accent); font-size:1rem; flex-shrink:0;">→</span>
+            <div>
+              <div style="font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:2px;">Safety awareness</div>
+              <div style="font-size:0.82rem; color:var(--text-dim); line-height:1.5;">Understanding that on a construction site, the right action is always the safe one first.</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; align-items:flex-start;">
+            <span style="color:var(--accent); font-size:1rem; flex-shrink:0;">→</span>
+            <div>
+              <div style="font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:2px;">Communication</div>
+              <div style="font-size:0.82rem; color:var(--text-dim); line-height:1.5;">Knowing when to act alone and when to get others involved.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="completion-actions">
+  <button class="replay-btn" onclick="resetSimulation()">↺ Play again with different choices</button>
+  <a href="pathforge-landing.html" class="replay-btn" style="text-decoration:none;">← Try another simulation</a>
+</div>
+    </div>
+  </div>
+
+</div><!-- end #app -->
+
+<script>
+  // State
+  let choice1 = null;
+  let choice2 = null;
+
+  // Scene 1 outcome data
+  const outcomes1 = {
+    A: {
+      title: 'You Found Something.',
+      type: 'neutral',
+      label: 'Investigator',
+      content: `<p class="narrative">You kneel down. The deck is cold under your hands.</p>
+        <p class="narrative">Most of the bolts look fine. But one — near the second support beam — has a gap between the nut and the plate. <strong>Not dangerous. Not yet.</strong> But wrong.</p>
+        <p class="narrative">A worker notices you crouching and walks over. "What are you looking at, intern?"</p>
+        <p class="narrative">You show him. He frowns, pulls out his radio.</p>
+        <div class="outcome-block neutral">
+          <div class="outcome-label"><span class="outcome-dot"></span> What you've gained</div>
+          <div class="outcome-text">You have <strong>information</strong>. You know exactly where the problem is. When it happens again, you'll be ready.</div>
+          <span class="skill-tag">🔍 Observation · Investigation</span>
+        </div>`,
+      memory: 'You noticed a loose bolt near the second beam. You\'re the only one who knows where it is.'
+    },
+    B: {
+      title: 'You Kept Walking.',
+      type: 'risk',
+      label: 'Ignored',
+      content: `<p class="narrative">You deliver the clipboard. The supervisor nods, barely looks up.</p>
+        <p class="narrative">On your way back, <em>clank</em>. A metallic sound from somewhere beneath the deck. Sharp. Not like the site noise.</p>
+        <p class="narrative">Two workers look up. One of them looks at you. You look away.</p>
+        <div class="outcome-block risk">
+          <div class="outcome-label"><span class="outcome-dot"></span> What happened</div>
+          <div class="outcome-text">Nothing collapsed. But something <strong>did</strong> make that noise, and now you're the only one who heard both the vibration and the sound — and said nothing about either.</div>
+          <span class="skill-tag">⚠️ Lesson: Ignoring signals has a cost</span>
+        </div>`,
+      memory: 'You ignored the first vibration. Then you heard a metallic clank and stayed quiet. That\'s sitting with you now.'
+    },
+    C: {
+      title: 'Mixed Signals.',
+      type: 'neutral',
+      label: 'Consulted',
+      content: `<p class="narrative">You ask two workers nearby. One shrugs. "Bridge does that sometimes. Wind."</p>
+        <p class="narrative">The other one pauses. Sets down her tool. <strong>"That didn't feel like wind."</strong></p>
+        <p class="narrative">They disagree. Now what?</p>
+        <div class="outcome-block neutral">
+          <div class="outcome-label"><span class="outcome-dot"></span> What happened</div>
+          <div class="outcome-text">You didn't act alone, which takes courage. But now you have <strong>conflicting information</strong> and no clear answer. The decision is still yours to make.</div>
+          <span class="skill-tag">🗣️ Communication · Navigating Disagreement</span>
+        </div>`,
+      memory: 'You asked around. One worker said it\'s normal. Another wasn\'t so sure. You\'re still not certain what to think.'
+    },
+    D: {
+      title: 'You Reported It.',
+      type: 'good',
+      label: 'Reported',
+      content: `<p class="narrative">You go straight to the supervisor. He's a big man, serious, mid-fifties. You explain what you felt.</p>
+        <p class="narrative">He doesn't dismiss you. He walks back to the spot with you. Stands there. Feels nothing.</p>
+        <p class="narrative"><strong>"Good call,"</strong> he says. "Better to report and be wrong than to say nothing and be right." He radios the crew to do a quick check.</p>
+        <div class="outcome-block good">
+          <div class="outcome-label"><span class="outcome-dot"></span> What happened</div>
+          <div class="outcome-text">Nothing was found. But you've earned something more important: <strong>the supervisor trusts your instincts.</strong> When it happens again, he'll listen.</div>
+          <span class="skill-tag">✅ Safety Culture · Building Trust</span>
+        </div>`,
+      memory: 'You reported it. The supervisor found nothing this time — but he told you it was the right call. He\'s watching out for you now.'
+    }
+  };
+
+  // Scene 2 outcome data
+  const outcomes2 = {
+    A: {
+      title: 'You Shouted.',
+      type: 'good',
+      content: `<p class="narrative"><strong>"STOP THE MIXER — NOW!"</strong></p>
+        <p class="narrative">Your voice cuts across the site. Everyone freezes. The mixer operator hesitates — then kills the engine.</p>
+        <p class="narrative">Silence.</p>
+        <p class="narrative">The vibration dies instantly. The beam stops groaning.</p>
+        <p class="narrative">The supervisor jogs over, face tight. He checks the beam. Checks the bolt. His expression changes.</p>
+        <p class="narrative"><em>"The bolt was loosening under load,"</em> he says quietly. <em>"Another minute of that and we'd have had a real problem."</em></p>
+        <p class="narrative">He looks at you. <strong>"Good reaction."</strong></p>
+        <div class="outcome-block good">
+          <div class="outcome-label"><span class="outcome-dot"></span> What happened</div>
+          <div class="outcome-text">You prioritised <strong>people over process</strong>. You didn't wait for permission. Your call prevented a structural failure.</div>
+          <span class="skill-tag">🎙️ Leadership Under Pressure · Communication</span>
+        </div>`
+    },
+    B: {
+      title: 'You Reached for the Wrench.',
+      type: 'danger',
+      content: `<p class="narrative">You grab a wrench from the nearest toolbox and crouch toward the bolt.</p>
+        <p class="narrative">The moment the wrench touches metal, the vibration <strong>surges</strong>. The beam shudders. The wrench flies from your hand.</p>
+        <p class="narrative">A worker grabs your arm and pulls you back. Hard.</p>
+        <p class="narrative">Later, the supervisor sits with you. His voice is quiet. Not angry. <em>"On a live structure, you don't touch components while it's shaking. You could have been seriously hurt."</em></p>
+        <p class="narrative"><em>"The instinct was right. The method was wrong."</em></p>
+        <div class="outcome-block danger">
+          <div class="outcome-label"><span class="outcome-dot"></span> What happened</div>
+          <div class="outcome-text">You had <strong>initiative and courage</strong> — two things engineers need. But on a construction site, safety protocols exist for exactly this reason. Knowing when <em>not</em> to act is as important as acting.</div>
+          <span class="skill-tag">⚠️ Initiative · Safety Boundaries</span>
+        </div>`
+    },
+    C: {
+      title: 'You Filmed It.',
+      type: 'risk',
+      content: `<p class="narrative">You step back and pull out your phone. The camera captures everything: the groaning beam, the vibration rippling through the deck.</p>
+        <p class="narrative">Thirty seconds later, the mixer operator shuts the engine down on his own — routine check, not emergency. The shaking stops.</p>
+        <p class="narrative">The supervisor watches your footage that evening. <em>"This is useful,"</em> he says. <em>"But those thirty seconds — anything could have happened."</em></p>
+        <div class="outcome-block risk">
+          <div class="outcome-label"><span class="outcome-dot"></span> What happened</div>
+          <div class="outcome-text">Your footage helped diagnose the fault. That's real value. But <strong>documenting danger and stopping danger are different things</strong> — and in those thirty seconds, you chose one over the other.</div>
+          <span class="skill-tag">📹 Observation · Documentation · Trade-offs</span>
+        </div>`
+    },
+    D: {
+      title: 'You Cleared the Area.',
+      type: 'good',
+      content: `<p class="narrative"><em>"Everyone back! Get back from the beam — now!"</em></p>
+        <p class="narrative">Three workers look at you like you're mad. But you're already moving, waving them away from the shaking section. Two follow. One hesitates, then follows too.</p>
+        <p class="narrative">You sprint to the supervisor. He's already moving when he sees your face.</p>
+        <p class="narrative">By the time you return with him, the vibration has stopped. The area is clear. No one is hurt.</p>
+        <p class="narrative"><em>"Textbook,"</em> the supervisor says, scanning the safe zone you created. <em>"Life first. Equipment second. Diagnosis third."</em></p>
+        <div class="outcome-block good">
+          <div class="outcome-label"><span class="outcome-dot"></span> What happened</div>
+          <div class="outcome-text">You prioritised <strong>human safety over quick fixes</strong>. You didn't know if the structure would fail — but you acted as if it might. That is exactly the right instinct in safety-critical environments.</div>
+          <span class="skill-tag">🛡️ Risk Assessment · Safety First</span>
+        </div>`
+    }
+  };
+
+  // Skill combinations based on both choices
+  const skillSummaries = {
+    AA: 'You observed first, then led decisively. That combination — careful observation followed by fast action — is what separates good engineers from great ones.',
+    AB: 'You investigated carefully, then tried to fix it yourself. The instinct to solve problems is powerful — but paired with safety awareness, it becomes genuinely useful.',
+    AC: 'You gathered evidence, then more evidence. Both cautious, both methodical. The question is: at what point does caution become hesitation?',
+    AD: 'You investigated, then put safety first. Information-gathering followed by decisive protective action. That\'s strong engineering thinking.',
+    BA: 'You ignored an early warning, then responded fast when the stakes were higher. The lesson is in the gap between those two moments.',
+    BB: 'You ignored the first signal and then tried to physically intervene in the second. Two instincts that conflict with each other — and with safety protocol.',
+    BC: 'You ignored the vibration once, then documented it the second time. The shift from ignoring to observing is real growth — but it happened one event too late.',
+    BD: 'You ignored the first signal but protected people in the second. That says something important: when lives are involved, you act differently.',
+    CA: 'You consulted others, processed uncertainty, then led firmly when it mattered. That is mature decision-making — gather input, then own the call.',
+    CB: 'You asked around, sat with uncertainty, then tried to act unilaterally under pressure. The challenge with uncertainty is knowing which way to break.',
+    CC: 'You sought information twice — from people, then from a camera. A consistently observational approach. But observation without response has limits.',
+    CD: 'You consulted others first, then prioritised safety when the stakes rose. That progression — gather, then protect — shows good instincts.',
+    DA: 'You escalated early, built trust, then used your voice to prevent harm. The supervisor believed you the second time because of how you handled the first.',
+    DB: 'You reported the first incident correctly, then tried a hands-on fix in the second. Reporting takes courage — so does restraint when the situation calls for it.',
+    DC: 'You escalated first, documented second. Both responsible choices. The documentation is more valuable because of the trust you built earlier.',
+    DD: 'You reported immediately, then cleared the area. Consistently cautious, consistently people-first. That is exactly the mindset safety culture is built on.',
+  };
+
+  function scene1Choose(choice) {
+    choice1 = choice;
+    const outcome = outcomes1[choice];
+
+    document.getElementById('outcome1-title').textContent = outcome.title;
+    document.getElementById('outcome1-content').innerHTML = outcome.content;
+
+    showScene('scene-outcome1');
+    triggerShake();
+  }
+
+  function goToScene2() {
+    const outcome = outcomes1[choice1];
+
+    // Set memory badge
+    document.getElementById('scene2-memory').innerHTML = `
+      <div class="memory-badge">
+        <span class="memory-icon">🧠</span>
+        <span><strong>You remember:</strong> ${outcome.memory}</span>
+      </div>`;
+
+    showScene('scene-2');
+  }
+
+  function scene2Choose(choice) {
+    choice2 = choice;
+    const outcome = outcomes2[choice];
+
+    document.getElementById('final-outcome-title').textContent = outcome.title;
+    document.getElementById('final-outcome-content').innerHTML = outcome.content;
+
+    showScene('scene-final-outcome');
+  }
+
+  function goToDebrief() {
+    const key = choice1 + choice2;
+    const skillText = skillSummaries[key] || '';
+
+    document.getElementById('debrief-skills-panel').innerHTML = `
+      <div class="skills-unlocked">
+        <div class="skills-title">Your path through this simulation</div>
+        <p style="font-size:0.9rem; color:var(--text-mid); line-height:1.65; margin-bottom:0.75rem;">${skillText}</p>
+        <div class="skills-grid" id="skills-grid"></div>
+      </div>`;
+
+    showScene('scene-debrief');
+  }
+
+  async function finish() {
+    await saveDebrief('bridge-that-shook');
+    const key = choice1 + choice2;
+    const skillText = skillSummaries[key] || '';
+    document.getElementById('completion-skills-text').textContent = skillText;
+    showScene('scene-complete');
+  }
+
+  function resetSimulation() {
+    choice1 = null;
+    choice2 = null;
+    document.getElementById('answer1').value = '';
+    document.getElementById('answer2').value = '';
+    document.getElementById('answer3').value = '';
+    showScene('scene-intro');
+    document.getElementById('progress-bar').style.width = '0%';
+  }
+
+  function showScene(id) {
+    document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function triggerShake() {
+    const tension = document.getElementById('tension-intro');
+    if (tension) {
+      tension.classList.add('shaking');
+      setTimeout(() => tension.classList.remove('shaking'), 700);
+    }
+  }
+
+  // Initialise progress bar animation on load
+  setTimeout(() => {
+    document.getElementById('progress-bar').style.width = '10%';
+  }, 300);
+
+async function saveDebrief(simulationName) {
+  const answer1 = (document.getElementById('answer1') || {}).value || '';
+  const answer2 = (document.getElementById('answer2') || {}).value || '';
+  const answer3 = (document.getElementById('answer3') || {}).value || '';
+  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
+  try {
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
+    });
+  } catch(e) { console.log('Debrief save failed silently', e); }
+}
+</script>
+</body>
+</html>

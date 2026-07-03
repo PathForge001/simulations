@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Flood — Ages 7–10</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#e8f4fd;--surface:#ffffff;--surface2:#f0f8ff;
+  --border:#bdd7f0;--ink:#1a3a5c;--ink-mid:#3a6080;
+  --ink-dim:#7090a8;--accent:#0ea5e9;--accent2:#0369a1;
+  --green:#16a34a;--green-soft:#dcfce7;
+  --amber:#d97706;--amber-soft:#fef3c7;
+  --red:#dc2626;--red-soft:#fee2e2;
+  --yellow:#ca8a04;--yellow-soft:#fef9c3;
+  --sans:'Nunito',system-ui,sans-serif;
+  --body:'Nunito Sans',system-ui,sans-serif;
+}
+html,body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--sans)}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(180deg,#dbeeff 0%,#e8f4fd 40%,#fef9f0 100%);z-index:0;pointer-events:none}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:1.5rem 1rem 5rem}
+.wrap{width:100%;max-width:620px}
+/* Header */
+.career-banner{background:var(--accent2);border-radius:12px;padding:0.6rem 1rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px}
+.career-icon{font-size:1.4rem}
+.career-label{font-size:13px;font-weight:800;color:white;letter-spacing:0.02em}
+.career-sub{font-size:11px;color:rgba(255,255,255,0.75);margin-top:1px}
+.prog-wrap{margin-bottom:1.5rem}
+.prog-label{font-size:12px;font-weight:700;color:var(--ink-dim);display:flex;justify-content:space-between;margin-bottom:5px}
+.prog-track{height:10px;background:#c8dff0;border-radius:10px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:10px;transition:width 0.7s ease}
+.scene{display:none;animation:pop 0.4s ease}
+.scene.active{display:block}
+@keyframes pop{from{opacity:0;transform:scale(0.98)}to{opacity:1;transform:scale(1)}}
+/* Scene title */
+.scene-eyebrow{font-size:12px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem}
+.scene-title{font-size:clamp(1.75rem,6vw,2.5rem);font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:0.35rem}
+.scene-title em{color:var(--accent);font-style:normal}
+.scene-sub{font-size:13px;font-weight:600;color:var(--ink-dim);margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:0.05em}
+/* Story text */
+.story{font-family:var(--body);font-size:1.05rem;line-height:1.8;color:var(--ink-mid);margin-bottom:0.9rem}
+.story strong{color:var(--ink);font-weight:700}
+.story em{color:var(--accent2);font-style:normal;font-weight:600}
+/* Drama card */
+.drama{background:var(--accent2);border-radius:16px;padding:1.25rem 1.35rem;margin:1.5rem 0;box-shadow:0 4px 20px rgba(3,105,161,0.25)}
+.drama p{font-size:1.05rem;line-height:1.7;color:white;font-weight:600}
+.drama p+p{margin-top:0.5rem}
+/* Fact card */
+.fact-card{background:var(--yellow-soft);border:2px solid #fde68a;border-radius:12px;padding:1rem 1.25rem;margin:1.25rem 0;display:flex;gap:12px;align-items:flex-start}
+.fact-icon{font-size:1.5rem;flex-shrink:0}
+.fact-title{font-size:12px;font-weight:800;color:var(--yellow);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.fact-body{font-size:0.9rem;font-family:var(--body);color:var(--ink-mid);line-height:1.6}
+/* Decision */
+.decision-label{font-size:14px;font-weight:800;color:var(--accent2);text-transform:uppercase;letter-spacing:0.05em;margin:1.75rem 0 0.85rem;display:flex;align-items:center;gap:8px}
+.decision-label::before{content:'';width:24px;height:3px;background:var(--accent);border-radius:2px}
+.choices{display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2rem}
+.choice-btn{display:flex;align-items:flex-start;gap:12px;padding:1rem 1.1rem;background:var(--surface);border:2.5px solid var(--border);border-radius:14px;cursor:pointer;text-align:left;font-family:var(--sans);transition:all 0.2s}
+.choice-btn:hover{background:#e0f2fe;border-color:var(--accent);transform:translateX(4px)}
+.choice-btn:hover .cletter{background:var(--accent);color:white;border-color:var(--accent)}
+.cletter{width:32px;height:32px;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--accent2);flex-shrink:0;transition:all 0.2s}
+.ctext{font-size:0.95rem;font-weight:700;color:var(--ink);line-height:1.4}
+.csub{font-size:0.82rem;color:var(--ink-dim);margin-top:3px;font-weight:600;font-family:var(--body)}
+/* Outcome */
+.outcome{border-radius:14px;padding:1.1rem 1.35rem;margin:1.25rem 0;border:2px solid}
+.out-green{background:var(--green-soft);border-color:#86efac}
+.out-amber{background:var(--amber-soft);border-color:#fcd34d}
+.out-red{background:var(--red-soft);border-color:#fca5a5}
+.out-blue{background:#e0f2fe;border-color:#7dd3fc}
+.out-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.6rem;display:flex;align-items:center;gap:5px}
+.out-green .out-label{color:var(--green)}.out-amber .out-label{color:var(--amber)}.out-red .out-label{color:var(--red)}.out-blue .out-label{color:var(--accent2)}
+.out-dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.out-green .out-dot{background:var(--green)}.out-amber .out-dot{background:var(--amber)}.out-red .out-dot{background:var(--red)}.out-blue .out-dot{background:var(--accent)}
+.out-text{font-size:0.93rem;font-family:var(--body);line-height:1.7;color:var(--ink-mid)}
+.out-text strong{color:var(--ink)}
+.skill-badge{display:inline-flex;align-items:center;gap:6px;margin-top:0.7rem;font-size:12px;font-weight:800;color:var(--accent2);background:#e0f2fe;border:2px solid #7dd3fc;padding:4px 10px;border-radius:8px;text-transform:uppercase;letter-spacing:0.05em}
+.memory-badge{display:flex;align-items:flex-start;gap:10px;padding:0.85rem 1rem;background:var(--surface);border:2px solid var(--border);border-radius:12px;margin-bottom:1.5rem;font-size:0.88rem;font-family:var(--body);color:var(--ink-mid);line-height:1.55}
+.memory-badge strong{color:var(--accent2);font-weight:800}
+.continue-btn{display:inline-flex;align-items:center;gap:8px;margin-top:1.5rem;padding:0.9rem 1.75rem;background:var(--accent2);color:white;border:none;border-radius:12px;font-family:var(--sans);font-size:0.95rem;font-weight:800;cursor:pointer;transition:all 0.2s;letter-spacing:0.02em}
+.continue-btn:hover{background:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(14,165,233,0.4)}
+/* Debrief */
+.career-reveal{background:var(--accent2);border-radius:16px;padding:1.5rem;margin:1.5rem 0;text-align:center}
+.cr-icon{font-size:2.5rem;margin-bottom:0.75rem}
+.cr-title{font-size:1.1rem;font-weight:900;color:white;margin-bottom:0.5rem}
+.cr-body{font-size:0.9rem;color:rgba(255,255,255,0.85);font-family:var(--body);line-height:1.6}
+.dq-list{display:flex;flex-direction:column;gap:1rem;margin:1.5rem 0}
+.dq{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem}
+.dq-num{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent2);margin-bottom:0.45rem}
+.dq-text{font-size:0.97rem;font-weight:700;color:var(--ink);line-height:1.5;margin-bottom:0.65rem}
+.dq textarea{width:100%;min-height:80px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;font-family:var(--body);font-size:0.88rem;color:var(--ink);resize:vertical;line-height:1.6;transition:border-color 0.2s}
+.dq textarea::placeholder{color:var(--ink-dim)}
+.dq textarea:focus{outline:none;border-color:var(--accent)}
+.final-btn{width:100%;padding:1rem;background:var(--accent2);color:white;border:none;border-radius:12px;font-family:var(--sans);font-size:1rem;font-weight:800;cursor:pointer;transition:all 0.2s;margin-top:0.5rem}
+.final-btn:hover{background:var(--accent);transform:translateY(-1px)}
+.completion{text-align:center;padding:1.5rem 0}
+.c-icon{font-size:3rem;margin-bottom:0.85rem}
+.completion h2{font-size:clamp(1.75rem,5vw,2.5rem);font-weight:900;color:var(--ink);margin-bottom:0.65rem}
+.completion p{font-size:0.95rem;font-family:var(--body);color:var(--ink-mid);line-height:1.7;max-width:460px;margin:0 auto 1rem}
+.careers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:1.5rem 0}
+.career-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:0.85rem;text-align:center}
+.cc-icon{font-size:1.75rem;margin-bottom:6px}
+.cc-title{font-size:12px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.cc-desc{font-size:11px;font-family:var(--body);color:var(--ink-dim);line-height:1.4}
+.replay-btn{display:inline-flex;align-items:center;gap:7px;padding:0.8rem 1.6rem;background:var(--surface);border:2.5px solid var(--accent2);color:var(--accent2);border-radius:10px;font-family:var(--sans);font-size:0.9rem;font-weight:800;cursor:pointer;transition:all 0.2s}
+.replay-btn:hover{background:#e0f2fe}
+@media(max-width:480px){.scene-title{font-size:1.75rem}}
+
+.pf-home-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:11px;font-weight:600;color:inherit;opacity:0.65;transition:opacity 0.2s;letter-spacing:0.03em}
+.pf-home-link:hover{opacity:1}
+.completion-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:0.5rem}
+</style>
+    <!-- Open Graph / Social Preview Tags -->
+    <meta property="og:title" content="The River is Rising — Can you save your town?" />
+    <meta property="og:description" content="A career exploration simulation for ages 7–10. Measure the flood, advise the council, discover real careers in environmental science and engineering." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://usepathforge.io/simulations/flood" />
+    <meta property="og:site_name" content="PathForge" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="The River is Rising — Can you save your town?" />
+    <meta name="twitter:description" content="A career exploration simulation for ages 7–10. Measure the flood, advise the council, discover real careers in environmental science and engineering." />
+    <!-- Microsoft Clarity Tracking -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xbl1zshvdm");
+    </script>
+</head>
+<body>
+<div id="app"><div class="wrap">
+
+<!-- SCENE 1 -->
+<div class="scene active" id="scene-intro">
+<div class="career-banner" style="justify-content:space-between;"><div style="display:flex;align-items:center;gap:10px;"><div class="career-icon">🌊</div><div><div class="career-label">Career Path: Environmental Science &amp; Engineering</div><div class="career-sub">Ages 7–10 · Decision-Making · Problem Solving</div></div></div><a href="pathforge-landing.html" class="pf-home-link" style="color:white;">← All simulations</a></div>
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Scene 1 of 3</span></div><div class="prog-track"><div class="prog-fill" id="pbar" style="width:5%"></div></div></div>
+
+<div class="scene-eyebrow">Scene 1</div>
+<h1 class="scene-title">The River<br><em>is Rising</em></h1>
+<p class="scene-sub">Could you help save your town?</p>
+
+<p class="story">It has been raining for three days. Not normal rain — the kind that turns the sky grey and makes rivers churn brown.</p>
+<p class="story">You live near the River Tyne. This morning your dad pointed at the water level marker on the old bridge. <strong>The red line.</strong> The water is nearly touching it.</p>
+<p class="story">At school, your teacher says the town council are meeting tonight to decide whether to build a new flood barrier. But <em>they need information first</em> — and nobody has measured how fast the river is rising.</p>
+
+<div class="drama">
+  <p>Your teacher looks at the class.</p>
+  <p>"The council needs someone to go and measure the water level every hour today. They need three measurements. Who wants to help?"</p>
+  <p><strong>Your hand goes up before you even think about it.</strong></p>
+</div>
+
+<div class="fact-card"><div class="fact-icon">🔬</div><div><div class="fact-title">Real Science Fact!</div><div class="fact-body">Environmental scientists measure things called "variables" — numbers that change over time, like river water levels. By recording the change, they can predict what happens next. That is called data collection!</div></div></div>
+
+<p class="story">You walk to the bridge with your notebook. The water is 2.3 metres. You write it down carefully.</p>
+<p class="story">One hour later: 2.5 metres. Another hour: 2.8 metres.</p>
+<p class="story"><strong>The river is rising 0.25 metres every hour.</strong></p>
+<p class="story">You run back to school. The council meeting is in two hours. Your teacher asks you to present your findings. But there is a problem — she wants you to also tell the council what you think they should do.</p>
+
+<div class="decision-label">What do you recommend?</div>
+<div class="choices">
+  <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Tell the council to start evacuating low areas immediately</div><div class="csub">At this rate the red line gets crossed in less than an hour.</div></div></button>
+  <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Recommend they wait — you only have three data points</div><div class="csub">More information would make a better decision. But time is short.</div></div></button>
+  <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Suggest building temporary sandbag barriers tonight</div><div class="csub">Not a permanent solution but could buy time.</div></div></button>
+  <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Present your data and ask the council to decide — the decision is theirs</div><div class="csub">Your job is the science. Their job is the decision.</div></div></button>
+</div>
+</div>
+
+<!-- OUTCOME 1 -->
+<div class="scene" id="scene-out1">
+<div class="career-banner"><div class="career-icon">🌊</div><div><div class="career-label">Career Path: Environmental Science &amp; Engineering</div><div class="career-sub">Ages 7–10</div></div></div>
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Scene 1 Result</span></div><div class="prog-track"><div class="prog-fill" style="width:28%"></div></div></div>
+<div class="scene-eyebrow">What happened next...</div>
+<h2 class="scene-title" id="o1-title"></h2>
+<div id="o1-body"></div>
+<button class="continue-btn" onclick="goS2()">Keep going! →</button>
+</div>
+
+<!-- SCENE 2 -->
+<div class="scene" id="scene-2">
+<div class="career-banner"><div class="career-icon">🌊</div><div><div class="career-label">Career Path: Environmental Science &amp; Engineering</div><div class="career-sub">Ages 7–10</div></div></div>
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Scene 2 of 3</span></div><div class="prog-track"><div class="prog-fill" style="width:50%"></div></div></div>
+<div id="s2-memory"></div>
+<div class="scene-eyebrow">Scene 2 — The Next Morning</div>
+<h2 class="scene-title">The Big <em>Question</em></h2>
+
+<p class="story">The council used your data. Some houses were protected. The river peaked at 3.1 metres and then slowly went back down. Nobody got flooded.</p>
+<p class="story">Your town is safe. And everyone at school knows it was partly because of you.</p>
+<p class="story">Your teacher sits down with you. She says: <em>"You know what you did yesterday? That is what environmental scientists do every single day."</em></p>
+
+<div class="fact-card"><div class="fact-icon">🌍</div><div><div class="fact-title">Did You Know?</div><div class="fact-body">Environmental scientists study rivers, air, soil, and weather. Some work for governments. Some work for charities. Some travel the world measuring glaciers and rainforests. They help humans live alongside nature without destroying it.</div></div></div>
+
+<p class="story">She shows you three different jobs that exist because of what you did yesterday:</p>
+<p class="story"><strong>A hydrologist</strong> — a scientist who studies rivers and predicts floods.<br><strong>A civil engineer</strong> — someone who designs barriers, bridges, and flood defences.<br><strong>An emergency planner</strong> — someone who decides what to do when disasters happen.</p>
+<p class="story">She asks you: <strong>"Which one sounds most like you?"</strong></p>
+
+<div class="decision-label">Which path interests you most?</div>
+<div class="choices">
+  <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">Hydrologist — I want to understand how rivers work</div><div class="csub">More science. More measuring. More discovery.</div></div></button>
+  <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">Civil Engineer — I want to design and build things</div><div class="csub">Make plans. Draw designs. Build barriers that last.</div></div></button>
+  <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">Emergency Planner — I want to help people when things go wrong</div><div class="csub">Make decisions under pressure. Protect communities.</div></div></button>
+  <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">I want to do all three — or something we haven't discovered yet</div><div class="csub">Many careers combine all of these and more.</div></div></button>
+</div>
+</div>
+
+<!-- FINAL OUTCOME -->
+<div class="scene" id="scene-final">
+<div class="career-banner"><div class="career-icon">🌊</div><div><div class="career-label">Career Path: Environmental Science &amp; Engineering</div><div class="career-sub">Ages 7–10</div></div></div>
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Scene 2 Result</span></div><div class="prog-track"><div class="prog-fill" style="width:75%"></div></div></div>
+<div class="scene-eyebrow">Your future...</div>
+<h2 class="scene-title" id="final-title"></h2>
+<div id="final-body"></div>
+<button class="continue-btn" onclick="goDebrief()">What did I learn? →</button>
+</div>
+
+<!-- DEBRIEF -->
+<div class="scene" id="scene-debrief">
+<div class="career-banner"><div class="career-icon">🌊</div><div><div class="career-label">Career Path: Environmental Science &amp; Engineering</div><div class="career-sub">Ages 7–10</div></div></div>
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Reflection Time!</span></div><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div></div>
+<div style="text-align:center;padding:0.5rem 0 1.5rem">
+  <div style="font-size:2.5rem;margin-bottom:0.75rem">💭</div>
+  <h2 style="font-size:clamp(1.5rem,4vw,2rem);font-weight:900;color:var(--ink);margin-bottom:0.65rem">Think about it!</h2>
+  <p style="font-size:0.93rem;font-family:var(--body);color:var(--ink-dim);max-width:400px;margin:0 auto;line-height:1.65">You just used real science skills to help your town. Now let's think about what you did and why it matters.</p>
+</div>
+<div class="skills-panel" id="skills-panel" style="background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:1rem 1.25rem;margin-bottom:1.5rem"></div>
+<div class="dq-list">
+  <div class="dq"><div class="dq-num">Question 1</div><div class="dq-text">Why was it important to measure the river three times instead of just once?</div><textarea placeholder="Think about what would have happened if you only measured once..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 2</div><div class="dq-text">The council were grown-ups. Why did your information still matter?</div><textarea placeholder="What can children notice that adults sometimes miss?"></textarea></div>
+  <div class="dq"><div class="dq-num">Question 3</div><div class="dq-text">What is something near where you live that a scientist, engineer or planner might want to study?</div><textarea placeholder="It could be a river, a road, a park, a building..."></textarea></div>
+</div>
+<button class="final-btn" onclick="goComplete()">I'm done thinking! ✓</button>
+</div>
+
+<!-- COMPLETE -->
+<div class="scene" id="scene-complete">
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Complete! 🎉</span></div><div class="prog-track"><div class="prog-fill" style="width:100%"></div></div></div>
+<div class="completion">
+  <div class="c-icon">🏆</div>
+  <h2>Amazing work!</h2>
+  <p>You measured, you analysed, you helped keep people safe. Today you were a real scientist. Here are the careers you explored:</p>
+  <div class="careers-grid">
+    <div class="career-card"><div class="cc-icon">🌊</div><div class="cc-title">Hydrologist</div><div class="cc-desc">Studies rivers, rainfall and floods. Works outside and in labs.</div></div>
+    <div class="career-card"><div class="cc-icon">🏗️</div><div class="cc-title">Civil Engineer</div><div class="cc-desc">Designs bridges, barriers, roads and buildings that keep us safe.</div></div>
+    <div class="career-card"><div class="cc-icon">🚨</div><div class="cc-title">Emergency Planner</div><div class="cc-desc">Decides what to do when disasters happen. Saves lives.</div></div>
+    <div class="career-card"><div class="cc-icon">🌱</div><div class="cc-title">Env. Scientist</div><div class="cc-desc">Studies nature — rivers, air, soil — to help protect our planet.</div></div>
+  </div>
+  <p style="color:var(--accent2);font-weight:700;" id="c-summary"></p>
+  <div class="completion-actions">
+  <button class="replay-btn" onclick="resetAll()">↺ Play again differently!</button>
+  <a href="pathforge-landing.html" class="replay-btn" style="text-decoration:none;">← Try another simulation</a>
+</div>
+</div>
+</div>
+
+</div></div>
+<script>
+let c1=null,c2=null;
+const O1={
+  A:{title:"You said: start the evacuation.",cls:"out-green",
+    body:`<p class="story">The council look at your notebook. They look at each other. One woman says: "A child did this?"</p>
+    <p class="story">Your teacher says: "She did."</p>
+    <p class="story">They issue a warning for the low-lying streets. By midnight, three households have moved to higher ground. By morning, water is lapping at their front doors.</p>
+    <div class="outcome out-green"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="out-text">Your data led to the right call. <strong>You used evidence to make a recommendation</strong> — and it worked. This is exactly what environmental scientists do. They do not just collect numbers. They interpret them and say what the numbers mean for real people.</div><span class="skill-badge">🌟 Data interpretation · Brave recommendation</span></div>`,
+    mem:"You told the council to act fast. They listened. Three families were safe because of your data."
+  },
+  B:{title:"You said: we need more data first.",cls:"out-amber",
+    body:`<p class="story">The councillors nod. They send someone else to measure. But that person is not back before the meeting ends.</p>
+    <p class="story">They make no decision. By 11pm the river crosses the red line. One shed floods. No people are hurt — but it was close.</p>
+    <div class="outcome out-amber"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="out-text">Wanting more data is a good scientific instinct. But sometimes <strong>good-enough data and fast action beats perfect data and slow action</strong>. Environmental scientists call this the "precautionary principle" — when in doubt and people might be at risk, act carefully rather than wait.</div><span class="skill-badge">💡 Scientific caution · Lesson: speed matters too</span></div>`,
+    mem:"You asked for more data. The delay meant a slower response. Good instinct — but timing matters in emergencies."
+  },
+  C:{title:"You suggested sandbags.",cls:"out-green",
+    body:`<p class="story">The council act immediately. By 9pm there are 200 sandbags on the riverbank. Twelve volunteers help stack them.</p>
+    <p class="story">The river rises to 3.0 metres. The sandbags hold.</p>
+    <div class="outcome out-green"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="out-text">You thought like an engineer. You did not just describe the problem — you proposed a solution that could be built quickly with available materials. <strong>That practical, "what can we do right now" thinking is exactly what civil engineers and emergency planners do.</strong></div><span class="skill-badge">🔧 Engineering thinking · Practical solution</span></div>`,
+    mem:"You suggested sandbags. The council acted. The barriers held. You thought like an engineer."
+  },
+  D:{title:"You presented the data and stepped back.",cls:"out-blue",
+    body:`<p class="story">"The river is rising 0.25 metres every hour," you say. "That means it reaches the red line in under two hours. What you do with that is your decision."</p>
+    <p class="story">The council are visibly impressed. They debate for twelve minutes. Then they issue a precautionary warning.</p>
+    <div class="outcome out-blue"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="out-text">You understood something important: <strong>scientists provide evidence. Decision-makers decide what to do with it.</strong> That separation — between science and policy — is one of the most important ideas in environmental work. You gave the council what they needed and trusted them to use it.</div><span class="skill-badge">📊 Scientific role · Evidence vs decision</span></div>`,
+    mem:"You presented the facts clearly and let the council decide. They respected you for it."
+  }
+};
+const O2={
+  A:{title:"You want to understand rivers.",cls:"out-blue",
+    body:`<p class="story">Your teacher smiles. "Then you should know that hydrologists work everywhere — the Amazon rainforest, the Scottish Highlands, the canals of Bangladesh. They are some of the most travelled scientists in the world."</p>
+    <div class="outcome out-blue"><div class="out-label"><span class="out-dot"></span> Your path</div><div class="out-text">Hydrologists study water in all its forms. They need maths, geography, chemistry, and computing. Some work for the Environment Agency. Some work for the United Nations. Some discover entirely new things about how water moves through the Earth. <strong>Every river on the planet needs someone who understands it.</strong></div><span class="skill-badge">🔬 Science path · Geography + maths + fieldwork</span></div>`
+  },
+  B:{title:"You want to design and build.",cls:"out-green",
+    body:`<p class="story">"Civil engineers designed the Thames Barrier in London," your teacher says. "It has protected eight million people from flooding since 1982. One team of engineers. Eight million people."</p>
+    <div class="outcome out-green"><div class="out-label"><span class="out-dot"></span> Your path</div><div class="out-text">Civil engineers design everything that holds society together — bridges, tunnels, flood barriers, clean water systems, roads. They need maths, physics, and the ability to imagine something that does not exist yet. <strong>Every barrier, bridge, and road you have ever used was designed by someone who started by asking "how does this work?"</strong></div><span class="skill-badge">🏗️ Engineering path · Maths + physics + design</span></div>`
+  },
+  C:{title:"You want to help people in emergencies.",cls:"out-amber",
+    body:`<p class="story">"Emergency planners work for every council in the UK," your teacher says. "They write plans for floods, fires, pandemics, power cuts. When everything goes wrong, they are the ones who already thought about it."</p>
+    <div class="outcome out-amber"><div class="out-label"><span class="out-dot"></span> Your path</div><div class="out-text">Emergency planners need to understand science, but they also need to understand people — how communities react under stress, who needs help first, how to communicate clearly when everyone is scared. <strong>They are part scientist, part psychologist, part leader.</strong> One of the most important jobs few people have ever heard of.</div><span class="skill-badge">🚨 Planning path · Science + leadership + communication</span></div>`
+  },
+  D:{title:"You want to discover what you don't know yet.",cls:"out-blue",
+    body:`<p class="story">"Good," your teacher says. "The best scientists never stop at the first answer. They keep asking questions."</p>
+    <div class="outcome out-blue"><div class="out-label"><span class="out-dot"></span> Your path</div><div class="out-text">Many of the most important jobs that exist in 2040 have not been invented yet. Climate scientists, ocean engineers, biodiversity analysts, ecological architects — every generation creates new careers that the previous generation could not have imagined. <strong>The best preparation is curiosity.</strong> You already have it.</div><span class="skill-badge">🌍 Explorer path · Curiosity is the qualification</span></div>`
+  }
+};
+const summaries={
+  AA:"You acted on your evidence and chose the science of rivers. Two instincts: act on what you know, and understand more. That combination is what the best environmental scientists have.",
+  AB:"You acted fast and want to understand the science. Action first, depth second. A good order.",
+  AC:"You acted on evidence and want to build solutions. That combination — data and design — is exactly what flood engineers need.",
+  AD:"You acted and want to keep exploring. Science never runs out of questions. Neither will you.",
+  BA:"You wanted more evidence first, then chose to understand rivers. A consistent scientific caution. That patience is valuable — just remember that sometimes speed matters more.",
+  BB:"You wanted more data and want to build things. Engineers collect evidence before they design. You have the instinct.",
+  BC:"You were cautious first and want to help people. The best emergency planners are careful thinkers — but they also act when they must.",
+  BD:"You asked for more time, then chose to keep exploring. Some of the greatest scientific discoveries happened when someone refused to rush.",
+  CA:"You thought of a practical solution and want to understand the science behind it. Engineers who also love science make the most important breakthroughs.",
+  CB:"You engineered a solution and want to keep engineering. The river will always need someone who can build better barriers.",
+  CC:"You built sandbags and want to help people in emergencies. Action, practicality, and care for people. That is emergency planning.",
+  CD:"You thought practically and want to keep discovering. The world needs people who can build AND imagine what comes next.",
+  DA:"You understood your role and chose science. Knowing when to lead and when to hand over is rare wisdom — even in adults.",
+  DB:"You understood your role and want to build things. Scientists and engineers who understand each other's boundaries do the most important work together.",
+  DC:"You stepped back wisely and want to help in emergencies. Understanding your role — and other people's — is the foundation of great teamwork.",
+  DD:"You understood your role and want to keep asking questions. The best scientists always know what they do not know yet."
+};
+function s1(c){c1=c;const o=O1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-out1')}
+function goS2(){const o=O1[c1];document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>🧠</span><span><strong>You remember:</strong> ${o.mem}</span></div>`;show('scene-2')}
+function s2(c){c2=c;const o=O2[c];document.getElementById('final-title').textContent=o.title;document.getElementById('final-body').innerHTML=o.body;show('scene-final')}
+function goDebrief(){const k=c1+c2;document.getElementById('skills-panel').innerHTML=`<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent2);margin-bottom:8px">What your choices say about you</div><div style="font-size:0.9rem;font-family:var(--body);color:var(--ink-mid);line-height:1.65">${summaries[k]||''}</div>`;show('scene-debrief')}
+async function goComplete(){await saveDebrief('the-flood');document.getElementById('c-summary').textContent=summaries[c1+c2]||'';show('scene-complete')}
+function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(t=>t.value='');show('scene-intro')}
+function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
+
+async function saveDebrief(simulationName) {
+  const textareas = document.querySelectorAll('textarea');
+  const answer1 = textareas[0] ? textareas[0].value.trim() : '';
+  const answer2 = textareas[1] ? textareas[1].value.trim() : '';
+  const answer3 = textareas[2] ? textareas[2].value.trim() : '';
+  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
+  try {
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
+    });
+  } catch(e) { console.log('Debrief save failed silently', e); }
+}
+</script>
+</body></html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Missing Player — PathForge</title>
+<meta property="og:title" content="The Missing Player — Your team's best player has vanished. The final is in three days." />
+<meta property="og:description" content="A PathForge simulation for ages 10–14. Sports science, coaching, teamwork, and the decisions that define what kind of leader you become." />
+<meta property="og:site_name" content="PathForge" />
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xbl1zshvdm");
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0f7ff;--surface:#ffffff;--surface2:#e4f0ff;
+  --border:#c4d9f5;--ink:#0d2140;--ink-mid:#2d4a6a;
+  --ink-dim:#7090a8;--accent:#0057d4;--accent2:#003fa0;
+  --green:#15803d;--green-soft:#dcfce7;--green-b:#86efac;
+  --amber:#b45309;--amber-soft:#fef3c7;--amber-b:#fcd34d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-b:#fca5a5;
+  --orange:#ea580c;--orange-soft:#ffedd5;
+  --sans:'Nunito',system-ui,sans-serif;
+  --body:'Nunito Sans',system-ui,sans-serif;
+}
+html,body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--sans)}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(160deg,#dbeeff 0%,#f0f7ff 50%,#fff7ed 100%);z-index:0;pointer-events:none}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:1.5rem 1rem 5rem}
+.wrap{width:100%;max-width:630px}
+.career-banner{background:var(--accent);border-radius:12px;padding:0.6rem 1rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px}
+.career-icon{font-size:1.4rem}
+.career-label{font-size:13px;font-weight:800;color:white}
+.career-sub{font-size:11px;color:rgba(255,255,255,0.75);margin-top:1px}
+.prog-wrap{margin-bottom:1.5rem}
+.prog-label{font-size:12px;font-weight:700;color:var(--ink-dim);display:flex;justify-content:space-between;margin-bottom:5px}
+.prog-track{height:10px;background:#c4d9f5;border-radius:10px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--orange));border-radius:10px;transition:width 0.7s ease}
+.scene{display:none;animation:pop 0.4s ease}
+.scene.active{display:block}
+@keyframes pop{from{opacity:0;transform:scale(0.98)}to{opacity:1;transform:scale(1)}}
+.scene-eyebrow{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem}
+.scene-title{font-size:clamp(1.75rem,6vw,2.5rem);font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:0.35rem}
+.scene-title em{color:var(--accent);font-style:normal}
+.scene-sub{font-size:13px;font-weight:600;color:var(--ink-dim);margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.story{font-family:var(--body);font-size:1.02rem;line-height:1.82;color:var(--ink-mid);margin-bottom:0.9rem}
+.story strong{color:var(--ink);font-weight:700}
+.story em{color:var(--accent);font-style:normal;font-weight:600}
+.drama{background:var(--accent);border-radius:14px;padding:1.25rem 1.35rem;margin:1.5rem 0;box-shadow:0 4px 20px rgba(0,87,212,0.25)}
+.drama p{font-size:1.02rem;line-height:1.7;color:white;font-weight:600}
+.drama p+p{margin-top:0.5rem}
+.fact-card{background:var(--orange-soft);border:2px solid #fdba74;border-radius:12px;padding:1rem 1.25rem;margin:1.25rem 0;display:flex;gap:12px;align-items:flex-start}
+.fact-icon{font-size:1.5rem;flex-shrink:0}
+.fact-title{font-size:12px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.fact-body{font-size:0.9rem;font-family:var(--body);color:var(--ink-mid);line-height:1.6}
+.decision-label{font-size:14px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:1.75rem 0 0.85rem;display:flex;align-items:center;gap:8px}
+.decision-label::before{content:'';width:24px;height:3px;background:var(--orange);border-radius:2px}
+.choices{display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2rem}
+.choice-btn{display:flex;align-items:flex-start;gap:12px;padding:1rem 1.1rem;background:var(--surface);border:2.5px solid var(--border);border-radius:14px;cursor:pointer;text-align:left;font-family:var(--sans);transition:all 0.2s}
+.choice-btn:hover{background:var(--surface2);border-color:var(--accent);transform:translateX(4px)}
+.choice-btn:hover .cletter{background:var(--accent);color:white;border-color:var(--accent)}
+.cletter{width:32px;height:32px;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--accent);flex-shrink:0;transition:all 0.2s}
+.ctext{font-size:0.95rem;font-weight:700;color:var(--ink);line-height:1.4}
+.csub{font-size:0.82rem;color:var(--ink-dim);margin-top:3px;font-weight:600;font-family:var(--body)}
+.outcome{border-radius:14px;padding:1.1rem 1.35rem;margin:1.25rem 0;border:2px solid}
+.out-green{background:var(--green-soft);border-color:var(--green-b)}
+.out-amber{background:var(--amber-soft);border-color:var(--amber-b)}
+.out-red{background:var(--red-soft);border-color:var(--red-b)}
+.out-blue{background:#e0f2fe;border-color:#7dd3fc}
+.out-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.6rem;display:flex;align-items:center;gap:5px}
+.out-green .out-label{color:var(--green)}.out-amber .out-label{color:var(--amber)}.out-red .out-label{color:var(--red)}.out-blue .out-label{color:var(--accent)}
+.out-dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.out-green .out-dot{background:var(--green)}.out-amber .out-dot{background:var(--amber)}.out-red .out-dot{background:var(--red)}.out-blue .out-dot{background:var(--accent)}
+.out-text{font-size:0.93rem;font-family:var(--body);line-height:1.7;color:var(--ink-mid)}
+.out-text strong{color:var(--ink)}
+.skill-badge{display:inline-flex;align-items:center;gap:6px;margin-top:0.7rem;font-size:12px;font-weight:800;color:var(--accent);background:#dbeeff;border:2px solid #93c5fd;padding:4px 10px;border-radius:8px;text-transform:uppercase;letter-spacing:0.05em}
+.memory-badge{display:flex;align-items:flex-start;gap:10px;padding:0.85rem 1rem;background:var(--surface);border:2px solid var(--border);border-radius:12px;margin-bottom:1.5rem;font-size:0.88rem;font-family:var(--body);color:var(--ink-mid);line-height:1.55}
+.memory-badge strong{color:var(--accent);font-weight:800}
+.continue-btn{display:inline-flex;align-items:center;gap:8px;margin-top:1.5rem;padding:0.9rem 1.75rem;background:var(--accent);color:white;border:none;border-radius:12px;font-family:var(--sans);font-size:0.95rem;font-weight:800;cursor:pointer;transition:all 0.2s}
+.continue-btn:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,87,212,0.35)}
+.careers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:1.5rem 0}
+.career-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:0.85rem;text-align:center}
+.cc-icon{font-size:1.75rem;margin-bottom:6px}
+.cc-title{font-size:12px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.cc-desc{font-size:11px;font-family:var(--body);color:var(--ink-dim);line-height:1.4}
+.dq-list{display:flex;flex-direction:column;gap:1rem;margin:1.5rem 0}
+.dq{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem}
+.dq-num{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:0.45rem}
+.dq-text{font-size:0.97rem;font-weight:700;color:var(--ink);line-height:1.5;margin-bottom:0.65rem}
+.dq textarea{width:100%;min-height:80px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;font-family:var(--body);font-size:0.88rem;color:var(--ink);resize:vertical;line-height:1.6;transition:border-color 0.2s}
+.dq textarea::placeholder{color:var(--ink-dim)}
+.dq textarea:focus{outline:none;border-color:var(--accent)}
+.final-btn{width:100%;padding:1rem;background:var(--accent);color:white;border:none;border-radius:12px;font-family:var(--sans);font-size:1rem;font-weight:800;cursor:pointer;transition:all 0.2s;margin-top:0.5rem}
+.final-btn:hover{background:var(--accent2);transform:translateY(-1px)}
+.completion{text-align:center;padding:1.5rem 0}
+.c-icon{font-size:3rem;margin-bottom:0.85rem}
+.completion h2{font-size:clamp(1.75rem,5vw,2.5rem);font-weight:900;color:var(--ink);margin-bottom:0.65rem}
+.completion p{font-size:0.95rem;font-family:var(--body);color:var(--ink-mid);line-height:1.7;max-width:460px;margin:0 auto 1rem}
+.replay-btn{display:inline-flex;align-items:center;gap:7px;padding:0.8rem 1.6rem;background:var(--surface);border:2.5px solid var(--accent);color:var(--accent);border-radius:10px;font-family:var(--sans);font-size:0.9rem;font-weight:800;cursor:pointer;transition:all 0.2s}
+.replay-btn:hover{background:var(--surface2)}
+@media(max-width:480px){.scene-title{font-size:1.75rem}}
+
+.pf-home-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:11px;font-weight:600;color:inherit;opacity:0.65;transition:opacity 0.2s;letter-spacing:0.03em}
+.pf-home-link:hover{opacity:1}
+.completion-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:0.5rem}
+</style>
+</head>
+<body>
+<div id="app"><div class="wrap">
+
+<!-- SCENE 1 -->
+<div class="scene active" id="scene-intro">
+<div class="career-banner" style="justify-content:space-between;"><div style="display:flex;align-items:center;gap:10px;"><div class="career-icon">⚽</div><div><div class="career-label">Career Path: Sports Science, Coaching &amp; Sports Psychology</div><div class="career-sub">Ages 10–14 · Teamwork · Leadership · Decision-Making</div></div></div><a href="pathforge-landing.html" class="pf-home-link" style="color:white;">← All simulations</a></div>
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Scene 1 of 3</span></div><div class="prog-track"><div class="prog-fill" id="pbar" style="width:5%"></div></div></div>
+
+<div class="scene-eyebrow">Scene 1</div>
+<h1 class="scene-title">The Missing <em>Player</em></h1>
+<p class="scene-sub">Your team's best player has vanished. The final is in three days.</p>
+
+<p class="story">You are the captain of your school football team. You have been working towards this regional final for the entire year — Tuesday morning, 10am, your biggest game ever.</p>
+<p class="story">It is Saturday. Three days before the final. At training today, your best player, <strong>Jordan</strong>, does not show up. No message. No explanation. Coach is frustrated but says nothing.</p>
+<p class="story">On the way home you bump into Jordan's younger sister. She goes quiet when you ask about Jordan. Then she says: <em>"He said he's done with football. He won't say why."</em></p>
+
+<div class="drama">
+  <p>Jordan is the reason you have a chance of winning. Without him your strategy falls apart. But something is clearly wrong.</p>
+  <p><strong>The team needs to know what to do. You are the captain. You decide first.</strong></p>
+</div>
+
+<div class="fact-card"><div class="fact-icon">🧠</div><div><div class="fact-title">Sports Psychology Fact</div><div class="fact-body">Sports psychologists work with athletes who have suddenly lost motivation or withdrawn from their sport. This is more common than most people think — and often has nothing to do with sport itself. The skill of noticing when a teammate has gone quiet is one of the most important in any team.</div></div></div>
+
+<div class="decision-label">What do you do?</div>
+<div class="choices">
+  <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Go to Jordan's house and ask him directly what's wrong</div><div class="csub">No messages. Face to face. Just you two.</div></div></button>
+  <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Tell Coach what Jordan's sister said — this is bigger than a missed training session</div><div class="csub">An adult needs to know. This is not just about football.</div></div></button>
+  <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Ask the rest of the team to adjust — redesign your strategy without Jordan</div><div class="csub">You cannot wait. Three days is not long. Build a plan around who you have.</div></div></button>
+  <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Send Jordan a message saying the team needs him — keep it about the game</div><div class="csub">He may just need to know he matters. Keep it simple for now.</div></div></button>
+</div>
+</div>
+
+<!-- OUTCOME 1 -->
+<div class="scene" id="scene-out1">
+<div class="career-banner"><div class="career-icon">⚽</div><div><div class="career-label">Career Path: Sports Science, Coaching &amp; Sports Psychology</div><div class="career-sub">Ages 10–14</div></div></div>
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Scene 1 Result</span></div><div class="prog-track"><div class="prog-fill" style="width:28%"></div></div></div>
+<div class="scene-eyebrow">What happened...</div>
+<h2 class="scene-title" id="o1-title"></h2>
+<div id="o1-body"></div>
+<button class="continue-btn" onclick="goS2()">Day of the Final →</button>
+</div>
+
+<!-- SCENE 2 -->
+<div class="scene" id="scene-2">
+<div class="career-banner"><div class="career-icon">⚽</div><div><div class="career-label">Career Path: Sports Science, Coaching &amp; Sports Psychology</div><div class="career-sub">Ages 10–14</div></div></div>
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Scene 2 of 3</span></div><div class="prog-track"><div class="prog-fill" style="width:50%"></div></div></div>
+<div id="s2-memory"></div>
+
+<div class="scene-eyebrow">Scene 2 — The Final · 9:45am</div>
+<h2 class="scene-title">Fifteen Minutes <em>Before</em></h2>
+
+<p class="story">The day of the final. Your team is in the changing room. Jordan is here — whatever happened this week, he showed up. He is quiet but he is here.</p>
+<p class="story">Your coach pulls you aside. <em>"Look at them,"</em> she says. The team is tense. Everyone is tight and silent. Three players have been arguing since warm-up. The team that wins finals is loose and confident. This team looks like it is already losing.</p>
+<p class="story">Coach says: <em>"You are the captain. You have fifteen minutes. I'll leave it to you."</em></p>
+<p class="story">Then she walks out of the changing room and closes the door.</p>
+
+<div class="fact-card"><div class="fact-icon">🏆</div><div><div class="fact-title">What coaches actually do</div><div class="fact-body">Pre-match team psychology is one of the most researched areas in sports science. Studies show that how a team feels in the fifteen minutes before a game matters as much as how they have trained. Coaches, sports psychologists, and team captains all work on this — it is a real, learnable skill.</div></div></div>
+
+<div class="decision-label">What do you do in those fifteen minutes?</div>
+<div class="choices">
+  <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">Tell the team a true story — something that happened this week that reminded you why this matters</div><div class="csub">Not a speech about winning. Something real.</div></div></button>
+  <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">Address the tension directly — name the arguing and say it stops now</div><div class="csub">Pretending it isn't happening will make it worse on the pitch.</div></div></button>
+  <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">Go round the room and ask each player one thing they are going to do today that nobody else can</div><div class="csub">Give everyone a job. Give everyone a reason to show up for themselves.</div></div></button>
+  <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">Say almost nothing — put on a song, keep it light, let the tension drop naturally</div><div class="csub">Sometimes the best thing a captain can do is calm the room without a word.</div></div></button>
+</div>
+</div>
+
+<!-- FINAL OUTCOME -->
+<div class="scene" id="scene-final">
+<div class="career-banner"><div class="career-icon">⚽</div><div><div class="career-label">Career Path: Sports Science, Coaching &amp; Sports Psychology</div><div class="career-sub">Ages 10–14</div></div></div>
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Scene 2 Result</span></div><div class="prog-track"><div class="prog-fill" style="width:75%"></div></div></div>
+<div class="scene-eyebrow">After the final...</div>
+<h2 class="scene-title" id="final-title"></h2>
+<div id="final-body"></div>
+<button class="continue-btn" onclick="goDebrief()">What did I learn? →</button>
+</div>
+
+<!-- DEBRIEF -->
+<div class="scene" id="scene-debrief">
+<div class="career-banner"><div class="career-icon">⚽</div><div><div class="career-label">Career Path: Sports Science, Coaching &amp; Sports Psychology</div><div class="career-sub">Ages 10–14</div></div></div>
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Think About It</span></div><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div></div>
+<div style="text-align:center;padding:0.5rem 0 1.5rem">
+  <div style="font-size:2.25rem;margin-bottom:0.75rem">🧠</div>
+  <h2 style="font-size:clamp(1.5rem,4vw,2rem);font-weight:900;color:var(--ink);margin-bottom:0.65rem">Think like a coach.</h2>
+  <p style="font-size:0.93rem;font-family:var(--body);color:var(--ink-dim);max-width:400px;margin:0 auto;line-height:1.65">The decisions you made in this simulation are the same ones coaches, sports psychologists, and team captains make every week. Let's think about what you chose and why.</p>
+</div>
+<div id="skills-panel" style="background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:1rem 1.25rem;margin-bottom:1.5rem"></div>
+<div class="dq-list">
+  <div class="dq"><div class="dq-num">Question 1</div><div class="dq-text">Jordan's sister said he was "done with football." Why might someone suddenly give up something they love — and what is the difference between "he needs space" and "he needs someone to check on him"?</div><textarea placeholder="Think about a time when you or someone you know went quiet about something..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 2</div><div class="dq-text">Your coach left the room and gave the fifteen minutes to you. Why do you think she did that rather than doing it herself?</div><textarea placeholder="What does a coach know about captaincy that a captain doesn't know yet?"></textarea></div>
+  <div class="dq"><div class="dq-num">Question 3</div><div class="dq-text">If you could have one conversation with Jordan before this whole week happened — when things were still normal — what would you have said or done differently?</div><textarea placeholder="Think about the difference between noticing and acting before a crisis versus during one..."></textarea></div>
+</div>
+<button class="final-btn" onclick="goComplete()">I'm done thinking! ✓</button>
+</div>
+
+<!-- COMPLETE -->
+<div class="scene" id="scene-complete">
+<div class="prog-wrap"><div class="prog-label"><span>Your Journey</span><span>Complete! 🎉</span></div><div class="prog-track"><div class="prog-fill" style="width:100%"></div></div></div>
+<div class="completion">
+  <div class="c-icon">🏆</div>
+  <h2>You played the game!</h2>
+  <p>The decisions you made this week — noticing Jordan, leading the changing room, building a team under pressure — are real skills that real professionals use every single day. Here are the careers you just explored:</p>
+  <div class="careers-grid">
+    <div class="career-card"><div class="cc-icon">🧠</div><div class="cc-title">Sports Psychologist</div><div class="cc-desc">Helps athletes manage pressure, motivation, and mental health alongside their sport.</div></div>
+    <div class="career-card"><div class="cc-icon">🏃</div><div class="cc-title">Sports Coach</div><div class="cc-desc">Builds team culture, designs training, and makes decisions under pressure before and during competition.</div></div>
+    <div class="career-card"><div class="cc-icon">🔬</div><div class="cc-title">Sports Scientist</div><div class="cc-desc">Uses data and science to improve performance — everything from nutrition to sleep to recovery.</div></div>
+    <div class="career-card"><div class="cc-icon">🏥</div><div class="cc-title">Sports Physiotherapist</div><div class="cc-desc">Keeps athletes fit and helps them recover from injury — the person every team needs.</div></div>
+  </div>
+  <p id="c-summary" style="color:var(--accent);font-weight:700;"></p>
+  <div class="completion-actions">
+  <button class="replay-btn" onclick="resetAll()">↺ Play again with different choices!</button>
+  <a href="pathforge-landing.html" class="replay-btn" style="text-decoration:none;">← Try another simulation</a>
+</div>
+</div>
+</div>
+
+</div></div>
+
+<script>
+let c1=null,c2=null;
+const O1={
+  A:{title:"You went to Jordan's house.",cls:"out-green",
+    body:`<p class="story">You knock on his door on Saturday evening. Jordan looks surprised to see you — and then something in his face shifts.</p>
+    <p class="story">You find out his parents are separating. He has been staying with his dad and has not told anyone. Football felt pointless. But having someone show up — literally show up at his door — changes something.</p>
+    <div class="outcome out-green"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="out-text">Jordan turns up to training on Sunday. He does not say much about what happened at home — but he plays. <strong>You did not fix his problem. You just showed up. Sometimes that is all it takes.</strong> That is what sports psychologists and welfare officers understand that most people do not.</div><span class="skill-badge">💚 Showing up · Welfare instinct</span></div>`,
+    mem:"You went to Jordan's house on Saturday. He opened up about what was happening at home. He came back to training Sunday. He's quiet but he's here."
+  },
+  B:{title:"You told Coach.",cls:"out-blue",
+    body:`<p class="story">Coach listens carefully. She says: "Good call." She calls Jordan's mum that evening.</p>
+    <p class="story">On Sunday, Jordan comes back to training. He is quieter than usual. He does not know who told Coach — but he does not seem angry.</p>
+    <div class="outcome out-blue"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="out-text">You recognised that this was bigger than something you could handle alone and escalated it to the right person. <strong>Knowing when to bring in an adult is not weakness — it is safeguarding awareness.</strong> Every coach and sports professional is trained to recognise and respond to this.</div><span class="skill-badge">🔵 Safeguarding awareness · Right escalation</span></div>`,
+    mem:"You told Coach. She called Jordan's mum. He came back Sunday. He doesn't know who said something — but he's here for the final."
+  },
+  C:{title:"You redesigned the strategy.",cls:"out-amber",
+    body:`<p class="story">You call an emergency team meeting Saturday afternoon. You tell everyone: Jordan might not be available. Here is the new plan.</p>
+    <p class="story">The team is unsettled — this feels like you have given up on Jordan. One player says: "Should we not at least check if he's okay?"</p>
+    <div class="outcome out-amber"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="out-text">Your tactical thinking was sharp. But a teammate noticed what you missed: the question was not just "can we win without Jordan?" It was "is Jordan okay?" <strong>The best coaches think about performance and people simultaneously.</strong> You got one right.</div><span class="skill-badge">🟡 Tactical thinking · Missed the welfare question</span></div>`,
+    mem:"You redesigned the strategy without Jordan. The team is ready tactically but unsettled. One player asked if Jordan was okay — a question you hadn't answered."
+  },
+  D:{title:"You sent him a message.",cls:"out-amber",
+    body:`<p class="story">You write: "Jordan. We need you. The team needs you. Whatever's happening — we want you there."</p>
+    <p class="story">Jordan reads it but does not reply until Sunday morning: "I'll be there." He arrives at training 20 minutes late. Something is clearly still wrong but he is there.</p>
+    <div class="outcome out-amber"><div class="ob-label"><span class="out-dot"></span> What happened</div><div class="out-text">The message worked — partly. But it framed everything around the team's need, not Jordan's. <strong>There is a difference between "we need you" and "are you okay?" The first is about the game. The second is about him.</strong> He heard enough to come back. Whether he feels heard is a different question.</div><span class="skill-badge">🟡 Connected · But: framed around team not Jordan</span></div>`,
+    mem:"You messaged Jordan. He replied Sunday: 'I'll be there.' He showed up late to training. He's quiet. Something is still not right but he's playing."
+  }
+};
+
+const O2={
+  A:{title:"You told a true story.",cls:"out-green",
+    body:`<p class="story">You tell them about Jordan. What happened this week. How he nearly was not here. You say: "Jordan, I don't know what you're dealing with. But the fact you're sitting here right now is the most courageous thing in this room."</p>
+    <p class="story">The room goes very quiet. Then someone laughs — a good laugh, a release laugh. The tension drops. You walk out onto the pitch differently.</p>
+    <div class="outcome out-green"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="out-text">You used a real story to make the room feel something. <strong>That is what great coaches and sports psychologists do — they make high-stakes moments feel human rather than just competitive.</strong> The result is whatever it is. But the team were themselves when they played it.</div><span class="skill-badge">💚 Emotional leadership · Using truth</span></div>`
+  },
+  B:{title:"You named the tension.",cls:"out-green",
+    body:`<p class="story">"We've been arguing since warm-up and everyone knows it. I'm not going to pretend I didn't notice. So let's say it now, here, and leave it here."</p>
+    <p class="story">The two players who had been arguing look at each other. One says: "I'm sorry, yeah." The other nods. It is over in thirty seconds. The room exhales.</p>
+    <div class="outcome out-green"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="out-text">You named what was unspoken. That is harder than it sounds — most people avoid it because naming conflict feels like making it worse. <strong>In fact the opposite is true: naming tension usually ends it faster than ignoring it does.</strong> Coaches call this clearing the air. Therapists call it naming the dynamic.</div><span class="skill-badge">💚 Named the tension · Cleared the air</span></div>`
+  },
+  C:{title:"You gave everyone a job.",cls:"out-green",
+    body:`<p class="story">You go round the room one by one. "What is the one thing you're doing today that nobody else can?" Some answers are tactical. Some are unexpected. Jordan says: "I'm going to be here."</p>
+    <p class="story">The room changes. Fifteen separate people who were all nervous become fifteen people who each have something specific to do.</p>
+    <div class="outcome out-green"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="ob-text"><strong>Purpose reduces anxiety.</strong> When people know their specific role, the general fear of failure shrinks into a specific job to do. Sports psychologists call this "process focus" — concentrating on what you control, not the outcome. You stumbled onto one of the most important mental performance techniques in sport.</div><span class="skill-badge">💚 Process focus · Purpose reduces anxiety</span></div>`
+  },
+  D:{title:"You let the room breathe.",cls:"out-amber",
+    body:`<p class="story">You put on a song — something familiar, something the team has trained to all year. You sit down. Others sit down. Nobody talks much. The song ends. The room feels different.</p>
+    <p class="story">Coach walks back in. She looks around. She nods slightly — she can feel the shift. "Right," she says. "Let's go."</p>
+    <div class="outcome out-amber"><div class="out-label"><span class="out-dot"></span> What happened</div><div class="out-text">Sometimes the best leadership is knowing when not to speak. The silence, the music, the space — they did the work you did not need to do with words. <strong>This is a genuine leadership style and it takes confidence to use it</strong> — most captains feel like they have to say something. You trusted the room.</div><span class="skill-badge">🟡 Quiet leadership · Trusted the space</span></div>`
+  }
+};
+
+const summaries={
+  AA:"You went to Jordan face to face and then told his story in the changing room. Both moves required the same thing: showing up honestly, without a script. That is the instinct at the heart of sports welfare and team psychology.",
+  AB:"You went to Jordan personally and then named the tension in the room. Two direct interventions, two different contexts, same willingness to address what others were avoiding.",
+  AC:"You went to Jordan personally and then gave everyone a specific job. Person first, team structure second. That is how good welfare officers and coaches think.",
+  AD:"You showed up for Jordan and then trusted the room to find its own level. Intense personal action followed by quiet collective confidence.",
+  BA:"You escalated Jordan's situation through the right channel and then used his story to shift the room. You understood both when to use an adult and when to lead yourself.",
+  BB:"You told Coach about Jordan and then named the team's tension directly. Two escalations — one upward, one internal. Both were the right call.",
+  BC:"You got Jordan the right support and then gave the team a structure for the moment. Welfare and performance thinking running in parallel.",
+  BD:"You protected Jordan by escalating and then created space for the team to settle. Two very different kinds of leadership in the same week.",
+  CA:"You thought tactically first and then got Jordan face to face. The tactical instinct was useful — the face-to-face was more important.",
+  CB:"You redesigned the strategy and then cleared the air. You think about systems — team shape and team dynamics — as things that can be actively changed.",
+  CC:"You built the new plan and then built individual purpose inside it. Two structural interventions from someone who thinks in systems.",
+  CD:"You adapted tactically and then trusted silence. Pragmatic and calm under pressure.",
+  DA:"You reached out with a message and then brought Jordan's story into the room. The message was good. The story was better.",
+  DB:"You sent Jordan a message and then named the team's tension. Both were acts of communication — one written, one spoken.",
+  DC:"You messaged Jordan and then gave the team specific jobs. You communicate and you structure.",
+  DD:"You sent a message and trusted the room. Low-intervention, high-trust. Sometimes that is exactly right."
+};
+
+function s1(c){c1=c;const o=O1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-out1')}
+function goS2(){const o=O1[c1];document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>🧠</span><span><strong>You remember:</strong> ${o.mem}</span></div>`;show('scene-2')}
+function s2(c){c2=c;const o=O2[c];document.getElementById('final-title').textContent=o.title;document.getElementById('final-body').innerHTML=o.body;show('scene-final')}
+function goDebrief(){const k=c1+c2;document.getElementById('skills-panel').innerHTML=`<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:8px">What your choices say about you</div><div style="font-size:0.9rem;font-family:var(--body);color:var(--ink-mid);line-height:1.65">${summaries[k]||''}</div>`;show('scene-debrief')}
+async function goComplete(){await saveDebrief('the-missing-player');document.getElementById('c-summary').textContent=summaries[c1+c2]||'';show('scene-complete')}
+function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(t=>t.value='');show('scene-intro')}
+function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
+
+async function saveDebrief(simulationName) {
+  const textareas = document.querySelectorAll('textarea');
+  const answer1 = textareas[0] ? textareas[0].value.trim() : '';
+  const answer2 = textareas[1] ? textareas[1].value.trim() : '';
+  const answer3 = textareas[2] ? textareas[2].value.trim() : '';
+  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
+  try {
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
+    });
+  } catch(e) { console.log('Debrief save failed silently', e); }
+}
+</script>
+</body></html>

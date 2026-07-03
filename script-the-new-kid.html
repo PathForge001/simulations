@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The New Kid</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fef9f0;--surface:#fff8ee;--surface2:#fdf0d8;
+  --border:#e8d9b8;--ink:#1c1409;--ink-mid:#5c4a2a;
+  --ink-dim:#9c8a6a;--accent:#c2410c;--accent2:#ea580c;
+  --green:#15803d;--green-soft:#dcfce7;--green-border:#86efac;
+  --amber:#b45309;--amber-soft:#fef3c7;--amber-border:#fcd34d;
+  --red:#b91c1c;--red-soft:#fee2e2;--red-border:#fca5a5;
+  --blue:#1d4ed8;--blue-soft:#dbeafe;--blue-border:#93c5fd;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+html,body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--sans)}
+body::before{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(to bottom,transparent 0px,transparent 31px,rgba(180,150,100,0.08) 32px);pointer-events:none;z-index:0}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem 1rem 5rem}
+.wrap{width:100%;max-width:640px}
+.hdr{display:flex;justify-content:space-between;align-items:center;padding-bottom:0.75rem;border-bottom:2px solid var(--ink);margin-bottom:1.75rem}
+.sim-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-dim)}
+.sim-career{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.07em;color:var(--accent);background:rgba(194,65,12,0.08);border:1px solid rgba(194,65,12,0.2);padding:3px 8px;border-radius:2px}
+.prog-wrap{margin-bottom:1.75rem}
+.prog-meta{font-family:var(--mono);font-size:10px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.07em;display:flex;justify-content:space-between;margin-bottom:5px}
+.prog-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.7s ease}
+.scene{display:none;animation:appear 0.4s ease}
+.scene.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.scene-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-dim);margin-bottom:0.85rem;display:flex;align-items:center;gap:8px}
+.scene-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.scene-title{font-family:var(--serif);font-size:clamp(2rem,6vw,3.25rem);line-height:1.05;margin-bottom:0.35rem}
+.scene-title em{font-style:italic;color:var(--accent)}
+.scene-sub{font-family:var(--mono);font-size:11px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:1.75rem}
+.narrative{font-size:1.02rem;line-height:1.82;color:var(--ink-mid);margin-bottom:0.9rem;font-weight:300}
+.narrative strong{color:var(--ink);font-weight:500}
+.narrative em{color:var(--accent);font-style:normal}
+.tension{border-left:4px solid var(--accent);background:rgba(194,65,12,0.04);padding:1rem 1.25rem;margin:1.5rem 0;border-radius:0 6px 6px 0}
+.tension p{font-size:1.02rem;line-height:1.75;color:var(--ink)}
+.tension p+p{margin-top:0.5rem}
+/* Classroom scene */
+.classroom-note{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1.25rem;margin:1.5rem 0;box-shadow:2px 3px 8px rgba(0,0,0,0.08);transform:rotate(-0.5deg)}
+.note-header{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-dim);margin-bottom:0.75rem;padding-bottom:0.75rem;border-bottom:1px dashed var(--border)}
+.note-body{font-family:var(--serif);font-size:1rem;line-height:1.8;color:var(--ink-mid);font-style:italic}
+.decision-prompt{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin:1.75rem 0 0.85rem}
+.choices{display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2rem}
+.choice-btn{display:flex;align-items:flex-start;gap:0.9rem;padding:0.9rem 1.1rem;background:var(--surface);border:1.5px solid var(--border);border-radius:6px;cursor:pointer;text-align:left;font-family:var(--sans);transition:all 0.2s ease}
+.choice-btn:hover{background:var(--surface2);border-color:var(--ink);transform:translateX(3px)}
+.choice-btn:hover .cletter{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.cletter{width:26px;height:26px;border-radius:3px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--ink-mid);flex-shrink:0;margin-top:1px;transition:all 0.2s}
+.ctext{font-size:0.93rem;font-weight:500;color:var(--ink);line-height:1.45}
+.csub{font-size:0.8rem;color:var(--ink-dim);margin-top:3px;font-weight:300}
+.outcome-block{border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0;border:1px solid var(--border)}
+.ob-green{background:var(--green-soft);border-color:var(--green-border)}
+.ob-amber{background:var(--amber-soft);border-color:var(--amber-border)}
+.ob-red{background:var(--red-soft);border-color:var(--red-border)}
+.ob-blue{background:var(--blue-soft);border-color:var(--blue-border)}
+.ob-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;display:flex;align-items:center;gap:5px}
+.ob-green .ob-label{color:var(--green)}.ob-amber .ob-label{color:var(--amber)}.ob-red .ob-label{color:var(--red)}.ob-blue .ob-label{color:var(--blue)}
+.ob-dot{width:5px;height:5px;border-radius:50%;display:inline-block}
+.ob-green .ob-dot{background:var(--green)}.ob-amber .ob-dot{background:var(--amber)}.ob-red .ob-dot{background:var(--red)}.ob-blue .ob-dot{background:var(--blue)}
+.ob-text{font-size:0.92rem;line-height:1.7;color:var(--ink-mid)}
+.ob-text strong{color:var(--ink)}
+.skill-tag{display:inline-flex;align-items:center;gap:5px;margin-top:0.65rem;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-dim);background:var(--surface2);border:1px solid var(--border);padding:3px 9px;border-radius:2px}
+.memory-badge{display:flex;align-items:flex-start;gap:10px;padding:0.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:1.5rem;font-size:0.85rem;color:var(--ink-mid);line-height:1.55}
+.memory-badge strong{color:var(--accent)}
+.continue-btn{display:inline-flex;align-items:center;gap:8px;margin-top:1.5rem;padding:0.85rem 1.75rem;background:var(--ink);color:var(--bg);border:none;border-radius:4px;font-family:var(--sans);font-size:0.88rem;font-weight:600;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.05em}
+.continue-btn:hover{background:var(--accent);transform:translateY(-1px)}
+.arrow{transition:transform 0.2s}
+.continue-btn:hover .arrow{transform:translateX(4px)}
+.debrief-intro{text-align:center;padding:0.5rem 0 1.75rem}
+.d-icon{font-size:2.25rem;margin-bottom:0.85rem}
+.debrief-intro h2{font-family:var(--serif);font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:0.65rem}
+.debrief-intro p{font-size:0.93rem;color:var(--ink-dim);max-width:420px;margin:0 auto;line-height:1.65}
+.skills-panel{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+.sp-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-dim);margin-bottom:0.65rem}
+.sp-text{font-size:0.9rem;color:var(--ink-mid);line-height:1.65}
+.dq-list{display:flex;flex-direction:column;gap:1rem;margin:1.5rem 0}
+.dq{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem}
+.dq-num{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:0.45rem}
+.dq-text{font-size:0.97rem;font-weight:500;color:var(--ink);line-height:1.5;margin-bottom:0.65rem}
+.dq textarea{width:100%;min-height:88px;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:0.7rem 0.9rem;font-family:var(--sans);font-size:0.88rem;color:var(--ink);resize:vertical;line-height:1.6;transition:border-color 0.2s}
+.dq textarea::placeholder{color:var(--ink-dim)}
+.dq textarea:focus{outline:none;border-color:var(--ink)}
+.final-btn{width:100%;padding:1rem;background:var(--ink);color:var(--bg);border:none;border-radius:5px;font-family:var(--sans);font-size:0.95rem;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em;transition:all 0.2s;margin-top:0.5rem}
+.final-btn:hover{background:var(--accent);transform:translateY(-1px)}
+.completion{text-align:center;padding:1.5rem 0}
+.c-icon{font-size:2.5rem;margin-bottom:1rem}
+.completion h2{font-family:var(--serif);font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:0.65rem}
+.completion p{font-size:0.93rem;color:var(--ink-mid);line-height:1.7;max-width:460px;margin:0 auto 1.25rem}
+.tested-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.25rem 1.5rem;margin:1.5rem 0;text-align:left}
+.tested-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:0.85rem}
+.tested-row:last-child{margin-bottom:0}
+.tested-arrow{color:var(--accent);font-size:0.9rem;flex-shrink:0;margin-top:2px}
+.tested-title{font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:2px}
+.tested-desc{font-size:0.8rem;color:var(--ink-dim);line-height:1.5}
+.replay-btn{display:inline-flex;align-items:center;gap:7px;padding:0.8rem 1.6rem;background:transparent;border:1.5px solid var(--ink);color:var(--ink);border-radius:4px;font-family:var(--sans);font-size:0.88rem;font-weight:600;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.05em}
+.replay-btn:hover{background:var(--surface2)}
+@media(max-width:480px){.scene-title{font-size:1.85rem}.choice-btn{padding:0.8rem 0.9rem}}
+
+.pf-home-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:11px;font-weight:600;color:inherit;opacity:0.65;transition:opacity 0.2s;letter-spacing:0.03em}
+.pf-home-link:hover{opacity:1}
+.completion-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:0.5rem}
+</style>
+    <!-- Open Graph / Social Preview Tags -->
+    <meta property="og:title" content="The New Kid — Making a friend in a world without social media" />
+    <meta property="og:description" content="A 15-minute simulation for ages 10–14. Amara arrived the week the ban came in. She has no digital shortcut to belonging. Neither do you." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://usepathforge.io/simulations/new-kid" />
+    <meta property="og:site_name" content="PathForge" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="The New Kid — Making a friend in a world without social media" />
+    <meta name="twitter:description" content="A 15-minute simulation for ages 10–14. Amara arrived the week the ban came in. She has no digital shortcut to belonging. Neither do you." />
+    <!-- Microsoft Clarity Tracking -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xbl1zshvdm");
+    </script>
+</head>
+<body>
+<div id="app"><div class="wrap">
+
+<!-- SCENE 1 -->
+<div class="scene active" id="scene-intro">
+<div class="hdr"><span class="sim-tag">Simulation 04</span><span class="sim-career">Psychology · Youth Work · Ages 10–14</span> <a href="pathforge-landing.html" class="pf-home-link">← All simulations</a></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 1 of 3</span></div><div class="prog-track"><div class="prog-fill" id="pbar" style="width:5%"></div></div></div>
+
+<div class="scene-label">Opening</div>
+<h1 class="scene-title">The<br><em>New Kid</em></h1>
+<p class="scene-sub">Making a friend in a world where everyone just used to follow each other instead.</p>
+
+<p class="narrative">There is a new girl in your year called Amara. She started three weeks ago, right when the ban came in.</p>
+<p class="narrative">That timing matters. Before the ban, a new kid could ease into a school slowly — follow a few people, get followed back, see what people were into. The digital version of belonging before the real version.</p>
+<p class="narrative">Amara does not have that. She came in cold.</p>
+<p class="narrative">You watch her in the lunch hall on a Wednesday. She is sitting at the edge of a table, not quite with the group and not quite alone. She is reading a book about architecture. She has drawn something in the margin. You notice it is actually quite good.</p>
+
+<div class="classroom-note">
+  <div class="note-header">What you observe · Wednesday lunchtime</div>
+  <div class="note-body">She laughed once at something in the book. Then looked up to see if anyone noticed. Nobody did. She went back to reading.</div>
+</div>
+
+<p class="narrative">You have your own friends. You are fine. You do not need to do anything.</p>
+<p class="narrative"><strong>But you noticed. And now you cannot un-notice.</strong></p>
+
+<div class="tension">
+  <p>The old way to connect with someone new would have been to follow them online — a low-risk, low-effort signal that says <em>"I see you."</em></p>
+  <p>There is no low-risk option anymore. Whatever you do next, you will have to actually do it.</p>
+</div>
+
+<div class="decision-prompt">— What do you do? —</div>
+<div class="choices">
+  <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Go over and say something about the drawing</div><div class="csub">Specific. Honest. Slightly terrifying.</div></div></button>
+  <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Sit at the same table without saying anything</div><div class="csub">Proximity without pressure. Let it happen naturally.</div></div></button>
+  <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Ask one of your friends to come over with you</div><div class="csub">Safety in numbers. Less intense for everyone.</div></div></button>
+  <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Do nothing today — you will find a moment later</div><div class="csub">The moment rarely finds itself. But it might.</div></div></button>
+</div>
+</div>
+
+<!-- OUTCOME 1 -->
+<div class="scene" id="scene-out1">
+<div class="hdr"><span class="sim-tag">Simulation 04</span><span class="sim-career">Psychology · Youth Work · Ages 10–14</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 1 — Outcome</span></div><div class="prog-track"><div class="prog-fill" style="width:28%"></div></div></div>
+<div class="scene-label">Scene 1 — Outcome</div>
+<h2 class="scene-title" id="o1-title"></h2>
+<div id="o1-body"></div>
+<button class="continue-btn" onclick="goS2()">Scene 2 <span class="arrow">→</span></button>
+</div>
+
+<!-- SCENE 2 -->
+<div class="scene" id="scene-2">
+<div class="hdr"><span class="sim-tag">Simulation 04</span><span class="sim-career">Psychology · Youth Work · Ages 10–14</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 2 of 3</span></div><div class="prog-track"><div class="prog-fill" style="width:50%"></div></div></div>
+<div class="scene-label">Scene 2</div>
+<h2 class="scene-title">The <em>Project</em></h2>
+<div id="s2-memory"></div>
+
+<p class="narrative">Two weeks later. Your school announces a community project — groups of four students will design something for a local space. A mural, a garden, a pop-up library, a community noticeboard. Real brief. Real location. Real presentation to the council at the end.</p>
+<p class="narrative">Your teacher assigns the groups. You and Amara are in the same one, along with two others — Marcus (yes, that Marcus) and a girl called Rosa who is incredibly organised but very quiet.</p>
+<p class="narrative">The project requires your group to make decisions together. The first one is the hardest: <strong>what do you build?</strong></p>
+<p class="narrative">Amara immediately suggests a community noticeboard — physical, in the town square, where local people can pin things. Events, lost pets, things to give away, offers of help.</p>
+<p class="narrative"><em>"Like a social media feed, but real,"</em> she says. Then laughs. <em>"Too soon?"</em></p>
+
+<div class="tension">
+  <p>Marcus wants to do a mural. Rosa wants to do a garden. You have not said what you want yet.</p>
+  <p>The group is stuck. Everyone has an idea. Nobody wants to be the one who kills someone else's.</p>
+  <p><strong>You are the one who knows all three of them best. What do you do?</strong></p>
+</div>
+
+<div class="decision-prompt">— How do you move the group forward? —</div>
+<div class="choices">
+  <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">Suggest combining all three ideas into one project</div><div class="csub">A noticeboard wall with a mural painted on it, surrounded by a small garden. Everyone wins — or everyone compromises.</div></div></button>
+  <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">Argue for Amara's noticeboard idea — it is the most original</div><div class="csub">You genuinely think it is the best idea. You back it.</div></div></button>
+  <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">Ask each person to explain why their idea matters to them before deciding</div><div class="csub">Slow the decision down. Find out what is actually driving each choice.</div></div></button>
+  <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">Suggest voting — whatever gets the most votes, you go with</div><div class="csub">Fair. Clean. Leaves one person feeling like they lost.</div></div></button>
+</div>
+</div>
+
+<!-- FINAL OUTCOME -->
+<div class="scene" id="scene-final">
+<div class="hdr"><span class="sim-tag">Simulation 04</span><span class="sim-career">Psychology · Youth Work · Ages 10–14</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 2 — Outcome</span></div><div class="prog-track"><div class="prog-fill" style="width:75%"></div></div></div>
+<div class="scene-label">Scene 2 — Final Outcome</div>
+<h2 class="scene-title" id="final-title"></h2>
+<div id="final-body"></div>
+<button class="continue-btn" onclick="goDebrief()">Reflect <span class="arrow">→</span></button>
+</div>
+
+<!-- DEBRIEF -->
+<div class="scene" id="scene-debrief">
+<div class="hdr"><span class="sim-tag">Simulation 04</span><span class="sim-career">Psychology · Youth Work · Ages 10–14</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Reflection</span></div><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div></div>
+<div class="debrief-intro">
+  <div class="d-icon">🌱</div>
+  <h2>Slow down and think.</h2>
+  <p>Youth workers, community organisers, and psychologists spend their lives helping groups of people who do not quite fit together yet — find a way to work together. You just did that.</p>
+</div>
+<div class="skills-panel" id="skills-panel"></div>
+<div class="dq-list">
+  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">Amara arrived in a world without the digital shortcut to belonging. What do you think that actually felt like — and what did you notice about her that made you want to help?</div><textarea placeholder="Think about what you saw versus what you assumed..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">When the group was stuck, you had to find a way through. What does it take to move a group of people who all have different ideas — without making anyone feel dismissed?</div><textarea placeholder="Think about the group project moment..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">Amara described the noticeboard as "social media but real." What do you think is lost when everything moves online — and what comes back when it is taken away?</div><textarea placeholder="There is no wrong answer here — this one is about what you actually think..."></textarea></div>
+</div>
+<button class="final-btn" onclick="goComplete()">Complete Simulation ✓</button>
+</div>
+
+<!-- COMPLETE -->
+<div class="scene" id="scene-complete">
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Complete</span></div><div class="prog-track"><div class="prog-fill" style="width:100%"></div></div></div>
+<div class="completion">
+  <div class="c-icon">🏗️</div>
+  <h2>Simulation Complete.</h2>
+  <p>You helped someone belong. Then you helped a group of people with different ideas find a way through. Both of those things are harder in person than online — and more real.</p>
+  <p id="c-summary" style="color:var(--accent);font-weight:500;"></p>
+  <div class="tested-box">
+    <div class="sp-label" style="margin-bottom:0.85rem;">What this simulation was really testing</div>
+    <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">Noticing people</div><div class="tested-desc">Amara laughed at her book and looked up to see if anyone noticed. You noticed. That is the first step in community psychology — paying attention to the person who is slightly on the edge.</div></div></div>
+    <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">Facilitation</div><div class="tested-desc">Moving a group from stuck to moving is one of the most valuable skills in youth work, community organising, teaching, and management. It requires you to care more about the group's outcome than about being right.</div></div></div>
+    <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">The difference between belonging and being present</div><div class="tested-desc">Amara was physically at the table. She did not belong yet. Belonging is something given by other people — which means it can be given deliberately, not just accidentally.</div></div></div>
+    <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">Community design</div><div class="tested-desc">The noticeboard idea — a physical space for local connection — is what urban planners, community architects, and social designers actually work on. Real jobs, built on exactly these instincts.</div></div></div>
+  </div>
+  <div class="completion-actions">
+  <button class="replay-btn" onclick="resetAll()">↺ Replay with different choices</button>
+  <a href="pathforge-landing.html" class="replay-btn" style="text-decoration:none;">← Try another simulation</a>
+</div>
+</div>
+</div>
+
+</div></div>
+<script>
+let c1=null,c2=null;
+const O1={
+  A:{title:"You said something specific.",cls:"ob-green",
+    body:`<p class="narrative">"That's really good," you say, pointing at the margin drawing. "Is that a building?"</p>
+    <p class="narrative">She looks startled for a second. Then: "It's the Barbican. I want to be an architect."</p>
+    <p class="narrative">You talk for eleven minutes. You are late back to class. It is worth it.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You gave a specific compliment — not "you seem nice" but "that drawing is good." <strong>Specific observations land differently than general ones.</strong> She felt seen, not just acknowledged. That is the difference between politeness and connection.</div><span class="skill-tag">💚 Observation · Specific empathy</span></div>`,
+    mem:"You told Amara her drawing was good and she told you about the Barbican. You were late to class. She saved you a seat the next day without being asked."
+  },
+  B:{title:"You sat nearby.",cls:"ob-blue",
+    body:`<p class="narrative">You pick up your tray and sit two seats away. You do not say anything. You eat your lunch.</p>
+    <p class="narrative">After about five minutes she looks up. "You're in my maths class," she says.</p>
+    <p class="narrative">"Yeah," you say. And somehow that is enough to start.</p>
+    <div class="outcome-block ob-blue"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You made yourself <strong>available without being intrusive</strong>. You gave her the chance to initiate. She took it. This is a specific social intelligence — knowing that sometimes the most powerful thing you can do is simply be present without demanding anything in return.</div><span class="skill-tag">🔵 Patience · Non-intrusive presence</span></div>`,
+    mem:"You sat near Amara without saying anything. She broke the silence. Sometimes the smallest move is the right one."
+  },
+  C:{title:"You brought your friends.",cls:"ob-amber",
+    body:`<p class="narrative">You grab your friend Theo and walk over together. "Hey — we have a free seat," you say.</p>
+    <p class="narrative">Amara looks slightly overwhelmed for a second. Then she smiles and shuffles along.</p>
+    <p class="narrative">The conversation is more scattered with three people, but the pressure is lower. She laughs twice. That feels like a win.</p>
+    <div class="outcome-block ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You reduced the intensity by distributing the social weight across more people. She did not have to perform a one-to-one connection. But <strong>you also slightly diluted the moment</strong> — it became a group invitation, not a specific noticing of her. Both things are true.</div><span class="skill-tag">🟡 Group inclusion · Slightly less personal</span></div>`,
+    mem:"You and Theo went over together. It was warmer but less personal. Amara seemed relieved by the lower pressure."
+  },
+  D:{title:"You waited.",cls:"ob-red",
+    body:`<p class="narrative">You finish your lunch. You go back to class. You tell yourself you will find a moment tomorrow.</p>
+    <p class="narrative">Tomorrow becomes next week. Next week Amara starts sitting with a group from the art block who found her first. She seems happy. You feel something you do not quite have a word for.</p>
+    <div class="outcome-block ob-red"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">She found her people — just not through you. That is fine. But the feeling you had afterwards is worth paying attention to: the cost of a missed moment is rarely dramatic. It is usually just <strong>a small door that closes quietly.</strong></div><span class="skill-tag">🔴 Procrastination · The cost of waiting</span></div>`,
+    mem:"You waited. She found her people elsewhere. You felt something you couldn't name. Small doors close quietly."
+  }
+};
+const O2={
+  A:{title:"You merged the ideas.",cls:"ob-green",
+    body:`<p class="narrative">"What if it's all three?" you say. "A noticeboard wall with a mural on it. Garden around it."</p>
+    <p class="narrative">Everyone goes quiet for a second. Then Marcus says: "That's actually kind of brilliant."</p>
+    <p class="narrative">Rosa immediately starts making a planning list. Amara sketches something on a napkin. The group has a direction in under three minutes.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You found a way to honour every idea rather than selecting one. This is called <strong>integrative thinking</strong> — the ability to hold multiple perspectives and synthesise them into something new. It is one of the most valued skills in leadership, design, and community work.</div><span class="skill-tag">💚 Integrative thinking · Group facilitation</span></div>`
+  },
+  B:{title:"You backed Amara's idea.",cls:"ob-amber",
+    body:`<p class="narrative">"I think the noticeboard is the strongest idea," you say. "It's the most original and it actually solves something real."</p>
+    <p class="narrative">Marcus shrugs. Rosa nods slowly. Amara looks at you with something that is not quite gratitude and not quite surprise — somewhere between the two.</p>
+    <p class="narrative">The group goes with it. But Marcus is quiet for the rest of the session.</p>
+    <div class="outcome-block ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You made a judgement call and backed it. The decision moved the group forward. But <strong>moving fast and leaving someone behind</strong> — even when you are right — is a cost that shows up later. Marcus's silence is data.</div><span class="skill-tag">🟡 Decisiveness · But: group cost</span></div>`
+  },
+  C:{title:"You slowed it down.",cls:"ob-green",
+    body:`<p class="narrative">"Before we decide — why does each idea matter to you? Like actually matter?"</p>
+    <p class="narrative">What comes out surprises you. Marcus wants the mural because his older brother painted one that got demolished and he wants to make something lasting. Rosa wants the garden because her nan has dementia and plants calm her down when she visits.</p>
+    <p class="narrative">Amara's noticeboard idea is still the most practical. But now the group knows what it is actually working with.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You turned a decision into a conversation. What looked like a disagreement about ideas was actually a set of <strong>different emotional needs wearing the costume of project proposals.</strong> That insight — that what people argue about is rarely what they actually want — is the foundation of counselling, mediation, and youth work.</div><span class="skill-tag">💚 Deep listening · Emotional intelligence · Facilitation</span></div>`
+  },
+  D:{title:"You called a vote.",cls:"ob-amber",
+    body:`<p class="narrative">"Let's just vote," you say. "Fairest way."</p>
+    <p class="narrative">The noticeboard wins two to one — you and Amara versus Marcus. Rosa abstained because she said she could not choose.</p>
+    <p class="narrative">Marcus says "fine" in the tone of someone who does not mean fine.</p>
+    <div class="outcome-block ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Voting feels fair because it follows a rule. But <strong>fairness and buy-in are not the same thing.</strong> Marcus lost. He will remember that. A community organiser or team leader who relies only on voting eventually finds that the people who lost stop showing up.</div><span class="skill-tag">🟡 Process fairness · Missing: buy-in</span></div>`
+  }
+};
+const summaries={
+  AA:"You noticed Amara specifically and then found a way to give everyone in the group a win. Both moves required you to pay close attention to people — what they needed, what was underneath the surface. That is community psychology in action.",
+  AB:"You made a direct connection and then backed the person you believed in. Personal and decisive. The question is whether those instincts work as well in larger groups.",
+  AC:"You made a specific connection and then found the common ground beneath the conflict. Both required real attention to other people.",
+  AD:"You reached out directly, then used a process that resolved the immediate question but left someone feeling unheard.",
+  BA:"You gave Amara space to come to you, then found a way to honour everyone's idea. Patient and integrative.",
+  BB:"You waited, then made a decisive call. Low energy early, high confidence later.",
+  BC:"You were patient with Amara, then curious about what was really driving the disagreement. Both show someone who does not rush.",
+  BD:"You waited for Amara to come to you, then handed the group decision to a process. Consistent — and worth asking whether that consistency is strength or avoidance.",
+  CA:"You brought support to Amara, then found the creative synthesis. You work better with other people around you.",
+  CB:"You included Amara through a group, then backed who you believed in. Warm and decisive.",
+  CC:"You brought people together for Amara, then brought people together for the group. That is a consistent pattern — you are a natural convener.",
+  CD:"You softened the approach with Amara, then used a rule to decide for the group. One required warmth; the other required less. The difference in those two choices is interesting.",
+  DA:"You missed the early moment with Amara but found the creative solution in the group. Sometimes the biggest contribution comes later.",
+  DB:"You waited on Amara, then argued for what you believed. The gap between those two is worth sitting with.",
+  DC:"You waited, then asked the most important question. The quality of the second choice almost makes up for the first.",
+  DD:"You waited both times. Amara found her people. Marcus felt dismissed. Both outcomes were available to be changed — and both required only a small action."
+};
+function s1(c){c1=c;const o=O1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-out1')}
+function goS2(){const o=O1[c1];document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>🧠</span><span><strong>Carrying forward:</strong> ${o.mem}</span></div>`;show('scene-2')}
+function s2(c){c2=c;const o=O2[c];document.getElementById('final-title').textContent=o.title;document.getElementById('final-body').innerHTML=o.body;show('scene-final')}
+function goDebrief(){const k=c1+c2;document.getElementById('skills-panel').innerHTML=`<div class="sp-label">Your path through this simulation</div><div class="sp-text">${summaries[k]||''}</div>`;show('scene-debrief')}
+async function goComplete(){await saveDebrief('the-new-kid');document.getElementById('c-summary').textContent=summaries[c1+c2]||'';show('scene-complete')}
+function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(t=>t.value='');show('scene-intro')}
+function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
+
+async function saveDebrief(simulationName) {
+  const textareas = document.querySelectorAll('textarea');
+  const answer1 = textareas[0] ? textareas[0].value.trim() : '';
+  const answer2 = textareas[1] ? textareas[1].value.trim() : '';
+  const answer3 = textareas[2] ? textareas[2].value.trim() : '';
+  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
+  try {
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
+    });
+  } catch(e) { console.log('Debrief save failed silently', e); }
+}
+</script>
+</body></html>

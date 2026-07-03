@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Group Chat is Gone</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0c1a;--surface:#16132a;--surface2:#1e1a35;
+  --border:#2e2854;--accent:#a78bfa;--accent2:#7c3aed;
+  --hot:#f472b6;--teal:#2dd4bf;--amber:#fbbf24;
+  --text:#f1f0ff;--text-mid:#a9a5c8;--text-dim:#6b6891;
+  --green:#34d399;--red:#f87171;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--sans)}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(124,58,237,0.12) 0%,transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(244,114,182,0.08) 0%,transparent 60%);pointer-events:none;z-index:0}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem 1rem 5rem}
+.wrap{width:100%;max-width:660px}
+.hdr{display:flex;justify-content:space-between;align-items:center;padding-bottom:0.85rem;border-bottom:1px solid var(--border);margin-bottom:1.75rem}
+.sim-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);padding:3px 9px;border-radius:3px}
+.sim-career{font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.07em}
+.prog-wrap{margin-bottom:2rem}
+.prog-meta{font-family:var(--mono);font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.07em;display:flex;justify-content:space-between;margin-bottom:5px}
+.prog-track{height:2px;background:var(--border);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:2px;transition:width 0.7s ease}
+.scene{display:none;animation:appear 0.45s ease}
+.scene.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.scene-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-dim);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.scene-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.scene-title{font-family:var(--serif);font-size:clamp(2rem,6vw,3rem);line-height:1.05;margin-bottom:0.35rem;letter-spacing:-0.01em}
+.scene-title em{font-style:italic;color:var(--accent)}
+.scene-sub{font-family:var(--mono);font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:1.75rem}
+.narrative{font-size:1.05rem;line-height:1.8;color:var(--text-mid);margin-bottom:0.9rem;font-weight:300}
+.narrative strong{color:var(--text);font-weight:500}
+.narrative em{color:var(--accent);font-style:normal;font-weight:400}
+.tension{border-left:3px solid var(--accent);background:rgba(167,139,250,0.06);padding:1rem 1.25rem;margin:1.5rem 0;border-radius:0 8px 8px 0}
+.tension p{font-size:1.05rem;line-height:1.7;color:var(--text)}
+.tension p+p{margin-top:0.5rem}
+/* Phone notification card */
+.notif-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin:1.5rem 0;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.notif-bar{display:flex;align-items:center;gap:8px;margin-bottom:0.85rem;padding-bottom:0.85rem;border-bottom:1px solid var(--border)}
+.notif-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.2)}
+.notif-app{font-size:12px;font-weight:600;color:var(--text);flex:1}
+.notif-time{font-family:var(--mono);font-size:10px;color:var(--text-dim)}
+.notif-title{font-size:0.95rem;font-weight:500;color:var(--text);margin-bottom:4px}
+.notif-body{font-size:0.88rem;color:var(--text-mid);line-height:1.55}
+/* Convo bubbles */
+.convo{display:flex;flex-direction:column;gap:6px;margin:1.25rem 0}
+.bubble-wrap{display:flex;flex-direction:column}
+.bubble-wrap.them{align-items:flex-start}
+.bubble-wrap.you{align-items:flex-end}
+.bubble-name{font-family:var(--mono);font-size:9px;color:var(--text-dim);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.07em;padding:0 4px}
+.bubble{max-width:80%;padding:0.65rem 1rem;border-radius:18px;font-size:0.9rem;line-height:1.55}
+.bubble.them{background:var(--surface2);color:var(--text-mid);border-bottom-left-radius:4px}
+.bubble.you{background:linear-gradient(135deg,var(--accent2),var(--accent));color:white;border-bottom-right-radius:4px}
+/* Decision */
+.decision-prompt{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin:1.75rem 0 0.85rem}
+.choices{display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2rem}
+.choice-btn{display:flex;align-items:flex-start;gap:0.9rem;padding:1rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:left;font-family:var(--sans);transition:all 0.2s ease}
+.choice-btn:hover{background:var(--surface2);border-color:var(--accent);transform:translateX(3px)}
+.choice-btn:hover .cletter{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.cletter{width:26px;height:26px;border-radius:4px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--accent);flex-shrink:0;margin-top:1px;transition:all 0.2s}
+.ctext{font-size:0.93rem;font-weight:500;color:var(--text);line-height:1.45}
+.csub{font-size:0.8rem;color:var(--text-dim);margin-top:3px;font-weight:300}
+/* Outcome */
+.outcome-block{border-radius:10px;padding:1.1rem 1.35rem;margin:1.25rem 0;border:1px solid var(--border)}
+.ob-green{background:rgba(52,211,153,0.06);border-color:rgba(52,211,153,0.25)}
+.ob-amber{background:rgba(251,191,36,0.06);border-color:rgba(251,191,36,0.25)}
+.ob-red{background:rgba(248,113,113,0.06);border-color:rgba(248,113,113,0.25)}
+.ob-blue{background:rgba(45,212,191,0.06);border-color:rgba(45,212,191,0.25)}
+.ob-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;display:flex;align-items:center;gap:5px}
+.ob-green .ob-label{color:var(--green)}
+.ob-amber .ob-label{color:var(--amber)}
+.ob-red .ob-label{color:var(--red)}
+.ob-blue .ob-label{color:var(--teal)}
+.ob-dot{width:5px;height:5px;border-radius:50%;display:inline-block}
+.ob-green .ob-dot{background:var(--green)}
+.ob-amber .ob-dot{background:var(--amber)}
+.ob-red .ob-dot{background:var(--red)}
+.ob-blue .ob-dot{background:var(--teal)}
+.ob-text{font-size:0.92rem;line-height:1.7;color:var(--text-mid)}
+.ob-text strong{color:var(--text)}
+.skill-tag{display:inline-flex;align-items:center;gap:5px;margin-top:0.65rem;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);padding:3px 9px;border-radius:3px}
+.memory-badge{display:flex;align-items:flex-start;gap:10px;padding:0.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:1.5rem;font-size:0.85rem;color:var(--text-mid);line-height:1.55}
+.memory-badge strong{color:var(--accent)}
+.continue-btn{display:inline-flex;align-items:center;gap:8px;margin-top:1.5rem;padding:0.85rem 1.75rem;background:linear-gradient(135deg,var(--accent2),var(--accent));color:white;border:none;border-radius:8px;font-family:var(--sans);font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.04em}
+.continue-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(124,58,237,0.4)}
+.arrow{transition:transform 0.2s}
+.continue-btn:hover .arrow{transform:translateX(4px)}
+.debrief-intro{text-align:center;padding:0.5rem 0 1.75rem}
+.d-icon{font-size:2.5rem;margin-bottom:1rem}
+.debrief-intro h2{font-family:var(--serif);font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:0.75rem;line-height:1.1}
+.debrief-intro p{font-size:0.93rem;color:var(--text-dim);max-width:420px;margin:0 auto;line-height:1.65}
+.skills-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.35rem;margin-bottom:1.5rem}
+.sp-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:0.65rem}
+.sp-text{font-size:0.9rem;color:var(--text-mid);line-height:1.65}
+.dq-list{display:flex;flex-direction:column;gap:1rem;margin:1.5rem 0}
+.dq{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.35rem}
+.dq-num{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:0.45rem}
+.dq-text{font-size:0.98rem;font-weight:500;color:var(--text);line-height:1.5;margin-bottom:0.65rem}
+.dq textarea{width:100%;min-height:88px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:0.7rem 0.9rem;font-family:var(--sans);font-size:0.88rem;color:var(--text);resize:vertical;line-height:1.6;transition:border-color 0.2s}
+.dq textarea::placeholder{color:var(--text-dim)}
+.dq textarea:focus{outline:none;border-color:var(--accent)}
+.final-btn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--accent2),var(--accent));color:white;border:none;border-radius:8px;font-family:var(--sans);font-size:0.95rem;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.05em;transition:all 0.2s;margin-top:0.5rem}
+.final-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(124,58,237,0.4)}
+.completion{text-align:center;padding:1.5rem 0}
+.c-icon{font-size:2.75rem;margin-bottom:1rem}
+.completion h2{font-family:var(--serif);font-size:clamp(1.75rem,5vw,2.5rem);color:var(--accent);margin-bottom:0.65rem;letter-spacing:-0.01em}
+.completion p{font-size:0.93rem;color:var(--text-mid);line-height:1.7;max-width:460px;margin:0 auto 1.25rem}
+.tested-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;margin:1.5rem 0;text-align:left}
+.tested-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:0.85rem}
+.tested-row:last-child{margin-bottom:0}
+.tested-arrow{color:var(--accent);font-size:0.9rem;flex-shrink:0;margin-top:2px}
+.tested-title{font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:2px}
+.tested-desc{font-size:0.8rem;color:var(--text-dim);line-height:1.5}
+.replay-btn{display:inline-flex;align-items:center;gap:7px;padding:0.8rem 1.6rem;background:transparent;border:1px solid var(--accent);color:var(--accent);border-radius:7px;font-family:var(--sans);font-size:0.88rem;font-weight:600;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.05em}
+.replay-btn:hover{background:rgba(167,139,250,0.1)}
+@media(max-width:480px){.scene-title{font-size:1.85rem}.choice-btn{padding:0.8rem 0.9rem}}
+
+.pf-home-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:11px;font-weight:600;color:inherit;opacity:0.65;transition:opacity 0.2s;letter-spacing:0.03em}
+.pf-home-link:hover{opacity:1}
+.completion-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:0.5rem}
+</style>
+    <!-- Open Graph / Social Preview Tags -->
+    <meta property="og:title" content="The Group Chat is Gone — What happens when social media disappears?" />
+    <meta property="og:description" content="A 15-minute simulation for ages 13–17. The ban is here. Your friend is missing. You have no DM, no story, no way to check. What do you do?" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://usepathforge.io/simulations/group-chat" />
+    <meta property="og:site_name" content="PathForge" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="The Group Chat is Gone — What happens when social media disappears?" />
+    <meta name="twitter:description" content="A 15-minute simulation for ages 13–17. The ban is here. Your friend is missing. You have no DM, no story, no way to check. What do you do?" />
+    <!-- Microsoft Clarity Tracking -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xbl1zshvdm");
+    </script>
+</head>
+<body>
+<div id="app"><div class="wrap">
+
+<!-- SCENE 1: OPENING -->
+<div class="scene active" id="scene-intro">
+<div class="hdr"><span class="sim-tag">Simulation 03</span><span class="sim-career">Journalism · Media · Ages 13–17</span> <a href="pathforge-landing.html" class="pf-home-link">← All simulations</a></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 1 of 3</span></div><div class="prog-track"><div class="prog-fill" id="pbar" style="width:5%"></div></div></div>
+
+<div class="scene-label">Opening</div>
+<h1 class="scene-title">The Group Chat<br><em>is Gone</em></h1>
+<p class="scene-sub">What happens when the way you talk to each other disappears overnight.</p>
+
+<p class="narrative">It has been three days since the ban came in.</p>
+<p class="narrative">Three days since the government switched off under-16 access to TikTok, Instagram, Snapchat, and everything else. Schools are calling it a <em>"digital detox."</em> Parents are mostly relieved. Your friends are mostly furious.</p>
+<p class="narrative">You are at school on Friday morning when you notice something. <strong>Marcus hasn't shown up.</strong></p>
+<p class="narrative">Before the ban, you would have already seen fifteen stories from him this morning. Now there is nothing. No way to check. No one to DM. The group chat you have all used every single day for two years — gone. Just like that.</p>
+
+<div class="notif-card">
+  <div class="notif-bar">
+    <div class="notif-icon">📵</div>
+    <div class="notif-app">Social Media Access</div>
+    <div class="notif-time">3 days ago</div>
+  </div>
+  <div class="notif-title">Access Restricted</div>
+  <div class="notif-body">Under the Children's Wellbeing Act 2026, access to this platform is no longer available for users under 16. This affects your account and all associated group chats.</div>
+</div>
+
+<p class="narrative">You ask around. Nobody has seen Marcus. His form tutor looks slightly worried but says nothing.</p>
+
+<div class="tension">
+  <p>You know Marcus has been having a rough time at home lately. He told you once — just once — that things were bad. You said "that sounds hard" and then someone posted a meme and the conversation moved on.</p>
+  <p><strong>You have been thinking about that conversation for three days.</strong></p>
+  <p>Now you have no way to reach him except to actually do something.</p>
+</div>
+
+<div class="decision-prompt">— What do you do? —</div>
+<div class="choices">
+  <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Walk to his classroom and check in face to face</div><div class="csub">Old school. Uncomfortable. But direct.</div></div></button>
+  <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Text him on your regular phone</div><div class="csub">You have his number. You just never actually used it.</div></div></button>
+  <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Ask his closest friend Demi if she knows anything</div><div class="csub">She would know. You two are not close but it's something.</div></div></button>
+  <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Tell a teacher you are worried</div><div class="csub">Hand it to an adult. It might be nothing. It might not be.</div></div></button>
+</div>
+</div>
+
+<!-- OUTCOME 1 -->
+<div class="scene" id="scene-out1">
+<div class="hdr"><span class="sim-tag">Simulation 03</span><span class="sim-career">Journalism · Media · Ages 13–17</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 1 — Outcome</span></div><div class="prog-track"><div class="prog-fill" style="width:28%"></div></div></div>
+<div class="scene-label">Scene 1 — Outcome</div>
+<h2 class="scene-title" id="o1-title"></h2>
+<div id="o1-body"></div>
+<button class="continue-btn" onclick="goS2()">Scene 2 <span class="arrow">→</span></button>
+</div>
+
+<!-- SCENE 2 -->
+<div class="scene" id="scene-2">
+<div class="hdr"><span class="sim-tag">Simulation 03</span><span class="sim-career">Journalism · Media · Ages 13–17</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 2 of 3</span></div><div class="prog-track"><div class="prog-fill" style="width:50%"></div></div></div>
+<div class="scene-label">Scene 2</div>
+<h2 class="scene-title">The <em>Article</em></h2>
+<div id="s2-memory"></div>
+<p class="narrative">Marcus turns up at lunch. He is fine — he had a dentist appointment and his mum forgot to ring school. You feel simultaneously relieved and slightly embarrassed about how worried you were.</p>
+<p class="narrative">But the morning has left something in you. Walking the corridors, you noticed how different school felt. Groups of people actually talking. Some looking lost. One girl was crying in the bathroom, and when her friend asked what was wrong she said: <em>"I don't know what to do with myself."</em></p>
+<p class="narrative">Your media studies teacher sets an assignment: <strong>"Write about something real that is happening in your community right now."</strong></p>
+<p class="narrative">You have been thinking about the ban all week. About what it has changed. About what it has revealed.</p>
+
+<div class="tension">
+  <p>You could write something safe. Or you could write something honest — about what it actually feels like to lose the one place where you could be yourself, 24 hours a day.</p>
+  <p>But honest might mean saying things some people will not want to read. It might mean quoting people. It might mean arguing something controversial.</p>
+  <p><strong>What kind of story do you write?</strong></p>
+</div>
+
+<div class="decision-prompt">— What angle do you take? —</div>
+<div class="choices">
+  <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">Interview your classmates honestly — collect real voices, good and bad</div><div class="csub">Some will hate the ban. Some are secretly relieved. You want all of it.</div></div></button>
+  <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">Write a strong opinion piece arguing the ban is wrong</div><div class="csub">You believe it. You want to make people feel it too.</div></div></button>
+  <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">Focus on what young people are doing instead — the alternatives they are building</div><div class="csub">Some of your classmates have started a zine. Someone else started a podcast.</div></div></button>
+  <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">Write the safe version — balanced, no strong views, nothing that could cause trouble</div><div class="csub">It will get a good grade. It will not change anything.</div></div></button>
+</div>
+</div>
+
+<!-- FINAL OUTCOME -->
+<div class="scene" id="scene-final">
+<div class="hdr"><span class="sim-tag">Simulation 03</span><span class="sim-career">Journalism · Media · Ages 13–17</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Scene 2 — Outcome</span></div><div class="prog-track"><div class="prog-fill" style="width:75%"></div></div></div>
+<div class="scene-label">Scene 2 — Final Outcome</div>
+<h2 class="scene-title" id="final-title"></h2>
+<div id="final-body"></div>
+<button class="continue-btn" onclick="goDebrief()">Reflect <span class="arrow">→</span></button>
+</div>
+
+<!-- DEBRIEF -->
+<div class="scene" id="scene-debrief">
+<div class="hdr"><span class="sim-tag">Simulation 03</span><span class="sim-career">Journalism · Media · Ages 13–17</span></div>
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Reflection</span></div><div class="prog-track"><div class="prog-fill" style="width:90%"></div></div></div>
+<div class="debrief-intro">
+  <div class="d-icon">📰</div>
+  <h2>Think like a journalist.</h2>
+  <p>Journalists make decisions every day about what to say, how to say it, and whose voice gets heard. The choices you made in this simulation are the same ones they face.</p>
+</div>
+<div class="skills-panel" id="skills-panel"></div>
+<div class="dq-list">
+  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">When you realised Marcus was missing, what was the first thing you felt — and did that feeling lead to a good decision?</div><textarea placeholder="Think about the gap between feeling something and acting on it..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">The ban took away one way of communicating. What did it force you to use instead — and was that actually worse, or just different?</div><textarea placeholder="This one is worth being honest about..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">If you were a journalist writing about the social media ban, whose voice would you most want people to hear — and why is that voice usually left out?</div><textarea placeholder="Who gets heard in these debates? Who doesn't?"></textarea></div>
+</div>
+<button class="final-btn" onclick="goComplete()">Complete Simulation ✓</button>
+</div>
+
+<!-- COMPLETE -->
+<div class="scene" id="scene-complete">
+<div class="prog-wrap"><div class="prog-meta"><span>Progress</span><span>Complete</span></div><div class="prog-track"><div class="prog-fill" style="width:100%"></div></div></div>
+<div class="completion">
+  <div class="c-icon">🎙️</div>
+  <h2>Simulation Complete.</h2>
+  <p>You navigated a real situation — a missing friend, a changed world, and a choice about what kind of story to tell. Journalists, media producers, and communications professionals face this every day.</p>
+  <p id="c-summary" style="color:var(--accent);font-weight:500;"></p>
+  <div class="tested-box">
+    <div class="sp-label" style="margin-bottom:0.85rem;">What this simulation was really testing</div>
+    <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">Real-world connection without digital tools</div><div class="tested-desc">When the platform disappears, the only option is to actually reach out. That requires more courage than a DM — and creates a different kind of connection.</div></div></div>
+    <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">Editorial judgement</div><div class="tested-desc">Safe stories protect the writer. Honest stories serve the reader. Journalists have to decide which one they are writing — and live with the consequences of that choice.</div></div></div>
+    <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">Empathy as information</div><div class="tested-desc">Noticing that the girl in the bathroom said "I don't know what to do with myself" is data. Journalists who pay attention to the people around them find the stories others miss.</div></div></div>
+    <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">Voice and power</div><div class="tested-desc">In every debate about young people, young people's voices are the last ones heard. What does it mean to change that — and what does it cost to try?</div></div></div>
+  </div>
+  <div class="completion-actions">
+  <button class="replay-btn" onclick="resetAll()">↺ Replay with different choices</button>
+  <a href="pathforge-landing.html" class="replay-btn" style="text-decoration:none;">← Try another simulation</a>
+</div>
+</div>
+</div>
+
+</div></div>
+
+<script>
+let c1=null,c2=null;
+
+const O1={
+  A:{title:"You showed up.",cls:"ob-green",
+    body:`<p class="narrative">You walk to his form room before registration. It feels strange — you have never done this before. You have only ever messaged.</p>
+    <p class="narrative">His form room is empty. You stand in the corridor feeling slightly ridiculous.</p>
+    <p class="narrative">Then you run into his friend Demi. She says Marcus had a dentist appointment. He is fine.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">He was fine. But you showed up anyway — and doing that in person, with no digital buffer, is something you have not done in a long time. <strong>The discomfort was real. So was the intention.</strong></div><span class="skill-tag">💚 Initiative · Physical presence</span></div>`,
+    mem:"You walked to his form room. He wasn't there but you had already decided to actually do something rather than just worry."
+  },
+  B:{title:"You used his actual number.",cls:"ob-blue",
+    body:`<p class="narrative">You open your contacts. Marcus's number has been there for two years. You have never called it. You have never even texted it.</p>
+    <p class="narrative">You type: <em>"Hey. You alright? You're not in school."</em></p>
+    <p class="narrative">It delivers. Then nothing for twenty minutes. Then: <em>"Yeah lol dentist. Back at lunch."</em></p>
+    <div class="outcome-block ob-blue"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">It worked. But you notice something: <strong>you had his number the whole time.</strong> You never used it because you never needed to. The platforms did it for you. Now they are gone — and the tools were there all along.</div><span class="skill-tag">🔵 Direct communication · Using existing resources</span></div>`,
+    mem:"You texted him on his actual number. He was at the dentist. The thing that surprised you most was how easy it was — and how long it took you to think of it."
+  },
+  C:{title:"You asked Demi.",cls:"ob-amber",
+    body:`<p class="narrative">You find Demi by the lockers. You do not know her well. You explain that you are worried about Marcus.</p>
+    <p class="narrative">She looks at you for a second. "He's at the dentist. He told me last night on WhatsApp — parents can still have that apparently."</p>
+    <p class="narrative">She pauses. Then: <em>"It's kind of nice that you actually came to ask me though."</em></p>
+    <div class="outcome-block ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You got the information. But more than that — you made a connection with someone you had never really spoken to. <strong>The ban removed one network and accidentally created another.</strong></div><span class="skill-tag">🟡 Networking · Asking for help</span></div>`,
+    mem:"You talked to Demi for the first time. Marcus was fine. But you and Demi ended up talking for ten minutes and you realised you actually have a lot in common."
+  },
+  D:{title:"You told a teacher.",cls:"ob-green",
+    body:`<p class="narrative">You knock on the form tutor's door. You say: "I'm a bit worried about Marcus — he's not in and I can't reach him."</p>
+    <p class="narrative">She looks relieved that someone said something. She checks the register and finds the dentist appointment note she had missed.</p>
+    <p class="narrative"><em>"Good instinct,"</em> she says. <em>"Seriously. Thank you."</em></p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Nothing was wrong. But you escalated a concern to someone who could act on it — and it turned out the teacher had actually missed the note. <strong>Your check-in prevented a safeguarding gap.</strong> That is what good citizens do. It is also what social workers, nurses, and youth workers do every day.</div><span class="skill-tag">💚 Safeguarding instinct · Responsibility</span></div>`,
+    mem:"You told the form tutor. She had missed the dentist note in the register. Your check-in actually prevented a safeguarding gap — even though Marcus was fine."
+  }
+};
+
+const O2={
+  A:{title:"You collected real voices.",cls:"ob-green",
+    body:`<p class="narrative">You spend two days interviewing twelve people. What you find surprises you.</p>
+    <p class="narrative">Six say they feel lost without social media. Three say they feel secretly relieved. Two are building something new. One — a quiet boy called Ade — tells you something you did not expect: <em>"I used to perform for my followers. I didn't know who I was without them watching."</em></p>
+    <p class="narrative">Your article is messy and contradictory and honest. Your teacher gives you the highest mark she has given in four years.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You did not tell people what to think. You gave them real voices and let them decide. <strong>That is the difference between journalism and propaganda.</strong> It is also harder — because you had to listen to people you disagreed with and represent them fairly.</div><span class="skill-tag">💚 Balanced journalism · Active listening · Ethical reporting</span></div>`
+  },
+  B:{title:"You wrote what you believed.",cls:"ob-amber",
+    body:`<p class="narrative">Your piece is sharp and angry and persuasive. You argue that the ban treats teenagers like children who cannot be trusted with their own choices.</p>
+    <p class="narrative">Your teacher gives you a B+. She writes in the margin: <em>"Strong argument. Where are the people who disagree with you?"</em></p>
+    <p class="narrative">Three classmates tell you it is the best thing you have ever written. Two others stop speaking to you for a week.</p>
+    <div class="outcome-block ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Opinion journalism is real journalism — when it is honest. Yours was. But your teacher identified the thing that separates <strong>opinion from argument: engagement with the other side.</strong> You do not have to agree with them. You have to know what they would say.</div><span class="skill-tag">🟡 Opinion writing · Courage · Missing counter-argument</span></div>`
+  },
+  C:{title:"You wrote about what people were building.",cls:"ob-green",
+    body:`<p class="narrative">You find the zine. You find the podcast. You find a boy called Theo who has started hosting a weekly meetup at the library where people bring things they have made — drawings, stories, music, code.</p>
+    <p class="narrative">Fourteen people showed up to the first one. Forty-two to the second.</p>
+    <p class="narrative">Your article does not argue anything. It just shows what is already happening — and somehow that is more powerful than any argument.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You found the story inside the story. The ban is the headline. <strong>What young people do in response to the ban is the real story.</strong> Feature journalists and documentary makers do exactly this — they look for what people are building in the rubble of a big change.</div><span class="skill-tag">💚 Feature journalism · Finding the human story</span></div>`
+  },
+  D:{title:"You wrote the safe version.",cls:"ob-red",
+    body:`<p class="narrative">Your article is structured and balanced and forgettable. You get a B.</p>
+    <p class="narrative">Your teacher writes: <em>"Well researched. What do <strong>you</strong> actually think?"</em></p>
+    <p class="narrative">You read it back a week later and feel nothing. You cannot even remember writing most of it.</p>
+    <div class="outcome-block ob-red"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Safe writing is not neutral writing. It is writing that protects the writer at the expense of the reader. <strong>The most important question in journalism is not "will this get me in trouble?" It is "does this tell the truth?"</strong> These are sometimes the same question — and sometimes they are not.</div><span class="skill-tag">🔴 Playing it safe · Lesson: voice costs something</span></div>`
+  }
+};
+
+const summaries={
+  AA:"You acted on instinct — showing up in person — then brought real voices into your story. Both choices required doing something uncomfortable. That pattern — act first, represent honestly — is what makes a good journalist and a good person.",
+  AB:"You showed up for Marcus, then argued your corner in print. Consistent courage, two different contexts.",
+  AC:"You showed up in person, then found the hopeful story inside a difficult one. That instinct — to look for what is being built — is what separates feature writers from news reporters.",
+  AD:"You moved first, then played it safe on paper. The gap between those two choices is worth sitting with.",
+  BA:"You used the tools that were always there, then gave a platform to voices that contradicted each other. Both show the same quality: using what is available, not waiting for the comfortable option.",
+  BB:"You texted directly, then argued directly. Efficient, honest, occasionally bruising. That is a recognisable journalism personality type.",
+  BC:"You reached out practically, then found the story of what people were creating. Practical and constructive.",
+  BD:"You solved the problem efficiently, then wrote the version that did not cost you anything.",
+  CA:"You built an unexpected connection with Demi, then collected the full range of voices. Both show someone who can talk to people they do not know yet — the most important skill in journalism.",
+  CB:"You talked to someone you had never spoken to, then wrote something that might cost you friendships. That took two different kinds of courage.",
+  CC:"You discovered a new friendship and then wrote about creation and community. There is a theme in how you move through the world.",
+  CD:"You took a social risk, then avoided a professional one. The two choices sit in tension with each other.",
+  DA:"You handed it to an adult, then collected every voice in the room. You understand when to escalate and when to listen. That is rare.",
+  DB:"You protected Marcus through the right channels, then made an argument for his autonomy in print. The contradiction is real — and interesting.",
+  DC:"You escalated when it mattered, then found the hopeful story. Responsible and constructive.",
+  DD:"You did the right thing for Marcus. For the article — you chose comfort over truth. One out of two."
+};
+
+function s1(c){c1=c;const o=O1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-out1')}
+function goS2(){const o=O1[c1];document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>🧠</span><span><strong>Carrying forward:</strong> ${o.mem}</span></div>`;show('scene-2')}
+function s2(c){c2=c;const o=O2[c];document.getElementById('final-title').textContent=o.title;document.getElementById('final-body').innerHTML=o.body;show('scene-final')}
+function goDebrief(){const k=c1+c2;document.getElementById('skills-panel').innerHTML=`<div class="sp-label">Your path through this simulation</div><div class="sp-text">${summaries[k]||''}</div>`;show('scene-debrief')}
+async function goComplete(){await saveDebrief('the-group-chat');document.getElementById('c-summary').textContent=summaries[c1+c2]||'';show('scene-complete')}
+function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(t=>t.value='');show('scene-intro')}
+function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
+
+async function saveDebrief(simulationName) {
+  const textareas = document.querySelectorAll('textarea');
+  const answer1 = textareas[0] ? textareas[0].value.trim() : '';
+  const answer2 = textareas[1] ? textareas[1].value.trim() : '';
+  const answer3 = textareas[2] ? textareas[2].value.trim() : '';
+  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
+  try {
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
+    });
+  } catch(e) { console.log('Debrief save failed silently', e); }
+}
+</script>
+</body></html>

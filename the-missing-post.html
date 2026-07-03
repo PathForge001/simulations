@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Missing Post</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f0e8;
+    --bg2: #ede7d9;
+    --surface: #faf7f2;
+    --border: #d8cfc0;
+    --ink: #1a1612;
+    --ink-mid: #4a4540;
+    --ink-dim: #8a8278;
+    --red: #c0392b;
+    --red-soft: #fdf0ee;
+    --red-border: #e8b4af;
+    --green: #2d6a4f;
+    --green-soft: #eef5f1;
+    --green-border: #a8d5be;
+    --amber: #b07d25;
+    --amber-soft: #fdf5e6;
+    --amber-border: #e8d09a;
+    --blue: #1a4e8a;
+    --blue-soft: #eef3fb;
+    --blue-border: #aac3e8;
+    --accent: #c0392b;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+  }
+
+  #app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 5rem;
+  }
+
+  /* Paper texture lines */
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 27px,
+      rgba(180,160,130,0.12) 28px
+    );
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap {
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:640px;
+  }
+
+  /* ---- Header ---- */
+  .sim-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:0.85rem;
+    border-bottom:2px solid var(--ink);
+    margin-bottom:1.75rem;
+  }
+
+  .sim-tag {
+    font-family:var(--mono);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--ink-dim);
+  }
+
+  .sim-career {
+    font-family:var(--mono);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent);
+    background: rgba(192,57,43,0.08);
+    border:1px solid rgba(192,57,43,0.2);
+    padding:3px 9px;
+    border-radius:2px;
+  }
+
+  /* ---- Progress ---- */
+  .progress-wrap { margin-bottom:1.75rem; }
+  .progress-meta {
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:5px;
+  }
+  .progress-track {
+    height:3px;
+    background:var(--border);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .progress-fill {
+    height:100%;
+    background:var(--accent);
+    border-radius:2px;
+    transition:width 0.7s ease;
+  }
+
+  /* ---- Scene ---- */
+  .scene { display:none; animation:appear 0.45s ease; }
+  .scene.active { display:block; }
+
+  @keyframes appear {
+    from { opacity:0; transform:translateY(10px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .scene-label {
+    font-family:var(--mono);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--ink-dim);
+    margin-bottom:1rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .scene-label::after {
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--border);
+  }
+
+  .scene-title {
+    font-family:var(--serif);
+    font-size:clamp(2rem,6vw,3rem);
+    line-height:1.05;
+    color:var(--ink);
+    margin-bottom:0.25rem;
+    letter-spacing:-0.01em;
+  }
+
+  .scene-title em {
+    font-style:italic;
+    color:var(--accent);
+  }
+
+  .scene-subtitle {
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:1.75rem;
+  }
+
+  /* ---- Narrative ---- */
+  .narrative {
+    font-size:1.05rem;
+    line-height:1.8;
+    color:var(--ink-mid);
+    margin-bottom:0.9rem;
+    font-weight:300;
+  }
+
+  .narrative strong { color:var(--ink); font-weight:500; }
+  .narrative em { color:var(--ink); font-style:italic; font-weight:300; }
+
+  /* ---- Phone mockup for the "post" ---- */
+  .phone-card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:1.25rem;
+    margin:1.5rem 0;
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  .phone-header {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:0.85rem;
+    padding-bottom:0.75rem;
+    border-bottom:1px solid var(--border);
+  }
+
+  .avatar {
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:var(--bg2);
+    border:1.5px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1rem;
+    flex-shrink:0;
+  }
+
+  .phone-user { font-size:0.85rem; font-weight:600; color:var(--ink); }
+  .phone-time { font-size:0.75rem; color:var(--ink-dim); font-family:var(--mono); }
+
+  .phone-body {
+    font-size:0.95rem;
+    line-height:1.7;
+    color:var(--ink-mid);
+    margin-bottom:0.75rem;
+  }
+
+  .phone-reactions {
+    display:flex;
+    gap:0.75rem;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-dim);
+  }
+
+  /* ---- Tension block ---- */
+  .tension {
+    border-left:4px solid var(--accent);
+    background:rgba(192,57,43,0.04);
+    padding:1rem 1.25rem;
+    margin:1.5rem 0;
+    border-radius:0 6px 6px 0;
+  }
+
+  .tension p {
+    font-size:1.05rem;
+    line-height:1.7;
+    color:var(--ink);
+    font-weight:400;
+  }
+
+  .tension p + p { margin-top:0.5rem; }
+
+  /* ---- Decision prompt ---- */
+  .decision-prompt {
+    font-family:var(--mono);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--accent);
+    margin:1.75rem 0 0.85rem;
+  }
+
+  /* ---- Choices ---- */
+  .choices { display:flex; flex-direction:column; gap:0.65rem; margin-bottom:2rem; }
+
+  .choice-btn {
+    display:flex;
+    align-items:flex-start;
+    gap:0.9rem;
+    padding:0.9rem 1.1rem;
+    background:var(--surface);
+    border:1.5px solid var(--border);
+    border-radius:8px;
+    cursor:pointer;
+    text-align:left;
+    font-family:var(--sans);
+    transition:all 0.2s ease;
+  }
+
+  .choice-btn:hover {
+    background:var(--bg2);
+    border-color:var(--ink);
+    transform:translateX(3px);
+  }
+
+  .choice-btn:hover .cletter {
+    background:var(--ink);
+    color:var(--bg);
+    border-color:var(--ink);
+  }
+
+  .cletter {
+    width:26px;
+    height:26px;
+    border-radius:3px;
+    border:1.5px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:500;
+    color:var(--ink-dim);
+    flex-shrink:0;
+    margin-top:1px;
+    transition:all 0.2s;
+  }
+
+  .ctext { font-size:0.95rem; font-weight:500; color:var(--ink); line-height:1.45; }
+  .csub  { font-size:0.8rem; color:var(--ink-dim); margin-top:3px; font-weight:300; }
+
+  /* ---- Outcome block ---- */
+  .outcome-block {
+    border-radius:8px;
+    padding:1.1rem 1.35rem;
+    margin:1.25rem 0;
+    border:1px solid var(--border);
+  }
+
+  .outcome-block.ob-red    { background:var(--red-soft);   border-color:var(--red-border); }
+  .outcome-block.ob-green  { background:var(--green-soft); border-color:var(--green-border); }
+  .outcome-block.ob-amber  { background:var(--amber-soft); border-color:var(--amber-border); }
+  .outcome-block.ob-blue   { background:var(--blue-soft);  border-color:var(--blue-border); }
+
+  .ob-label {
+    font-family:var(--mono);
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    margin-bottom:0.6rem;
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+
+  .ob-red   .ob-label { color:var(--red); }
+  .ob-green .ob-label { color:var(--green); }
+  .ob-amber .ob-label { color:var(--amber); }
+  .ob-blue  .ob-label { color:var(--blue); }
+
+  .ob-dot { width:5px; height:5px; border-radius:50%; display:inline-block; }
+  .ob-red   .ob-dot { background:var(--red); }
+  .ob-green .ob-dot { background:var(--green); }
+  .ob-amber .ob-dot { background:var(--amber); }
+  .ob-blue  .ob-dot { background:var(--blue); }
+
+  .ob-text { font-size:0.93rem; line-height:1.7; color:var(--ink-mid); }
+  .ob-text strong { color:var(--ink); }
+
+  .skill-tag {
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    margin-top:0.65rem;
+    font-family:var(--mono);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--ink-dim);
+    background:var(--bg2);
+    border:1px solid var(--border);
+    padding:3px 9px;
+    border-radius:2px;
+  }
+
+  /* ---- Memory badge ---- */
+  .memory-badge {
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:0.8rem 1rem;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:6px;
+    margin-bottom:1.5rem;
+    font-size:0.85rem;
+    color:var(--ink-mid);
+    line-height:1.55;
+  }
+
+  .memory-badge strong { color:var(--accent); }
+
+  /* ---- Continue btn ---- */
+  .continue-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:1.5rem;
+    padding:0.8rem 1.6rem;
+    background:var(--ink);
+    color:var(--bg);
+    border:none;
+    border-radius:5px;
+    font-family:var(--sans);
+    font-size:0.88rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:all 0.2s;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+
+  .continue-btn:hover { background:var(--accent); transform:translateY(-1px); }
+  .arrow { transition:transform 0.2s; }
+  .continue-btn:hover .arrow { transform:translateX(4px); }
+
+  /* ---- Divider ---- */
+  .divider { height:1px; background:var(--border); margin:1.75rem 0; }
+
+  /* ---- Debrief ---- */
+  .debrief-intro { text-align:center; padding:0.5rem 0 1.5rem; }
+  .debrief-intro .d-icon { font-size:2.25rem; margin-bottom:0.85rem; }
+  .debrief-intro h2 {
+    font-family:var(--serif);
+    font-size:clamp(1.5rem,4vw,2.25rem);
+    margin-bottom:0.65rem;
+    line-height:1.1;
+  }
+  .debrief-intro p { font-size:0.93rem; color:var(--ink-dim); max-width:400px; margin:0 auto; line-height:1.65; }
+
+  .skills-panel {
+    background:var(--surface);
+    border:1.5px solid var(--border);
+    border-radius:8px;
+    padding:1.1rem 1.35rem;
+    margin-bottom:1.5rem;
+  }
+
+  .sp-label {
+    font-family:var(--mono);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--ink-dim);
+    margin-bottom:0.65rem;
+  }
+
+  .sp-text { font-size:0.9rem; color:var(--ink-mid); line-height:1.65; }
+
+  .debrief-questions { display:flex; flex-direction:column; gap:1.1rem; margin:1.5rem 0; }
+
+  .dq {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:1.1rem 1.35rem;
+  }
+
+  .dq-num {
+    font-family:var(--mono);
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--accent);
+    margin-bottom:0.45rem;
+  }
+
+  .dq-text { font-size:0.98rem; font-weight:500; color:var(--ink); line-height:1.5; margin-bottom:0.65rem; }
+
+  .dq textarea {
+    width:100%;
+    min-height:88px;
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:5px;
+    padding:0.7rem 0.9rem;
+    font-family:var(--sans);
+    font-size:0.88rem;
+    color:var(--ink);
+    resize:vertical;
+    line-height:1.6;
+    transition:border-color 0.2s;
+  }
+
+  .dq textarea::placeholder { color:var(--ink-dim); }
+  .dq textarea:focus { outline:none; border-color:var(--ink); }
+
+  .final-btn {
+    width:100%;
+    padding:0.95rem;
+    background:var(--ink);
+    color:var(--bg);
+    border:none;
+    border-radius:6px;
+    font-family:var(--sans);
+    font-size:0.95rem;
+    font-weight:600;
+    cursor:pointer;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    transition:all 0.2s;
+    margin-top:0.5rem;
+  }
+  .final-btn:hover { background:var(--accent); transform:translateY(-1px); }
+
+  /* ---- Completion ---- */
+  .completion { text-align:center; padding:1.5rem 0; }
+  .completion .c-icon { font-size:2.5rem; margin-bottom:1rem; }
+
+  .completion h2 {
+    font-family:var(--serif);
+    font-size:clamp(1.75rem,5vw,2.5rem);
+    color:var(--ink);
+    margin-bottom:0.65rem;
+    letter-spacing:-0.01em;
+  }
+
+  .completion p {
+    font-size:0.93rem;
+    color:var(--ink-mid);
+    line-height:1.7;
+    max-width:440px;
+    margin:0 auto 1.25rem;
+  }
+
+  .what-tested {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:1.25rem 1.5rem;
+    margin:1.5rem 0;
+    text-align:left;
+  }
+
+  .wt-row {
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    margin-bottom:0.85rem;
+  }
+  .wt-row:last-child { margin-bottom:0; }
+  .wt-arrow { color:var(--accent); font-size:0.9rem; flex-shrink:0; margin-top:2px; }
+  .wt-skill { font-size:0.88rem; font-weight:500; color:var(--ink); margin-bottom:2px; }
+  .wt-desc  { font-size:0.8rem; color:var(--ink-dim); line-height:1.5; }
+
+  .replay-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:0.8rem 1.6rem;
+    background:transparent;
+    border:1.5px solid var(--ink);
+    color:var(--ink);
+    border-radius:5px;
+    font-family:var(--sans);
+    font-size:0.88rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:all 0.2s;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+  .replay-btn:hover { background:var(--bg2); }
+
+  @media(max-width:480px) {
+    .scene-title { font-size:1.85rem; }
+    .choice-btn { padding:0.8rem 0.9rem; }
+  }
+
+.pf-home-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:11px;font-weight:600;color:inherit;opacity:0.65;transition:opacity 0.2s;letter-spacing:0.03em}
+.pf-home-link:hover{opacity:1}
+.completion-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:0.5rem}
+</style>
+    <!-- Open Graph / Social Preview Tags -->
+    <meta property="og:title" content="The Missing Post — What do you do when a friend goes quiet?" />
+    <meta property="og:description" content="A 15-minute decision simulation for ages 13–17. Your friend posts something worrying online at 11pm. What do you do? No app, no login." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://usepathforge.io/simulations/missing-post" />
+    <meta property="og:site_name" content="PathForge" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="The Missing Post — What do you do when a friend goes quiet?" />
+    <meta name="twitter:description" content="A 15-minute decision simulation for ages 13–17. Your friend posts something worrying online at 11pm. What do you do? No app, no login." />
+    <!-- Microsoft Clarity Tracking -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xbl1zshvdm");
+    </script>
+</head>
+<body>
+<div id="app">
+<div class="wrap">
+
+<!-- ================================================ -->
+<!-- SCENE: INTRO / SCENE 1                           -->
+<!-- ================================================ -->
+<div class="scene active" id="scene-intro">
+  <div class="sim-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+    <div><span class="sim-tag">Simulation 02</span>
+    <span class="sim-career">Psychology · Social Work · Ages 13–17</span></div>
+    <a href="pathforge-landing.html" class="pf-home-link">← All simulations</a>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-meta"><span>Progress</span><span>Scene 1 of 3</span></div>
+    <div class="progress-track"><div class="progress-fill" id="pbar" style="width:5%"></div></div>
+  </div>
+
+  <div class="scene-label">Opening</div>
+  <h1 class="scene-title">The <em>Missing</em><br>Post</h1>
+  <p class="scene-subtitle">A story about what you do when someone goes quiet.</p>
+
+  <p class="narrative">It's a Tuesday night. You're doing homework with your phone face-down — then you pick it up for a second, just to check.</p>
+  <p class="narrative">You scroll past the usual stuff. Then something stops you.</p>
+
+  <div class="phone-card">
+    <div class="phone-header">
+      <div class="avatar">👤</div>
+      <div>
+        <div class="phone-user">Jay · <span style="font-weight:300;color:var(--ink-dim);">your closest friend</span></div>
+        <div class="phone-time">Posted 11 minutes ago</div>
+      </div>
+    </div>
+    <div class="phone-body">
+      "Some days it genuinely feels like nothing I do matters. Like I could disappear and the world would just... keep going. Anyway. Doesn't matter."
+    </div>
+    <div class="phone-reactions">
+      <span>💬 0 comments</span>
+      <span>❤️ 3 likes</span>
+      <span>👁 14 views</span>
+    </div>
+  </div>
+
+  <p class="narrative">Jay posted that eleven minutes ago. Three people liked it. Nobody commented.</p>
+  <p class="narrative">You and Jay have been friends since year 7. They're funny and sarcastic and they never post things like this.</p>
+
+  <div class="tension">
+    <p><strong>Your stomach tightens.</strong></p>
+    <p>You don't know if this is serious or just a bad day. You don't know what to say. You don't even know if you should say anything.</p>
+    <p>But you're the one who noticed.</p>
+  </div>
+
+  <div class="decision-prompt">— What do you do? —</div>
+
+  <div class="choices">
+    <button class="choice-btn" onclick="s1Choose('A')">
+      <span class="cletter">A</span>
+      <div>
+        <div class="ctext">Message Jay directly — right now</div>
+        <div class="csub">Private. Just you two. Ask them how they're actually doing.</div>
+      </div>
+    </button>
+    <button class="choice-btn" onclick="s1Choose('B')">
+      <span class="cletter">B</span>
+      <div>
+        <div class="ctext">React with a heart and keep scrolling</div>
+        <div class="csub">You don't want to make a big deal of it. They probably just had a rough day.</div>
+      </div>
+    </button>
+    <button class="choice-btn" onclick="s1Choose('C')">
+      <span class="cletter">C</span>
+      <div>
+        <div class="ctext">Text your mutual friend Priya about it first</div>
+        <div class="csub">Check if anyone else noticed. Maybe Priya knows what's been going on with Jay.</div>
+      </div>
+    </button>
+    <button class="choice-btn" onclick="s1Choose('D')">
+      <span class="cletter">D</span>
+      <div>
+        <div class="ctext">Screenshot it and send it to a trusted adult</div>
+        <div class="csub">This feels bigger than you. Someone older needs to know.</div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- ================================================ -->
+<!-- OUTCOME 1                                        -->
+<!-- ================================================ -->
+<div class="scene" id="scene-out1">
+  <div class="sim-header">
+    <span class="sim-tag">Simulation 02</span>
+    <span class="sim-career">Psychology · Social Work · Ages 13–17</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-meta"><span>Progress</span><span>Scene 1 — Outcome</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:30%"></div></div>
+  </div>
+
+  <div class="scene-label">Scene 1 — Outcome</div>
+  <h2 class="scene-title" id="out1-title"></h2>
+  <div id="out1-content"></div>
+
+  <button class="continue-btn" onclick="goS2()">Scene 2 <span class="arrow">→</span></button>
+</div>
+
+<!-- ================================================ -->
+<!-- SCENE 2                                          -->
+<!-- ================================================ -->
+<div class="scene" id="scene-2">
+  <div class="sim-header">
+    <span class="sim-tag">Simulation 02</span>
+    <span class="sim-career">Psychology · Social Work · Ages 13–17</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-meta"><span>Progress</span><span>Scene 2 of 3</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:50%"></div></div>
+  </div>
+
+  <div class="scene-label">Scene 2</div>
+  <h2 class="scene-title">The Next <em>Morning</em></h2>
+
+  <div id="s2-memory"></div>
+
+  <p class="narrative">You get to school. Jay isn't there.</p>
+  <p class="narrative">By 10am, you've heard two different rumours. First: Jay just skipped because of an exam. Second: someone called Jay's mum last night and there was some kind of scene at their house.</p>
+  <p class="narrative">Nobody knows which is true. The group chat is buzzing with speculation. People are tagging each other and saying things like <em>"so dramatic"</em> and <em>"they're always like this."</em></p>
+
+  <div class="tension">
+    <p>Then your phone buzzes.</p>
+    <p>It's a message from Jay — sent at 7:42am, while you were on the bus.</p>
+
+    <div class="phone-card" style="margin-top:1rem;">
+      <div class="phone-header">
+        <div class="avatar">👤</div>
+        <div>
+          <div class="phone-user">Jay</div>
+          <div class="phone-time">07:42 · This morning</div>
+        </div>
+      </div>
+      <div class="phone-body">
+        "I know someone told my mum about the post. I get that they were trying to help. But I'm so embarrassed right now I can't even face school. I just needed someone to actually talk to me, not go around me."
+      </div>
+    </div>
+  </div>
+
+  <p class="narrative">You read it three times.</p>
+  <p class="narrative">Jay is clearly struggling. And now they also feel exposed — like the one moment they were vulnerable was turned into a situation, not a conversation.</p>
+
+  <div class="decision-prompt">— What do you do now? —</div>
+
+  <div class="choices">
+    <button class="choice-btn" onclick="s2Choose('A')">
+      <span class="cletter">A</span>
+      <div>
+        <div class="ctext">Reply to Jay — honestly and directly</div>
+        <div class="csub">Tell them what you saw, how it made you feel, and that you're there. No explanations, no excuses.</div>
+      </div>
+    </button>
+    <button class="choice-btn" onclick="s2Choose('B')">
+      <span class="cletter">B</span>
+      <div>
+        <div class="ctext">Go quiet — you don't know what to say</div>
+        <div class="csub">You're scared of making it worse. Sometimes silence feels safer.</div>
+      </div>
+    </button>
+    <button class="choice-btn" onclick="s2Choose('C')">
+      <span class="cletter">C</span>
+      <div>
+        <div class="ctext">Defend whoever told Jay's mum in the group chat</div>
+        <div class="csub">They were trying to help. The group chat is making it seem worse than it was.</div>
+      </div>
+    </button>
+    <button class="choice-btn" onclick="s2Choose('D')">
+      <span class="cletter">D</span>
+      <div>
+        <div class="ctext">Ask Jay if you can call — or meet after school</div>
+        <div class="csub">Text is hard for this. A real conversation is different.</div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- ================================================ -->
+<!-- FINAL OUTCOME                                    -->
+<!-- ================================================ -->
+<div class="scene" id="scene-final">
+  <div class="sim-header">
+    <span class="sim-tag">Simulation 02</span>
+    <span class="sim-career">Psychology · Social Work · Ages 13–17</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-meta"><span>Progress</span><span>Scene 2 — Outcome</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:75%"></div></div>
+  </div>
+
+  <div class="scene-label">Scene 2 — Final Outcome</div>
+  <h2 class="scene-title" id="final-title"></h2>
+  <div id="final-content"></div>
+
+  <button class="continue-btn" onclick="goDebrief()">Reflect <span class="arrow">→</span></button>
+</div>
+
+<!-- ================================================ -->
+<!-- DEBRIEF                                          -->
+<!-- ================================================ -->
+<div class="scene" id="scene-debrief">
+  <div class="sim-header">
+    <span class="sim-tag">Simulation 02</span>
+    <span class="sim-career">Psychology · Social Work · Ages 13–17</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-meta"><span>Progress</span><span>Reflection</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:90%"></div></div>
+  </div>
+
+  <div class="debrief-intro">
+    <div class="d-icon">💬</div>
+    <h2>Now sit with it.</h2>
+    <p>People who work in psychology, counselling, and social work face moments like this every day. There's rarely a clean right answer. What matters is how you think it through.</p>
+  </div>
+
+  <div class="skills-panel" id="skills-panel"></div>
+
+  <div class="debrief-questions">
+
+    <div class="dq">
+      <div class="dq-num">Question 01</div>
+      <div class="dq-text">When you saw Jay's post, what was the first feeling that hit you — and did that feeling drive what you chose to do?</div>
+      <textarea placeholder="Be honest. There's no right answer here..."></textarea>
+    </div>
+
+    <div class="dq">
+      <div class="dq-num">Question 02</div>
+      <div class="dq-text">Think about Jay on that Tuesday night, reading the reactions — or not seeing any. What do you think they needed most in that moment?</div>
+      <textarea placeholder="Put yourself in their position..."></textarea>
+    </div>
+
+    <div class="dq">
+      <div class="dq-num">Question 03</div>
+      <div class="dq-text">Was there a moment in this simulation where doing the "right thing" and doing the "kind thing" felt different? What would you do if you faced this for real?</div>
+      <textarea placeholder="This one is worth thinking about slowly..."></textarea>
+    </div>
+
+  </div>
+
+  <button class="final-btn" onclick="goComplete()">Complete Simulation ✓</button>
+</div>
+
+<!-- ================================================ -->
+<!-- COMPLETION                                       -->
+<!-- ================================================ -->
+<div class="scene" id="scene-complete">
+  <div class="progress-wrap">
+    <div class="progress-meta"><span>Progress</span><span>Complete</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+  </div>
+
+  <div class="completion">
+    <div class="c-icon">🧠</div>
+    <h2>Simulation Complete.</h2>
+    <p>You just navigated one of the hardest situations a young person can face: noticing someone who's struggling and deciding what to do about it.</p>
+    <p id="c-summary" style="color:var(--accent);font-weight:500;"></p>
+
+    <div class="what-tested">
+      <div class="sp-label" style="margin-bottom:0.85rem;">What this simulation was really testing</div>
+      <div class="wt-row">
+        <span class="wt-arrow">→</span>
+        <div>
+          <div class="wt-skill">Empathy vs action</div>
+          <div class="wt-desc">Knowing someone is hurting is one thing. Deciding what to do about it — and how — is a different skill entirely.</div>
+        </div>
+      </div>
+      <div class="wt-row">
+        <span class="wt-arrow">→</span>
+        <div>
+          <div class="wt-skill">Understanding privacy and dignity</div>
+          <div class="wt-desc">When you involve other people in someone else's pain, even with good intentions, there are consequences. Psychologists and social workers think about this every day.</div>
+        </div>
+      </div>
+      <div class="wt-row">
+        <span class="wt-arrow">→</span>
+        <div>
+          <div class="wt-skill">Reading between the lines</div>
+          <div class="wt-desc">Jay's post didn't say "I need help." It said something quieter. Noticing the quiet signals is one of the most important skills in human-facing careers.</div>
+        </div>
+      </div>
+      <div class="wt-row">
+        <span class="wt-arrow">→</span>
+        <div>
+          <div class="wt-skill">Communication under emotional pressure</div>
+          <div class="wt-desc">When you're scared of saying the wrong thing, silence can feel safe. But silence has consequences too.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="completion-actions">
+  <button class="replay-btn" onclick="resetAll()">↺ Replay with different choices</button>
+  <a href="pathforge-landing.html" class="replay-btn" style="text-decoration:none;">← Try another simulation</a>
+</div>
+  </div>
+</div>
+
+</div><!-- .wrap -->
+</div><!-- #app -->
+
+<script>
+let c1=null, c2=null;
+
+const O1 = {
+  A: {
+    title:'You Reached Out.',
+    cls:'ob-green',
+    label:'Direct contact',
+    body:`<p class="narrative">You open your messages and type. Not something clever. Just: <em>"Hey. Saw your post. Are you okay? Like actually okay."</em></p>
+    <p class="narrative">Three dots appear immediately. Then they disappear. Then they come back.</p>
+    <p class="narrative"><em>"Not really. Can we talk tomorrow?"</em></p>
+    <p class="narrative">You say yes.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Jay didn't have to perform being fine. You gave them a door — and they walked through it. <strong>That took courage from both of you.</strong></div><span class="skill-tag">💚 Empathy · Direct Communication</span></div>`,
+    mem:"You messaged Jay directly that night. They said they weren't okay. You arranged to talk."
+  },
+  B: {
+    title:'You Kept Scrolling.',
+    cls:'ob-amber',
+    label:'No response',
+    body:`<p class="narrative">You double-tap the post. A small heart appears under it. You put your phone down and go back to your homework.</p>
+    <p class="narrative">But it sits in the back of your mind. At midnight you check to see if Jay posted anything else.</p>
+    <p class="narrative">They didn't.</p>
+    <div class="outcome-block ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You saw something and chose not to act. That choice came from a real place — <strong>not wanting to overstep, not knowing what to say.</strong> Those are understandable feelings. But Jay is still alone with whatever they posted.</div><span class="skill-tag">⚠️ Discomfort with uncertainty · Avoidance</span></div>`,
+    mem:"You liked the post and didn't message. It stayed with you. Jay had no idea you were thinking about them."
+  },
+  C: {
+    title:'You Checked With Priya.',
+    cls:'ob-blue',
+    label:'Consulted first',
+    body:`<p class="narrative">You screenshot Jay's post and send it to Priya. <em>"Did you see this? Do you know if Jay's okay?"</em></p>
+    <p class="narrative">Priya replies fast. <em>"Oh wow. I hadn't seen it. I don't know what's going on. Should we do something?"</em></p>
+    <p class="narrative">You go back and forth for twenty minutes. By the time you decide to message Jay, it's nearly midnight.</p>
+    <div class="outcome-block ob-blue"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You didn't want to act alone — that's a healthy instinct. But <strong>Jay's private post is now on someone else's phone</strong>, and the clock ran down before anyone actually spoke to Jay directly.</div><span class="skill-tag">🔵 Collaboration · But: privacy trade-off</span></div>`,
+    mem:"You consulted Priya first. Now two people have seen the screenshot. You messaged Jay late — and they'd already gone to sleep."
+  },
+  D: {
+    title:'You Told a Trusted Adult.',
+    cls:'ob-red',
+    label:'Escalated',
+    body:`<p class="narrative">You're not sure this is something you can handle. You screenshot the post and send it to your form tutor with a short message: <em>"I'm worried about my friend. They posted this tonight."</em></p>
+    <p class="narrative">The tutor replies in the morning: <em>"Thank you for telling me. We'll look into it."</em></p>
+    <p class="narrative">You feel both relieved and uneasy. You did something. But Jay doesn't know you did it.</p>
+    <div class="outcome-block ob-red"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You made a call that prioritised <strong>safety over Jay's privacy</strong>. That instinct — when someone might be in real danger — is exactly what safeguarding frameworks are built on. But consequences come with it. Jay will find out. How that lands depends on what happens next.</div><span class="skill-tag">🔴 Safeguarding instinct · Privacy tension</span></div>`,
+    mem:"You escalated to your form tutor. Jay doesn't know yet. Something has already been set in motion."
+  }
+};
+
+const O2 = {
+  A: {
+    title:'You Were Honest.',
+    cls:'ob-green',
+    body:`<p class="narrative">You write: <em>"I was scared when I read that post. I didn't know what the right thing was. I still don't. But I know you matter to me and I should have said that first, before anything else."</em></p>
+    <p class="narrative">You press send before you can second-guess it.</p>
+    <p class="narrative">Jay doesn't reply for two hours. Then: <em>"That means a lot actually."</em></p>
+    <p class="narrative">Later that evening, Jay calls you. You talk for an hour. Not about the post — about everything else. Just talk.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You didn't fix anything. You didn't say the perfect thing. But you were <strong>present, honest, and you put Jay first</strong>. That's what mattered.</div><span class="skill-tag">💚 Vulnerability · Honest Communication</span></div>`
+  },
+  B: {
+    title:'You Said Nothing.',
+    cls:'ob-amber',
+    body:`<p class="narrative">You read the message. You open the keyboard. You close it. You put your phone face down.</p>
+    <p class="narrative">Two days pass. Jay comes back to school quiet. You smile at each other in the corridor but don't say anything. The gap between you feels larger than it was.</p>
+    <p class="narrative">A month later, things are mostly back to normal. But Jay never mentions the post. And neither do you.</p>
+    <div class="outcome-block ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Silence protected you both from an uncomfortable conversation. But something went <strong>unsaid — and unresolved</strong>. In professional care settings, this is called a <em>missed opportunity for connection</em>. It happens to trained adults too.</div><span class="skill-tag">⚠️ Self-protection · Missed connection</span></div>`
+  },
+  C: {
+    title:'You Went to the Group Chat.',
+    cls:'ob-red',
+    body:`<p class="narrative">You type into the group: <em>"Whoever told Jay's mum was trying to help. Stop acting like they did something wrong."</em></p>
+    <p class="narrative">Half the group agrees. Half don't. Within thirty minutes the conversation has shifted entirely — now it's about loyalty, and who's a good friend, and who's not.</p>
+    <p class="narrative">Jay is at home. Reading everything.</p>
+    <div class="outcome-block ob-red"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Your intention was fair. But <strong>Jay's worst moment is now a group debate</strong> — and Jay can see it. The person you were trying to defend just had their private pain turned into content. That's not the same as support.</div><span class="skill-tag">🔴 Unintended harm · Group dynamics</span></div>`
+  },
+  D: {
+    title:'You Asked to Actually Talk.',
+    cls:'ob-green',
+    body:`<p class="narrative"><em>"Can I call you? Or come meet you after school? I don't want to do this over text."</em></p>
+    <p class="narrative">Three minutes of silence. Then: <em>"Yeah. After school. The park near mine."</em></p>
+    <p class="narrative">You show up. Jay is sitting on a bench, hood up, looking at the ground. You sit next to them and don't say anything for about a minute.</p>
+    <p class="narrative">Then Jay starts talking. You mostly listen.</p>
+    <div class="outcome-block ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">You recognised that <strong>some conversations don't belong in a text box</strong>. Being physically present, and creating space for someone to speak — without rushing to fix or advise — is one of the most powerful things a person can do for someone who's struggling.</div><span class="skill-tag">💚 Active listening · Presence</span></div>`
+  }
+};
+
+const summaries = {
+  AA:"You reached out immediately, then followed up with honesty. Both times, you chose the harder, more human response. That's the foundation of counselling, psychology, and social work.",
+  AB:"You made first contact, then froze when it got real. The gap between noticing and knowing what to say is one of the most honest things about this simulation — and about people.",
+  AC:"You reached out early, then retreated to the group chat when things got complicated. The contrast between those two choices is worth sitting with.",
+  AD:"You made direct contact, then stepped back to ask for a real conversation. Consistent, thoughtful, and patient — even when the situation got uncomfortable.",
+  BA:"You were passive first, then honest later. Something shifted in you between Tuesday night and Wednesday morning. What was it?",
+  BB:"You stayed quiet twice. That's not a character flaw — but it is a pattern. What does it cost Jay each time you choose not to speak?",
+  BC:"You didn't act on Tuesday, then got drawn into the noise of the group chat. Jay's situation became something other people were talking about before you had talked to Jay.",
+  BD:"You ignored the first signal, then offered genuine presence in the second scene. The timing matters — but so does the fact that you showed up at all.",
+  CA:"You looped someone else in first, which slowed you down. But when Jay's message came, you responded with honesty. The instinct to connect was there — it just took longer to reach Jay directly.",
+  CB:"You consulted Priya, then went silent when things got hard. Two rounds of not quite reaching Jay.",
+  CC:"You shared Jay's post with Priya, then went back to the group chat. Jay's private moment passed through multiple people's hands before anyone actually spoke to Jay.",
+  CD:"You checked with Priya first, then — when it mattered — asked for a real conversation. The instinct to escalate early wasn't wrong. The instinct to show up in person was good.",
+  DA:"You escalated to an adult, which set off a chain of events. Then when Jay reached out hurt and exposed, you didn't defend yourself — you were just honest. That takes a particular kind of courage.",
+  DB:"You involved an adult — a significant, consequential choice — and then went quiet when the fallout hit. Jay is left in silence after being exposed.",
+  DC:"You escalated, then got drawn into a group argument about who was right. Jay, watching from home, experienced both their privacy being broken and their pain becoming a debate.",
+  DD:"You escalated for safety, then asked Jay for a real conversation when it mattered most. These two instincts — protect and connect — sit in tension with each other. The best support workers hold both."
+};
+
+function s1Choose(c){
+  c1=c;
+  const o=O1[c];
+  document.getElementById('out1-title').textContent=o.title;
+  document.getElementById('out1-content').innerHTML=o.body;
+  show('scene-out1');
+}
+
+function goS2(){
+  const o=O1[c1];
+  document.getElementById('s2-memory').innerHTML=`
+    <div class="memory-badge">
+      <span>🧠</span>
+      <span><strong>Carrying forward:</strong> ${o.mem}</span>
+    </div>`;
+  show('scene-2');
+}
+
+function s2Choose(c){
+  c2=c;
+  const o=O2[c];
+  document.getElementById('final-title').textContent=o.title;
+  document.getElementById('final-content').innerHTML=o.body;
+  show('scene-final');
+}
+
+function goDebrief(){
+  const key=c1+c2;
+  const s=summaries[key]||'';
+  document.getElementById('skills-panel').innerHTML=`
+    <div class="sp-label">Your path through this simulation</div>
+    <div class="sp-text">${s}</div>`;
+  show('scene-debrief');
+}
+
+async function goComplete(){
+  await saveDebrief('the-missing-post');
+  const key=c1+c2;
+  document.getElementById('c-summary').textContent=summaries[key]||'';
+  show('scene-complete');
+}
+
+function resetAll(){
+  c1=null; c2=null;
+  document.querySelectorAll('textarea').forEach(t=>t.value='');
+  show('scene-intro');
+}
+
+function show(id){
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+setTimeout(()=>{ document.getElementById('pbar').style.width='8%'; },400);
+
+async function saveDebrief(simulationName) {
+  const textareas = document.querySelectorAll('textarea');
+  const answer1 = textareas[0] ? textareas[0].value.trim() : '';
+  const answer2 = textareas[1] ? textareas[1].value.trim() : '';
+  const answer3 = textareas[2] ? textareas[2].value.trim() : '';
+  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
+  try {
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
+    });
+  } catch(e) { console.log('Debrief save failed silently', e); }
+}
+</script>
+</body>
+</html>
