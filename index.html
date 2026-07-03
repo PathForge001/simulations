@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PathForge — Where Young People Discover Who They Are</title>
+<meta property="og:title" content="PathForge — Decision-Making & Career Exploration for Young People" />
+<meta property="og:description" content="Inventor story videos + interactive simulations that help young people aged 7–18 discover careers and build decision-making skills. Free to try." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://usepathforge.io" />
+<meta property="og:site_name" content="PathForge" />
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xbl1zshvdm");
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#4300CB;
+  --purple-dark:#2D0090;
+  --purple-mid:#5A1FE0;
+  --purple-soft:#EDE8FF;
+  --purple-glow:rgba(67,0,203,0.15);
+  --ink:#0A0612;
+  --ink-mid:#2D1F4A;
+  --ink-dim:#7A6A9A;
+  --bg:#FAFAF8;
+  --surface:#FFFFFF;
+  --border:#E8E0F5;
+  --green:#0D9352;
+  --green-soft:#E6F7EF;
+  --amber:#B85C00;
+  --amber-soft:#FFF3E0;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,250,248,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-icon{width:32px;height:32px;background:var(--purple);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-logo-icon svg{width:18px;height:18px}
+.nav-logo-text{font-family:var(--sans);font-weight:600;font-size:16px;color:var(--ink)}
+.nav-cta{background:var(--purple);color:white;border:none;border-radius:8px;padding:8px 20px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.2s}
+.nav-cta:hover{background:var(--purple-dark);transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 2rem 80px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(67,0,203,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--purple);background:var(--purple-soft);border:1px solid rgba(67,0,203,0.2);padding:5px 14px;border-radius:20px;display:inline-block;margin-bottom:1.75rem}
+.hero-title{font-family:var(--serif);font-size:clamp(2.5rem,7vw,5rem);line-height:1.05;font-weight:700;max-width:900px;margin:0 auto 1.25rem;letter-spacing:-0.02em}
+.hero-title em{font-style:italic;color:var(--purple)}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.2rem);color:var(--ink-mid);max-width:580px;margin:0 auto 2.5rem;line-height:1.75;font-weight:300}
+.hero-sub strong{color:var(--ink);font-weight:500}
+.hero-actions{display:flex;flex-direction:column;align-items:center;gap:12px}
+.btn-primary{background:var(--purple);color:white;border:none;border-radius:10px;padding:16px 36px;font-family:var(--sans);font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.25s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--purple-dark);transform:translateY(-2px);box-shadow:0 8px 32px rgba(67,0,203,0.3)}
+.btn-secondary{color:var(--purple);font-size:14px;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:gap 0.2s}
+.btn-secondary:hover{gap:10px}
+.hero-note{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:0.04em;margin-top:8px}
+
+/* ── HOW IT WORKS ── */
+.section{padding:100px 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:var(--purple);margin-bottom:1rem;display:block}
+.section-title{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;line-height:1.1;margin-bottom:0.75rem;letter-spacing:-0.01em}
+.section-sub{font-size:1rem;color:var(--ink-mid);max-width:520px;line-height:1.7;font-weight:300;margin-bottom:3rem}
+
+/* ── Journey Steps ── */
+.journey{display:flex;flex-direction:column;gap:0}
+.journey-step{display:grid;grid-template-columns:auto 1fr;gap:0 40px;position:relative}
+.journey-step:not(:last-child)::after{content:'';position:absolute;left:28px;top:64px;bottom:0;width:2px;background:linear-gradient(to bottom,var(--purple),transparent);opacity:0.2}
+.step-left{display:flex;flex-direction:column;align-items:center;padding-top:12px}
+.step-num{width:56px;height:56px;border-radius:50%;background:var(--purple);color:white;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:20px;font-weight:700;flex-shrink:0;box-shadow:0 4px 20px rgba(67,0,203,0.25)}
+.step-right{padding:12px 0 60px}
+.step-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-dim);margin-bottom:6px}
+.step-title{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.step-body{font-size:0.95rem;color:var(--ink-mid);line-height:1.75;font-weight:300;max-width:560px}
+.step-body strong{color:var(--ink);font-weight:500}
+.step-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;margin-top:1rem;max-width:520px;box-shadow:0 2px 16px rgba(67,0,203,0.05)}
+.step-card-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-dim);margin-bottom:8px}
+.step-card-eg{font-size:0.9rem;color:var(--ink-mid);line-height:1.65;font-style:italic}
+.step-card-eg strong{color:var(--purple);font-style:normal;font-weight:600}
+
+/* ── What's included ── */
+.included-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:2rem}
+.inc-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:all 0.2s;position:relative;overflow:hidden}
+.inc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--purple);transform:scaleX(0);transform-origin:left;transition:transform 0.3s}
+.inc-card:hover{box-shadow:0 8px 32px rgba(67,0,203,0.1);transform:translateY(-2px)}
+.inc-card:hover::before{transform:scaleX(1)}
+.inc-icon{font-size:2rem;margin-bottom:1rem}
+.inc-title{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:6px}
+.inc-body{font-size:0.88rem;color:var(--ink-mid);line-height:1.65;font-weight:300}
+.inc-body strong{color:var(--ink);font-weight:500}
+.inc-count{font-family:var(--mono);font-size:10px;color:var(--purple);text-transform:uppercase;letter-spacing:0.08em;margin-top:10px;display:block}
+
+/* ── SIMULATIONS PREVIEW ── */
+.sims-section{background:var(--ink);padding:100px 2rem}
+.sims-inner{max-width:1100px;margin:0 auto}
+.sims-eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:rgba(167,139,250,0.8);margin-bottom:1rem;display:block}
+.sims-title{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:white;line-height:1.1;margin-bottom:0.75rem;letter-spacing:-0.01em}
+.sims-sub{font-size:1rem;color:rgba(255,255,255,0.5);max-width:500px;line-height:1.7;font-weight:300;margin-bottom:2.5rem}
+.sims-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.sim-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1.25rem 1.5rem;transition:all 0.2s;text-decoration:none;display:block}
+.sim-card:hover{background:rgba(67,0,203,0.15);border-color:rgba(67,0,203,0.4);transform:translateX(4px)}
+.sim-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.sim-age{font-family:var(--mono);font-size:10px;color:rgba(167,139,250,0.7);text-transform:uppercase;letter-spacing:0.08em;background:rgba(67,0,203,0.2);border:1px solid rgba(67,0,203,0.3);padding:2px 8px;border-radius:20px}
+.sim-career{font-size:10px;color:rgba(255,255,255,0.35);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.06em}
+.sim-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:white;margin-bottom:4px;line-height:1.25}
+.sim-hook{font-size:0.83rem;color:rgba(255,255,255,0.45);line-height:1.55;font-weight:300}
+.sim-arrow{color:rgba(167,139,250,0.6);font-size:0.85rem;margin-top:10px;display:block;transition:color 0.2s}
+.sim-card:hover .sim-arrow{color:rgba(167,139,250,1)}
+
+/* ── FOR PARENTS ── */
+.parents-section{background:var(--purple-soft);padding:100px 2rem}
+.parents-inner{max-width:900px;margin:0 auto;text-align:center}
+.parents-title{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:1rem;letter-spacing:-0.01em}
+.parents-title em{font-style:italic;color:var(--purple)}
+.parents-body{font-size:1rem;color:var(--ink-mid);max-width:620px;margin:0 auto 2.5rem;line-height:1.8;font-weight:300}
+.parents-body strong{color:var(--ink);font-weight:500}
+.parents-points{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;text-align:left;margin-bottom:3rem}
+.point{background:white;border-radius:12px;padding:1.25rem;border:1px solid rgba(67,0,203,0.12)}
+.point-icon{font-size:1.5rem;margin-bottom:8px}
+.point-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.point-body{font-size:12px;color:var(--ink-mid);line-height:1.6;font-weight:300}
+.pricing-note{background:white;border-radius:16px;padding:2rem;border:2px solid rgba(67,0,203,0.15);max-width:500px;margin:0 auto}
+.pricing-note-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-dim);margin-bottom:8px}
+.pricing-note-title{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--purple);margin-bottom:6px}
+.pricing-note-body{font-size:13px;color:var(--ink-mid);line-height:1.6;margin-bottom:1.25rem}
+.pricing-free-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid rgba(13,147,82,0.2)}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:60px 2rem;text-align:center}
+.footer-logo{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:white;margin-bottom:8px;font-style:italic}
+.footer-tag{font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:2rem}
+.footer-links{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:2rem}
+.footer-links a{font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:rgba(167,139,250,0.9)}
+.footer-copy{font-size:12px;color:rgba(255,255,255,0.2);font-family:var(--mono)}
+
+@media(max-width:640px){
+  .journey-step{grid-template-columns:1fr;gap:0}
+  .step-left{flex-direction:row;gap:12px;margin-bottom:12px}
+  .journey-step::after{display:none}
+  .hero-actions{width:100%}
+  .btn-primary{width:100%;justify-content:center}
+  nav{padding:0 1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 4h7a5 5 0 0 1 0 10H4V4z" fill="white" opacity="0.9"/>
+        <rect x="4" y="16" width="4" height="4" rx="1" fill="white" opacity="0.7"/>
+        <path d="M15 10 Q20 10 20 16 Q20 20 16 20" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="nav-logo-text">PathForge</span>
+  </a>
+  <a href="#try" class="nav-cta">Try free →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-eyebrow">For young people aged 7–18 · Free to try</span>
+  <h1 class="hero-title">
+    Young people don't just watch<br>
+    the story. <em>They live it.</em>
+  </h1>
+  <p class="hero-sub">
+    PathForge combines <strong>inventor story videos</strong> with <strong>interactive decision simulations</strong> — so young people discover real careers, build decision-making skills, and find out who they are through the choices they make.
+  </p>
+  <div class="hero-actions">
+    <a href="#how" class="btn-primary">See how it works ↓</a>
+    <a href="#try" class="btn-secondary">Try a free simulation →</a>
+    <span class="hero-note">No login · No app · Works on any phone or laptop</span>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-inner">
+    <span class="section-eyebrow">How PathForge works</span>
+    <h2 class="section-title">Not a lesson.<br>An experience.</h2>
+    <p class="section-sub">Every PathForge story is two things in sequence — a video and a simulation. Together they take about 20 minutes and leave a young person thinking about decisions in a way a classroom rarely does.</p>
+
+    <div class="journey">
+
+      <div class="journey-step">
+        <div class="step-left"><div class="step-num">1</div></div>
+        <div class="step-right">
+          <div class="step-tag">The video · 4–5 minutes</div>
+          <h3 class="step-title">An inventor's story — told as a decision</h3>
+          <p class="step-body">Every PathForge story opens with a short animated video about a real person who changed the world. But we do not tell it as history. We tell it as the moment before the decision — the fork in the road where everything could have gone differently. <strong>Young people see that breakthroughs happen because of how someone chose to think, not because they were born special.</strong></p>
+          <div class="step-card">
+            <div class="step-card-label">Example — The Boy Who Read With His Fingers</div>
+            <div class="step-card-eg">Louis Braille, Paris, 1824. He is 15 years old and blind. He has just heard about a military code soldiers use to read messages in the dark — without light, without sound. Nobody has thought to use it for reading books. Louis looks at the dots and dashes and asks one question nobody else thought to ask. <strong>What if this could work for us?</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-left"><div class="step-num">2</div></div>
+        <div class="step-right">
+          <div class="step-tag">The simulation · 15 minutes</div>
+          <h3 class="step-title">You are in the decision. What do you choose?</h3>
+          <p class="step-body">The video freezes at the critical moment — and the young person takes over. They face the same decision the inventor faced, with four realistic choices. Each decision leads to a consequence. Each consequence leads to a second, harder decision. <strong>There is no single right answer — only different paths, each with something to teach.</strong></p>
+          <div class="step-card">
+            <div class="step-card-label">Inside the simulation</div>
+            <div class="step-card-eg">You are Louis. The military code is in your hands. Your teacher says it is too complicated for blind students. Your classmates are not sure it will work. You have one evening before the school decision is made. A — Test it on yourself tonight. B — Ask your teacher to give you more time. C — Share the idea with your closest friend first. D — Present it to the school headmaster directly. <strong>Every choice leads somewhere different.</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-left"><div class="step-num">3</div></div>
+        <div class="step-right">
+          <div class="step-tag">The debrief · 5 minutes</div>
+          <h3 class="step-title">Reflect. Name what you learned. Make it yours.</h3>
+          <p class="step-body">After the simulation, three questions invite the young person to reflect on what they chose and why. A personalised summary — unique to the exact path they took through the story — names the skills and values their decisions demonstrated. <strong>Every child gets a different ending, because every child made different choices.</strong></p>
+          <div class="step-card">
+            <div class="step-card-label">What the debrief asks</div>
+            <div class="step-card-eg">"Louis was 15 and had no laboratory, no funding, and no support from most adults around him. What do you think gave him the courage to keep going anyway?" <strong>No right answer. Just thinking.</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-left"><div class="step-num">4</div></div>
+        <div class="step-right">
+          <div class="step-tag">The career reveal</div>
+          <h3 class="step-title">Meet the real careers they just practised.</h3>
+          <p class="step-body">At the end of every story, PathForge shows the young person the real careers that use the skills they just demonstrated. Not a list of job titles — <strong>a specific connection between what they just did and what real professionals do every single day.</strong> This is how a 10-year-old discovers they might want to work in accessibility design, or a 13-year-old realises they have always been thinking like a social innovator.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <span class="section-eyebrow">What is included</span>
+    <h2 class="section-title">One platform.<br>Six career worlds.</h2>
+    <p class="section-sub">PathForge is building a complete library of inventor story videos and simulations across six fields — one story per field, across five historical eras from 1900 to today.</p>
+    <div class="included-grid">
+      <div class="inc-card">
+        <div class="inc-icon">🔬</div>
+        <div class="inc-title">Science & Medicine</div>
+        <div class="inc-body">From Louis Braille reading with his fingers to CRISPR gene editing — how curiosity and persistence changed what was possible for human lives.</div>
+        <span class="inc-count">5 stories · Ages 10–17</span>
+      </div>
+      <div class="inc-card">
+        <div class="inc-icon">⚡</div>
+        <div class="inc-title">Technology & Computing</div>
+        <div class="inc-body">From the transistor to the World Wide Web — how information technology changed who holds power and what is possible.</div>
+        <span class="inc-count">5 stories · Ages 13–18+</span>
+      </div>
+      <div class="inc-card">
+        <div class="inc-icon">🏗️</div>
+        <div class="inc-title">Engineering & Infrastructure</div>
+        <div class="inc-body">From the Wright Brothers to the Thames Barrier — how engineering decisions shaped the world young people live in.</div>
+        <span class="inc-count">5 stories · Ages 7–15</span>
+      </div>
+      <div class="inc-card">
+        <div class="inc-icon">⚖️</div>
+        <div class="inc-title">Law & Social Justice</div>
+        <div class="inc-body">From Rosa Parks to the Human Rights Act — how decisions made by ordinary people changed systems that affected millions.</div>
+        <span class="inc-count">5 stories · Ages 13–17</span>
+      </div>
+      <div class="inc-card">
+        <div class="inc-icon">🎨</div>
+        <div class="inc-title">Arts & Communication</div>
+        <div class="inc-body">From the printing press to the internet — how storytelling, media, and communication shaped what people believed and who they became.</div>
+        <span class="inc-count">5 stories · Ages 10–17</span>
+      </div>
+      <div class="inc-card">
+        <div class="inc-icon">🌱</div>
+        <div class="inc-title">Environment & Food</div>
+        <div class="inc-body">From the Green Revolution to solar energy — how humans learned to live alongside nature rather than against it.</div>
+        <span class="inc-count">5 stories · Ages 7–14</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIMULATIONS PREVIEW -->
+<section class="sims-section" id="try">
+  <div class="sims-inner">
+    <span class="sims-eyebrow">Free simulations — try now</span>
+    <h2 class="sims-title">Ten simulations.<br>Available today. Free.</h2>
+    <p class="sims-sub">While the full inventor story videos are in production, every simulation below is complete, fully interactive, and free to try right now. No login. No app. Just a link.</p>
+    <div class="sims-grid">
+
+      <a href="https://the-bridge-that-shook.netlify.app/" class="sim-card" target="_blank" rel="noopener">
+        <div class="sim-card-top">
+          <span class="sim-age">Ages 13–15</span>
+          <span class="sim-career">Engineering</span>
+        </div>
+        <div class="sim-title">The Bridge That Shook</div>
+        <div class="sim-hook">You are an engineering intern when the bridge starts shaking. You have seconds to decide. What do you do?</div>
+        <span class="sim-arrow">Try this simulation →</span>
+      </a>
+
+      <a href="https://the-flood.netlify.app/" class="sim-card" target="_blank" rel="noopener">
+        <div class="sim-card-top">
+          <span class="sim-age">Ages 7–10</span>
+          <span class="sim-career">Environmental Science</span>
+        </div>
+        <div class="sim-title">The River is Rising</div>
+        <div class="sim-hook">The river is rising 0.25 metres every hour. The council meet in two hours. You have the data. What do you recommend?</div>
+        <span class="sim-arrow">Try this simulation →</span>
+      </a>
+
+      <a href="https://the-wrong-verdict.netlify.app/" class="sim-card" target="_blank" rel="noopener">
+        <div class="sim-card-top">
+          <span class="sim-age">Ages 13–16</span>
+          <span class="sim-career">Law · Justice</span>
+        </div>
+        <div class="sim-title">The Wrong Verdict</div>
+        <div class="sim-hook">You are defending Omar. One hour before trial. The witness said "fairly confident." You have one question. What do you ask?</div>
+        <span class="sim-arrow">Try this simulation →</span>
+      </a>
+
+      <a href="https://the-startup-era.netlify.app/" class="sim-card" target="_blank" rel="noopener">
+        <div class="sim-card-top">
+          <span class="sim-age">Ages 16–18+</span>
+          <span class="sim-career">Business · Entrepreneurship</span>
+        </div>
+        <div class="sim-title">The Offer</div>
+        <div class="sim-hook">You built TutorLink. £85,000 acquisition offer just arrived. Kai says take it. Priya says wait. You are the tiebreaker.</div>
+        <span class="sim-arrow">Try this simulation →</span>
+      </a>
+
+      <a href="https://the-algorithm-tech.netlify.app/" class="sim-card" target="_blank" rel="noopener">
+        <div class="sim-card-top">
+          <span class="sim-age">Ages 18+</span>
+          <span class="sim-career">AI Ethics · Tech · Product</span>
+        </div>
+        <div class="sim-title">The Algorithm</div>
+        <div class="sim-hook">You built the AI. Now it's discriminating by postcode. Your manager wants one more week before disclosing. What do you do?</div>
+        <span class="sim-arrow">Try this simulation →</span>
+      </a>
+
+      <a href="https://the-missing-player.netlify.app/" class="sim-card" target="_blank" rel="noopener">
+        <div class="sim-card-top">
+          <span class="sim-age">Ages 10–14</span>
+          <span class="sim-career">Sports Science · Coaching</span>
+        </div>
+        <div class="sim-title">The Missing Player</div>
+        <div class="sim-hook">Your team's best player has vanished three days before the final. You're the captain. What do you do?</div>
+        <span class="sim-arrow">Try this simulation →</span>
+      </a>
+
+      <a href="https://the-diagnosis.netlify.app/" class="sim-card" target="_blank" rel="noopener">
+        <div class="sim-card-top">
+          <span class="sim-age">Ages 12–16</span>
+          <span class="sim-career">Medicine · Healthcare</span>
+        </div>
+        <div class="sim-title">The Diagnosis</div>
+        <div class="sim-hook">Something is wrong with your patient. Your senior is unreachable for 90 minutes. You have 20 minutes to work out what.</div>
+        <span class="sim-arrow">Try this simulation →</span>
+      </a>
+
+      <div class="sim-card" style="opacity:0.45;cursor:default;pointer-events:none;">
+        <div class="sim-card-top">
+          <span class="sim-age">Ages 13–17</span>
+          <span class="sim-career">Psychology · Social Work</span>
+        </div>
+        <div class="sim-title">The Missing Post</div>
+        <div class="sim-hook">Your closest friend posts something worrying at 11pm. Three people liked it. Nobody commented. What do you do?</div>
+        <span class="sim-arrow" style="color:rgba(167,139,250,0.3);">Coming soon</span>
+      </div>
+
+      <div class="sim-card" style="opacity:0.45;cursor:default;pointer-events:none;">
+        <div class="sim-card-top">
+          <span class="sim-age">Ages 13–17</span>
+          <span class="sim-career">Journalism · Media</span>
+        </div>
+        <div class="sim-title">The Group Chat is Gone</div>
+        <div class="sim-hook">The social media ban is here. Your friend is missing. No DM. No story. No way to check. What do you actually do?</div>
+        <span class="sim-arrow" style="color:rgba(167,139,250,0.3);">Coming soon</span>
+      </div>
+
+      <div class="sim-card" style="opacity:0.45;cursor:default;pointer-events:none;">
+        <div class="sim-card-top">
+          <span class="sim-age">Ages 10–14</span>
+          <span class="sim-career">Psychology · Youth Work</span>
+        </div>
+        <div class="sim-title">The New Kid</div>
+        <div class="sim-hook">Amara arrived the week the ban came in. She has no digital shortcut to belonging. You notice she is on the edge. What do you do?</div>
+        <span class="sim-arrow" style="color:rgba(167,139,250,0.3);">Coming soon</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOR PARENTS -->
+<section class="parents-section">
+  <div class="parents-inner">
+    <h2 class="parents-title">Built for parents who want more<br>than <em>another screen.</em></h2>
+    <p class="parents-body">PathForge is not a game. It is not a revision app. It is a place where your child practises the skill that determines more about their future than any exam result — <strong>how to make decisions under pressure, with incomplete information, when it matters.</strong></p>
+    <div class="parents-points">
+      <div class="point">
+        <div class="point-icon">🎯</div>
+        <div class="point-title">Career exploration from age 7</div>
+        <div class="point-body">Children form career aspirations earlier than most people think. PathForge puts them inside real career decisions before limiting beliefs set in.</div>
+      </div>
+      <div class="point">
+        <div class="point-icon">🧠</div>
+        <div class="point-title">Values through experience</div>
+        <div class="point-body">The debrief surfaces qualities like persistence, empathy, and integrity — not by lecturing, but by asking the child to name what they did and why.</div>
+      </div>
+      <div class="point">
+        <div class="point-icon">📚</div>
+        <div class="point-title">Aligned to the UK curriculum</div>
+        <div class="point-body">Every simulation maps to PSHE outcomes and the Gatsby Benchmarks for careers education — so schools can use PathForge as a teaching tool too.</div>
+      </div>
+      <div class="point">
+        <div class="point-icon">🔒</div>
+        <div class="point-title">No account. No data collected.</div>
+        <div class="point-body">The simulations are fully self-contained. No login, no tracking of individual children, no data stored. Safe for any age.</div>
+      </div>
+    </div>
+    <div class="pricing-note">
+      <div class="pricing-note-label">Pricing — currently in testing</div>
+      <div class="pricing-note-title">Free while we build</div>
+      <div class="pricing-note-body">All seven current simulations are completely free. We are building the inventor story videos and the full 30-story library now. When the full platform launches, early families who tested with us will hear first.</div>
+      <span class="pricing-free-badge">✓ Free to use today — no card required</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">PathForge</div>
+  <div class="footer-tag">Everyone deserves an education.</div>
+  <div class="footer-links">
+    <a href="#how">How it works</a>
+    <a href="#try">Try free</a>
+    <a href="mailto:hello@usepathforge.io">Contact</a>
+    <a href="https://usepathforge.io">usepathforge.io</a>
+  </div>
+  <div class="footer-copy">© 2026 PathForge · Built in the UK · Salem Akinyemi & Co-Founder</div>
+</footer>
+
+</body>
+</html>
