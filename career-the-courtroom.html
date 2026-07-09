@@ -408,6 +408,7 @@ async function saveDebrief(simulationName) {
   try {
     await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
       method: 'POST',
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
     });
