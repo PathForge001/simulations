@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Boy Who Read With His Fingers — PathForge</title>
+<meta property="og:title" content="The Boy Who Read With His Fingers — You are Louis Braille, age 15." />
+<meta property="og:description" content="A PathForge inventor story simulation. Paris, 1824. You have spent three years building a system that could change the world. Tonight, you decide whether to show it." />
+<meta property="og:site_name" content="PathForge" />
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xbl1zshvdm");
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCT2NS7ET8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCT2NS7ET8');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0C0A1A;--surface:#13102A;--surface2:#1C1836;
+  --border:#2D2650;--text:#EDE8FF;--text-mid:#A89FCC;
+  --text-dim:#5C5480;--accent:#C4A5FF;--accent2:#9B72FF;
+  --gold:#F5C842;--gold-soft:rgba(245,200,66,0.1);
+  --green:#4ADE80;--green-soft:rgba(74,222,128,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --amber:#FBD04A;--amber-soft:rgba(251,208,74,0.08);
+  --blue:#60A5FA;--blue-soft:rgba(96,165,250,0.08);
+  --serif:'Crimson Pro',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--sans)}
+body::before{content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(196,165,255,0.07) 0%,transparent 60%),
+  radial-gradient(ellipse at 0% 100%,rgba(155,114,255,0.04) 0%,transparent 50%);
+  pointer-events:none;z-index:0}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:1.75rem 1rem 5rem}
+.wrap{width:100%;max-width:660px}
+
+/* ── INVENTOR BADGE ── */
+.inventor-badge{display:flex;align-items:center;gap:10px;background:var(--gold-soft);border:1px solid rgba(245,200,66,0.25);border-radius:10px;padding:0.65rem 1rem;margin-bottom:1.5rem}
+.badge-icon{font-size:1.25rem;flex-shrink:0}
+.badge-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:2px}
+.badge-sub{font-size:11px;color:var(--text-dim)}
+
+/* ── PROGRESS ── */
+.prog-wrap{margin-bottom:1.75rem}
+.prog-meta{font-family:var(--mono);font-size:10px;color:var(--text-dim);display:flex;justify-content:space-between;margin-bottom:5px;letter-spacing:0.05em}
+.prog-track{height:2px;background:var(--border)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width 0.7s ease}
+
+/* ── SCENES ── */
+.scene{display:none;animation:appear 0.45s ease}
+.scene.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── OPENING — STORY INTRO ── */
+.story-eyebrow{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-dim);margin-bottom:0.85rem;display:flex;align-items:center;gap:8px}
+.story-eyebrow::after{content:'';flex:1;height:1px;background:var(--border)}
+.story-title{font-family:var(--serif);font-size:clamp(2.25rem,7vw,3.75rem);line-height:1.05;margin-bottom:0.35rem;color:var(--text);letter-spacing:-0.02em}
+.story-title em{font-style:italic;color:var(--accent)}
+.story-sub{font-family:var(--mono);font-size:11px;color:var(--text-dim);margin-bottom:1.75rem;letter-spacing:0.05em}
+.narrative{font-family:var(--serif);font-size:1.08rem;line-height:1.85;color:var(--text-mid);margin-bottom:0.9rem;font-weight:300}
+.narrative strong{color:var(--text);font-weight:500}
+.narrative em{color:var(--accent);font-style:italic}
+
+/* ── WORLD CARD ── */
+.world-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin:1.5rem 0}
+.wc-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:0.75rem}
+.wc-stat{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
+.wc-stat:last-child{margin-bottom:0}
+.wc-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px}
+.wc-text{font-size:12px;color:var(--text-mid);line-height:1.6}
+.wc-text strong{color:var(--text)}
+
+/* ── TENSION ── */
+.tension{border-left:2px solid var(--accent);background:rgba(196,165,255,0.05);padding:1rem 1.25rem;margin:1.5rem 0;border-radius:0 8px 8px 0}
+.tension p{font-family:var(--serif);font-size:1.05rem;line-height:1.75;color:var(--text)}
+.tension p+p{margin-top:0.5rem}
+.tension p em{color:var(--accent);font-style:italic}
+
+/* ── DECISION ── */
+.dp{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin:1.75rem 0 0.85rem}
+.choices{display:flex;flex-direction:column;gap:0.65rem;margin-bottom:0.5rem}
+.choice-btn{display:flex;align-items:flex-start;gap:12px;padding:1rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;text-align:left;font-family:var(--sans);transition:all 0.2s}
+.choice-btn:hover{background:var(--surface2);border-color:var(--accent);transform:translateX(3px)}
+.choice-btn:hover .cletter{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.cletter{width:28px;height:28px;border-radius:4px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;margin-top:1px;transition:all 0.2s}
+.ctext{font-size:0.92rem;font-weight:500;color:var(--text);line-height:1.45}
+.csub{font-size:0.78rem;color:var(--text-dim);margin-top:3px;font-weight:300}
+
+/* ── FIFTH OPTION ── */
+.fifth-option{margin-top:0.65rem;border:1.5px dashed var(--border);border-radius:8px;padding:0.75rem 1rem;background:transparent;transition:border-color 0.2s}
+.fifth-option:focus-within{border-color:var(--accent)}
+.fifth-label{font-size:10px;font-weight:600;color:var(--text-dim);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:0.06em}
+.fifth-input{width:100%;background:transparent;border:none;outline:none;font-family:var(--sans);font-size:13px;color:var(--text);resize:none;min-height:48px;line-height:1.6}
+.fifth-input::placeholder{color:var(--text-dim)}
+
+/* ── OUTCOMES ── */
+.ob{border-radius:8px;padding:1rem 1.25rem;margin:1.25rem 0;border:1px solid}
+.ob-green{background:var(--green-soft);border-color:rgba(74,222,128,0.25)}
+.ob-amber{background:var(--amber-soft);border-color:rgba(251,208,74,0.25)}
+.ob-red{background:var(--red-soft);border-color:rgba(248,113,113,0.25)}
+.ob-blue{background:var(--blue-soft);border-color:rgba(96,165,250,0.2)}
+.ob-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;display:flex;align-items:center;gap:5px}
+.ob-green .ob-label{color:var(--green)}.ob-amber .ob-label{color:var(--amber)}.ob-red .ob-label{color:var(--red)}.ob-blue .ob-label{color:var(--blue)}
+.ob-dot{width:5px;height:5px;border-radius:50%;display:inline-block}
+.ob-green .ob-dot{background:var(--green)}.ob-amber .ob-dot{background:var(--amber)}.ob-red .ob-dot{background:var(--red)}.ob-blue .ob-dot{background:var(--blue)}
+.ob-text{font-size:0.92rem;line-height:1.7;color:var(--text-mid)}
+.ob-text strong{color:var(--text)}
+.skill-tag{display:inline-flex;align-items:center;gap:5px;margin-top:0.65rem;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-dim);background:rgba(196,165,255,0.08);border:1px solid rgba(196,165,255,0.15);padding:3px 9px;border-radius:3px}
+
+/* ── MEMORY BADGE ── */
+.memory-badge{display:flex;align-items:flex-start;gap:10px;padding:0.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:1.5rem;font-size:0.85rem;color:var(--text-mid);line-height:1.55}
+.memory-badge strong{color:var(--accent)}
+
+/* ── CONTINUE ── */
+.continue-btn{display:inline-flex;align-items:center;gap:8px;margin-top:1.5rem;padding:0.85rem 1.75rem;background:var(--accent2);color:white;border:none;border-radius:8px;font-family:var(--sans);font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+.continue-btn:hover{background:var(--accent);transform:translateY(-1px);box-shadow:0 6px 24px rgba(155,114,255,0.3)}
+.arrow{transition:transform 0.2s}.continue-btn:hover .arrow{transform:translateX(4px)}
+
+/* ── DEBRIEF ── */
+.debrief-intro{text-align:center;padding:0.5rem 0 1.75rem}
+.d-icon{font-size:2.25rem;margin-bottom:0.85rem}
+.debrief-intro h2{font-family:var(--serif);font-size:clamp(1.75rem,5vw,2.5rem);color:var(--accent);margin-bottom:0.65rem;font-style:italic}
+.debrief-intro p{font-size:0.92rem;color:var(--text-mid);max-width:420px;margin:0 auto;line-height:1.65}
+.skills-panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem}
+.sp-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:0.65rem}
+.sp-text{font-size:0.9rem;line-height:1.65;color:var(--text-mid)}
+.dq-list{display:flex;flex-direction:column;gap:1rem;margin:1.5rem 0}
+.dq{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem}
+.dq-num{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:0.45rem}
+.dq-text{font-size:0.97rem;font-weight:500;color:var(--text);line-height:1.5;margin-bottom:0.65rem}
+.dq textarea{width:100%;min-height:88px;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:0.7rem 0.9rem;font-family:var(--sans);font-size:0.88rem;color:var(--text);resize:vertical;line-height:1.6;transition:border-color 0.2s}
+.dq textarea::placeholder{color:var(--text-dim)}
+.dq textarea:focus{outline:none;border-color:var(--accent)}
+.final-btn{width:100%;padding:1rem;background:var(--accent2);color:white;border:none;border-radius:6px;font-family:var(--sans);font-size:0.95rem;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:0.5rem}
+.final-btn:hover{background:var(--accent)}
+
+/* ── COMPLETION ── */
+.completion{text-align:center;padding:1.5rem 0}
+.c-icon{font-size:2.5rem;margin-bottom:1rem}
+.completion h2{font-family:var(--serif);font-size:clamp(1.75rem,5vw,2.5rem);color:var(--accent);margin-bottom:0.65rem;font-style:italic;letter-spacing:-0.01em}
+.completion p{font-size:0.93rem;color:var(--text-mid);line-height:1.7;max-width:480px;margin:0 auto 1.25rem}
+.careers-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem;margin:1.5rem 0;text-align:left}
+.career-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:0.85rem}
+.career-row:last-child{margin-bottom:0}
+.career-icon{font-size:1rem;color:var(--accent);flex-shrink:0;margin-top:2px}
+.career-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.career-desc{font-size:11px;color:var(--text-dim);line-height:1.5}
+.completion-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:0.75rem}
+.replay-btn{display:inline-flex;align-items:center;gap:7px;padding:0.8rem 1.6rem;background:transparent;border:1px solid var(--border);color:var(--text-mid);border-radius:6px;font-family:var(--sans);font-size:0.88rem;font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none}
+.replay-btn:hover{border-color:var(--accent);color:var(--accent)}
+.review-btn{display:inline-flex;align-items:center;gap:7px;padding:0.75rem 1.4rem;background:transparent;border:1.5px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;color:var(--text-mid);transition:all 0.2s;margin-top:0.5rem}
+.review-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── JOURNEY REVIEW ── */
+.journey-review-scene{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:0.85rem}
+.jr-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:4px}
+.jr-choice{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.jr-mem{font-size:12px;color:var(--text-mid);line-height:1.6}
+.jr-debrief-block{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:0.85rem 1rem;margin-bottom:0.65rem}
+.jr-q{font-size:10px;font-weight:600;color:var(--text-dim);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em}
+.jr-a{font-size:12px;color:var(--text);line-height:1.6;font-style:italic}
+.jr-summary-box{border-radius:8px;padding:1rem 1.1rem;margin:1rem 0;background:rgba(196,165,255,0.06);border:1px solid rgba(196,165,255,0.2)}
+.jr-summary-text{font-size:12px;line-height:1.7;color:var(--accent)}
+
+/* ── PARENT FEEDBACK ── */
+.parent-feedback{margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(255,255,255,0.04);border-radius:10px;text-align:center;border:1px solid rgba(255,255,255,0.08)}
+
+@media(max-width:480px){.story-title{font-size:2.25rem}}
+</style>
+</head>
+<body>
+<div id="app"><div class="wrap">
+
+<!-- ═══════════════════════════════════════════════════════
+     SCENE INTRO — THE STORY OPENING
+══════════════════════════════════════════════════════════ -->
+<div class="scene active" id="scene-intro">
+<div class="inventor-badge">
+  <span class="badge-icon">✦</span>
+  <div>
+    <div class="badge-label">PathForge Inventor Story</div>
+    <div class="badge-sub">Real history · Real decisions · Your turn</div>
+  </div>
+</div>
+<div class="prog-wrap"><div class="prog-meta"><span>The Story</span><span>Opening</span></div><div class="prog-track"><div class="prog-fill" id="pbar" style="width:5%"></div></div></div>
+
+<div class="story-eyebrow">Paris, France · 1821</div>
+<h1 class="story-title">The Boy Who Read<br>With His <em>Fingers</em></h1>
+<p class="story-sub">Louis Braille · Age 12 · Royal Institute for Blind Youth</p>
+
+<p class="narrative">Louis Braille was born in 1809 in a small village outside Paris. When he was three years old, he was playing with a stitching awl in his father's harness workshop. The tool slipped. <strong>By age five, he was completely blind.</strong></p>
+
+<p class="narrative">At ten, he received a scholarship to the Royal Institute for Blind Youth in Paris — one of the first schools in the world built for the blind. He arrived eager to learn. Then he discovered the truth: the school's library contained just three books. <em>Three books.</em> Because making books for the blind required carving each letter into wooden blocks and pressing them into thick wax paper. It cost a fortune and took months per book.</p>
+
+<p class="narrative">Louis was trapped. A brilliant mind with almost nothing to read and no way to write.</p>
+
+<div class="world-card">
+  <div class="wc-label">The world Louis was born into</div>
+  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>Blind people could not read or write independently.</strong> The only system was embossed print — enormous raised letters that took years to learn and could not be written at all.</div></div>
+  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>Most blind people never received any education.</strong> Louis was one of the lucky ones — and his school had three books.</div></div>
+  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>The world assumed blind people could not contribute to society.</strong> Louis would spend his entire life proving otherwise.</div></div>
+</div>
+
+<p class="narrative">Then, in 1821, something arrived at the Institute that would change Louis Braille's life — and eventually the lives of millions of people he would never meet.</p>
+
+<button class="continue-btn" onclick="goS1A()">What arrived? <span class="arrow">→</span></button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCENE 1A — BARBIER ARRIVES
+══════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-1a">
+<div class="prog-wrap"><div class="prog-meta"><span>The Story</span><span>The Spark · 1821</span></div><div class="prog-track"><div class="prog-fill" style="width:18%"></div></div></div>
+
+<div class="story-eyebrow">The Royal Institute · Paris · 1821</div>
+<h2 style="font-family:var(--serif);font-size:clamp(1.5rem,4vw,2.25rem);font-weight:700;color:var(--text);margin-bottom:0.35rem;letter-spacing:-0.01em;">Night Writing</h2>
+<p class="story-sub">A French Army captain brings something unexpected</p>
+
+<p class="narrative">A retired French Army captain named Charles Barbier arrived at the Institute. He had invented a system called <strong>"night writing"</strong> — a code of raised dots punched into thick paper that soldiers could read by touch in complete darkness, without making a sound or striking a light that might alert the enemy.</p>
+<p class="narrative">Barbier believed this system could help the blind. He demonstrated it to the students. The room was completely silent as fingers moved across paper covered in raised dots.</p>
+<p class="narrative">Louis, aged twelve, felt the dots under his fingertips. His heart began to race.</p>
+<p class="narrative">But as he explored the system, his excitement curdled into something more complicated. <em>This is the idea. But this is not the right version of the idea.</em></p>
+
+<div class="world-card">
+  <div class="wc-label">What Louis noticed immediately</div>
+  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>The grid was 12 dots</strong> — two columns of six. It required as many as 100 dots for a single word. His finger had to move too far to read a single letter.</div></div>
+  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>It represented sounds, not letters.</strong> A blind student using Barbier's system could never learn to spell correctly. There was no punctuation. No numbers. No music notation.</div></div>
+  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>Barbier was proud of his system.</strong> He had donated it to the school. He was not expecting a twelve-year-old to tell him it was flawed.</div></div>
+</div>
+
+<div class="tension">
+  <p>Louis could feel the potential and the problem simultaneously. Barbier's system was a door — but it was the wrong size, the wrong shape. The idea was there. The execution was not.</p>
+  <p><strong>Louis is twelve years old. Barbier is a distinguished retired army officer. What does Louis do?</strong></p>
+</div>
+
+<div class="dp">— Scene 1 — What does Louis do? —</div>
+<div class="choices" id="choices-1">
+  <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Tell Barbier directly — explain the flaws clearly and ask if they can work on it together</div><div class="csub">The problems are real. An adult who cares about the blind should want to know.</div></div></button>
+  <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Say nothing to Barbier — start working privately on his own improved version</div><div class="csub">Barbier won't listen to a child. The way to prove the idea is to build a better one.</div></div></button>
+  <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Ask the headmaster to bring Barbier back for another session so Louis can study the system more</div><div class="csub">Understand it completely before trying to improve it.</div></div></button>
+  <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Write Barbier a letter after the demonstration, listing the specific problems he found</div><div class="csub">More respectful than confronting him in the room. Gives Barbier time to think.</div></div></button>
+</div>
+<div class="fifth-option">
+  <span class="fifth-label">💡 I'd do something different —</span>
+  <textarea class="fifth-input" id="fifth-s1" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+</div>
+</div>
+
+<!-- OUTCOME 1 -->
+<div class="scene" id="scene-out1">
+<div class="prog-wrap"><div class="prog-meta"><span>The Story</span><span>Scene 1 — What happened</span></div><div class="prog-track"><div class="prog-fill" style="width:32%"></div></div></div>
+<div class="story-eyebrow">What happened</div>
+<h2 class="story-title" style="font-size:clamp(1.5rem,4vw,2rem);" id="o1-title"></h2>
+<div id="o1-body"></div>
+<button class="continue-btn" onclick="goS2()">Three years later <span class="arrow">→</span></button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCENE 2 — THE PRESENTATION · 1824
+══════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-2">
+<div class="prog-wrap"><div class="prog-meta"><span>The Story</span><span>Scene 2 · 1824</span></div><div class="prog-track"><div class="prog-fill" style="width:50%"></div></div></div>
+<div id="s2-memory"></div>
+
+<div class="story-eyebrow">The Royal Institute · Paris · Autumn 1824</div>
+<h2 style="font-family:var(--serif);font-size:clamp(1.5rem,4vw,2.25rem);font-weight:700;color:var(--text);margin-bottom:0.35rem;letter-spacing:-0.01em;">The System Is Ready</h2>
+<p class="story-sub">Louis Braille, age 15 · Three years of all-nighters</p>
+
+<p class="narrative">Three years have passed. Louis is now fifteen. He has spent every spare moment — evenings after class, vacations home in Coupvray, nights when everyone else was sleeping — bent over paper with a stylus, punching holes in the darkness.</p>
+<p class="narrative">He has solved every problem he identified in Barbier's system. <strong>Six dots instead of twelve</strong> — small enough to read with a single fingertip. Each combination represents a letter, not a sound. There is punctuation. Numbers. Even a way to write music.</p>
+<p class="narrative">He has created 63 distinct symbols from those six dots. An entire written language that fits under one finger.</p>
+<p class="narrative">He tests it with his classmates. They can read faster than they ever could with embossed print. They weep.</p>
+<p class="narrative">Now comes the hardest part. The system is ready. But <em>the world is not yet ready for the system.</em></p>
+
+<div class="tension">
+  <p>Louis must decide how to introduce what he has built. The headmaster Dr. Pignier is sympathetic but cautious — he has to manage the school's relationship with the government and with sighted teachers who might feel threatened. Some teachers are already nervous that a system only the blind can read might make them unnecessary.</p>
+  <p><strong>It is autumn 1824. Louis is fifteen. He has something that could change the world. How does he present it?</strong></p>
+</div>
+
+<div class="dp">— Scene 2 — How does Louis present his system? —</div>
+<div class="choices" id="choices-2">
+  <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">Ask Dr. Pignier to read aloud from a newspaper while Louis transcribes it live — then read it back perfectly</div><div class="csub">Show the system working in real time. Let the evidence speak for itself.</div></div></button>
+  <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">Present a written booklet explaining the full system — let it stand on its own without a performance</div><div class="csub">The work should speak for itself without theatrics.</div></div></button>
+  <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">Teach a small group of classmates first and present with them as proof it can be learned</div><div class="csub">One person demonstrating a system is impressive. Five people demonstrating it is a movement.</div></div></button>
+  <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">Request a formal meeting with Dr. Pignier and the senior teaching staff — make the case for full adoption</div><div class="csub">Go directly to the decision-makers. Do not present to students first.</div></div></button>
+</div>
+<div class="fifth-option">
+  <span class="fifth-label">💡 I'd do something different —</span>
+  <textarea class="fifth-input" id="fifth-s2" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+</div>
+</div>
+
+<!-- FINAL OUTCOME -->
+<div class="scene" id="scene-final">
+<div class="prog-wrap"><div class="prog-meta"><span>The Story</span><span>Scene 2 — What happened</span></div><div class="prog-track"><div class="prog-fill" style="width:72%"></div></div></div>
+<div class="story-eyebrow">What happened</div>
+<h2 class="story-title" style="font-size:clamp(1.5rem,4vw,2rem);" id="final-title"></h2>
+<div id="final-body"></div>
+
+<div style="margin:1.5rem 0;background:var(--gold-soft);border:1px solid rgba(245,200,66,0.2);border-radius:10px;padding:1.1rem 1.25rem;">
+  <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.65rem;">What history records</div>
+  <p class="narrative" style="margin-bottom:0;">Louis Braille died of tuberculosis in 1852, aged 43. He died without knowing whether his system would survive. <strong>Two years after his death, the Royal Institute finally made braille its official system.</strong> By the end of the 19th century it had spread to every continent. Today, more than 200 million people worldwide use a writing system invented by a fifteen-year-old with an awl, a slate, and three years of all-nighters. He saved them from silence. The awl that blinded him became the tool that freed them.</p>
+</div>
+
+<button class="continue-btn" onclick="goDebrief()">Reflect on this <span class="arrow">→</span></button>
+</div>
+
+<!-- DEBRIEF -->
+<div class="scene" id="scene-debrief">
+<div class="prog-wrap"><div class="prog-meta"><span>The Story</span><span>Reflect</span></div><div class="prog-track"><div class="prog-fill" style="width:88%"></div></div></div>
+<div class="debrief-intro">
+  <div class="d-icon">✦</div>
+  <h2>Think like Louis.</h2>
+  <p>Three questions. No right answers. Just your honest thinking about what Louis did — and what you would have done.</p>
+</div>
+<div class="skills-panel" id="skills-panel"></div>
+<div class="dq-list">
+  <div class="dq">
+    <div class="dq-num">Question 01</div>
+    <div class="dq-text">Louis spent three years working on his system mostly alone, in secret, during all-nighters. He was twelve when he started. What do you think kept him going when there was no guarantee it would ever be accepted?</div>
+    <textarea id="dq1" placeholder="Think about what drives someone to keep working on something for three years with no reward yet..."></textarea>
+  </div>
+  <div class="dq">
+    <div class="dq-num">Question 02</div>
+    <div class="dq-text">Louis's system was rejected for decades after he created it — even burned and banned by one director. He kept refining and sharing it anyway. What does that tell you about the difference between an idea succeeding and an idea surviving?</div>
+    <textarea id="dq2" placeholder="Think about what it means to keep believing in something when institutions say no..."></textarea>
+  </div>
+  <div class="dq">
+    <div class="dq-num">Question 03</div>
+    <div class="dq-text">Barbier invented night writing for soldiers. Louis took it and turned it into something completely different. Can you think of any invention, tool, or idea today that started as something else — and what does Louis's story tell you about how innovation actually works?</div>
+    <textarea id="dq3" placeholder="Think about ideas being borrowed, remixed, and transformed..."></textarea>
+  </div>
+</div>
+<button class="final-btn" onclick="goComplete()">Complete ✓</button>
+</div>
+
+<!-- COMPLETION -->
+<div class="scene" id="scene-complete">
+<div class="prog-wrap"><div class="prog-meta"><span>The Story</span><span>Complete</span></div><div class="prog-track"><div class="prog-fill" style="width:100%"></div></div></div>
+<div class="completion">
+  <div class="c-icon">✦</div>
+  <h2>Story complete.</h2>
+  <p>You just lived through two of the most important decisions in the history of literacy — made by a fifteen-year-old who could not see, but could imagine something nobody else could.</p>
+  <p id="c-summary" style="color:var(--accent);font-weight:500;font-family:var(--serif);font-style:italic;font-size:1.05rem;"></p>
+
+  <div class="careers-box">
+    <div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:0.85rem;">Careers this story connects to</div>
+    <div class="career-row"><div class="career-icon">♿</div><div><div class="career-title">Accessibility & Assistive Technology Designer</div><div class="career-desc">Designs tools, systems, and products that help people with disabilities live, learn, and work independently. One of the fastest-growing fields in tech.</div></div></div>
+    <div class="career-row"><div class="career-icon">🔬</div><div><div class="career-title">Research Scientist</div><div class="career-desc">Identifies problems nobody has solved yet and builds the knowledge to solve them — often over years, with no guarantee of success.</div></div></div>
+    <div class="career-row"><div class="career-icon">📚</div><div><div class="career-title">Special Educational Needs (SEN) Teacher</div><div class="career-desc">Works with young people who learn differently — designing approaches, like Louis did, that meet people where they are.</div></div></div>
+    <div class="career-row"><div class="career-icon">⚖️</div><div><div class="career-title">Disability Rights Advocate / Policy Designer</div><div class="career-desc">Fights for systemic change so that institutions adopt what works — the battle Louis could not fully win in his lifetime.</div></div></div>
+    <div class="career-row"><div class="career-icon">🎨</div><div><div class="career-title">Social Innovator / Design Thinker</div><div class="career-desc">Takes existing ideas and transforms them for completely different purposes — exactly what Louis did with night writing.</div></div></div>
+  </div>
+
+  <div class="completion-actions">
+    <button class="replay-btn" onclick="resetAll()">↺ Replay with different choices</button>
+    <a href="https://pathforge001.github.io/simulations/" class="replay-btn">← Try another simulation</a>
+    <button class="review-btn" onclick="showJourney()">📖 Review my full journey</button>
+  </div>
+
+  <div class="parent-feedback">
+    <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;">👋 For Parents — Tell us what your child thought</p>
+    <a href="https://tally.so/r/kdx5g1" target="_blank" rel="noopener" style="display:inline-block;background:white;color:#4300CB;font-size:13px;font-weight:700;padding:8px 20px;border-radius:6px;text-decoration:none;">Parent Feedback →</a>
+  </div>
+</div>
+</div>
+
+<!-- JOURNEY REVIEW -->
+<div class="scene" id="scene-journey">
+<div class="prog-wrap"><div class="prog-meta"><span>The Story</span><span>Your Journey</span></div><div class="prog-track"><div class="prog-fill" style="width:100%"></div></div></div>
+<div style="padding:0.5rem 0 1rem;">
+  <div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:0.75rem;">Your full journey through Louis's story</div>
+  <div id="jr-content"></div>
+</div>
+<button class="review-btn" onclick="show('scene-complete')">← Back to completion</button>
+</div>
+
+</div></div>
+
+<script>
+let c1=null, c2=null;
+
+const O1 = {
+  A: {
+    title: "You spoke directly to Barbier.",
+    mem: "You told Barbier the problems honestly. He did not take it well — a twelve-year-old criticising a retired army officer's life work. But the conversation planted something. Louis began working on his own version that same night.",
+    body: `<p class="narrative">Louis raised his hand during Barbier's demonstration. The room went quiet. He explained, clearly and specifically, why the 12-dot grid was too large for a single finger, why representing sounds instead of letters would prevent blind students from learning to spell correctly, why there was no punctuation or numbers.</p>
+    <p class="narrative">Barbier did not take it well. He was proud of his system. A twelve-year-old blind student criticising it in front of a room felt like an insult.</p>
+    <div class="ob ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Barbier left without acknowledging the critique. But Louis had named the problem out loud — and that changed everything. Sometimes you do not speak up to change the other person's mind. You speak up to clarify your own. That night, Louis began working on his own version. <strong>He now knew exactly what he had to fix.</strong></div><span class="skill-tag">🟡 Intellectual courage · Identified the gap precisely</span></div>`
+  },
+  B: {
+    title: "You worked in private.",
+    mem: "You said nothing to Barbier. You borrowed his tools and started working alone that night. Three years of all-nighters, sitting on hills at home in Coupvray with a stylus and paper, nobody watching, nobody encouraging.",
+    body: `<p class="narrative">Louis said nothing. He borrowed Barbier's stylus and slate — the captain had donated dozens of sets to the school — and returned to his dormitory that evening.</p>
+    <p class="narrative">He spent the night punching holes in paper. Not reading. Building.</p>
+    <div class="ob ob-blue"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">For three years, Louis worked mostly in private. Villagers in Coupvray described seeing him on holidays sitting alone on a hill, stylus and paper in hand, in all weathers. <strong>He was not waiting for permission. He was building the evidence.</strong> The system would speak for itself when it was ready. Nobody needed to believe in it until it existed.</div><span class="skill-tag">🔵 Self-directed persistence · Proof before persuasion</span></div>`
+  },
+  C: {
+    title: "You asked to study it more.",
+    mem: "You asked the headmaster to invite Barbier back. You spent weeks mapping every flaw in the system before you started building your own. Understanding it completely before improving it.",
+    body: `<p class="narrative">Louis went to Dr. Pignier and requested that Barbier be invited to return so the students could study the system in depth. Pignier agreed — he was impressed by the seriousness of the request from such a young student.</p>
+    <p class="narrative">Over several weeks, Louis mapped the system completely. Every symbol. Every limitation. Every place where a finger hesitated.</p>
+    <div class="ob ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">By the time Louis began building his own system, he understood Barbier's so thoroughly that he could see exactly where each improvement needed to happen. <strong>The extra weeks of study compressed the three years of work that followed.</strong> Understanding something completely before trying to improve it is not delay — it is precision.</div><span class="skill-tag">💚 Thorough understanding before action · Mapped the problem precisely</span></div>`
+  },
+  D: {
+    title: "You wrote Barbier a letter.",
+    mem: "You wrote to Barbier listing the specific problems you found. He never replied. But writing them down forced you to be precise — and that list became the exact blueprint for what you built next.",
+    body: `<p class="narrative">That evening, Louis wrote a careful letter. He listed six specific problems with the night-writing system. He was respectful but precise. He did not tell Barbier the system was bad — he explained exactly where it fell short of what blind people actually needed.</p>
+    <p class="narrative">Barbier never replied.</p>
+    <div class="ob ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">The letter was never answered. But writing it forced Louis to name every problem precisely — and that list became the exact specification for what he built over the next three years. <strong>Sometimes you write not to communicate with someone else, but to clarify something for yourself.</strong> The letter was really a blueprint.</div><span class="skill-tag">🟡 Written clarity · Turned frustration into specification</span></div>`
+  }
+};
+
+const O2 = {
+  A: {
+    title: "You demonstrated it live.",
+    mem: "Pignier read aloud from a newspaper. Louis transcribed it as fast as Pignier could speak. Then he flipped back to the start and read the entire article back without hesitation. Pignier sat in silence for a long time.",
+    body: `<p class="narrative">Louis sat across from Dr. Pignier with his stylus, ruler, and paper. He asked Pignier to read aloud from a newspaper article — as fast as he liked.</p>
+    <p class="narrative"><em>"You can go faster,"</em> Louis said, his stylus moving continuously.</p>
+    <p class="narrative">When Pignier finished, Louis flipped back to the beginning of his notes. He ran his fingertips across the raised dots and recited the entire article back — word for word, without hesitation.</p>
+    <div class="ob ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Pignier sat in silence for a long time. Then he stood up and began immediately making arrangements for the system to be taught across the school. <strong>Evidence that moves through the body lands differently than evidence on paper.</strong> Pignier did not just understand braille after that demonstration. He felt it. A decade later, Louis was timed at a Paris exhibition punching 2,500 dots per minute.</div><span class="skill-tag">💚 Live demonstration · Let the evidence speak physically</span></div>`
+  },
+  B: {
+    title: "You wrote the system down and submitted it.",
+    mem: "You submitted a written booklet — careful, thorough, complete. Pignier read it over several days. He was impressed but cautious. Adopting it took longer without the live demonstration.",
+    body: `<p class="narrative">Louis spent three weeks writing a complete description of his system — every symbol, every rule, every reason for each decision. He submitted it to Dr. Pignier as a formal proposal.</p>
+    <p class="narrative">Pignier read it carefully over several days. He was impressed. The logic was airtight. But he had never felt it work under his own fingers.</p>
+    <div class="ob ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Pignier agreed the system was promising but asked for more time and testing before formal adoption. The written proposal was thorough but missed something crucial — <strong>braille is a physical experience. Reading about it is not the same as feeling it work.</strong> The best argument for some ideas is not words. It is demonstration.</div><span class="skill-tag">🟡 Thorough documentation · Missing: the physical experience</span></div>`
+  },
+  C: {
+    title: "You taught your classmates first.",
+    mem: "You spent six months teaching five classmates the system before presenting it. When the presentation came, six blind students demonstrating braille simultaneously was not impressive. It was undeniable.",
+    body: `<p class="narrative">Louis spent six months teaching his system to five classmates before approaching Pignier. He held sessions in the dormitory after lights-out, fingertips moving across paper in the dark.</p>
+    <p class="narrative">When the day came, Louis did not present alone. Six blind students stood in a row. Pignier read from a book. Six styluses moved across six sheets of paper simultaneously. Then six voices read it back.</p>
+    <div class="ob ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Pignier was floored. This was not one gifted student with a clever invention. <strong>This was a system that could be learned and used by anyone.</strong> One person demonstrating something proves it is possible. A group demonstrating it proves it is teachable. Louis understood the difference. Pignier began implementing it across the school immediately.</div><span class="skill-tag">💚 Built a community first · Proof of teachability not just possibility</span></div>`
+  },
+  D: {
+    title: "You went directly to the decision-makers.",
+    mem: "You requested a formal meeting with Pignier and senior staff. The meeting was long and difficult — sighted teachers asked hard questions about whether they would still be needed. But you answered every question.",
+    body: `<p class="narrative">Louis requested a formal meeting with Dr. Pignier and the three most senior teachers at the school. He came prepared. He had written out answers to every objection he anticipated — especially the one he knew was coming: <em>if the blind can read and write independently, what do sighted teachers contribute?</em></p>
+    <p class="narrative">The meeting was long. The questions were hard. Louis answered every one.</p>
+    <div class="ob ob-blue"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">The formal meeting process was slower than a live demonstration would have been. But it forced Louis to think through every objection systematically — and that preparation meant that when resistance came later from a different director, <strong>Louis already knew every argument and had already built every answer.</strong> Preparing for hard questions is its own kind of armour.</div><span class="skill-tag">🔵 Anticipated objections · Prepared for institutional resistance</span></div>`
+  }
+};
+
+const summaries = {
+  AA: "You spoke directly when others might have stayed quiet, and you proved the idea through live evidence rather than explanation. Both moves show the same quality: you trust that truth — spoken and demonstrated — is more powerful than politics.",
+  AB: "You named the problem out loud to Barbier, then let the work speak for itself with Pignier. Two different kinds of directness — one person-to-person, one through evidence. You understood that different audiences need different approaches.",
+  AC: "You had the courage to tell Barbier what was wrong, then the patience to teach others before presenting. You moved from individual honesty to collective proof. That combination — speak truth, then build a movement — is rare.",
+  AD: "You wrote to Barbier to clarify your thinking, then brought decision-makers directly to the table. Both moves show someone who thinks in writing and respects institutional process — even when it is slower.",
+  BA: "You worked in private for three years without needing external validation, then demonstrated the result so powerfully that Pignier could not deny it. That is the profile of someone who builds first and talks after — one of the most underrated qualities in any field.",
+  BB: "You worked alone and submitted your work through formal channels. Methodical, independent, process-respecting. The work was right. The presentation needed the physical layer that words alone could not carry.",
+  BC: "You built in private and then built a community before going public. Two kinds of patience — individual and collective. By the time you presented, you had not just an invention. You had proof.",
+  BD: "You worked quietly and prepared thoroughly for institutional resistance. Self-contained and strategically patient. You understood that an idea needs both truth and timing.",
+  CA: "You studied the problem completely before acting, then demonstrated it so physically that understanding was unavoidable. Thorough preparation followed by decisive demonstration — that combination builds things that last.",
+  CB: "You mapped every flaw before building, then submitted a complete written system. The intellectual rigour was exceptional. Adding a physical demonstration would have made it unstoppable.",
+  CC: "You understood the system completely before improving it, then built a community of practitioners before presenting. Two instances of deep preparation. By the time anyone saw the result, it was already proven.",
+  CD: "You studied the problem carefully, then prepared for every institutional objection. Two layers of preparation — technical and political. You did not just build the right thing. You built it for the right audience.",
+  DA: "You were respectful and precise with Barbier, then proved everything in a single live moment with Pignier. Written clarity followed by physical truth. Both together are more powerful than either alone.",
+  DB: "You documented the problems carefully for Barbier and the solution carefully for Pignier. Consistent in your commitment to written precision. The physical demonstration would have accelerated what your writing described perfectly.",
+  DC: "You wrote the specification and then built a community before presenting it. Precision in diagnosis, patience in proof. By the time you presented, the idea was already living in other people's hands.",
+  DD: "You used writing to clarify the problem and formal process to address institutional resistance. Consistently respectful, consistently thorough. You built something that was designed to survive — not just to impress."
+};
+
+function s1(c){
+  c1=c;
+  const o=O1[c];
+  document.getElementById('o1-title').textContent=o.title;
+  document.getElementById('o1-body').innerHTML=o.body;
+  show('scene-out1');
+  document.getElementById('pbar').style.width='32%';
+}
+
+function goS2(){
+  const o=O1[c1];
+  document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>✦</span><span><strong>You remember:</strong> ${o.mem}</span></div>`;
+  show('scene-2');
+  document.getElementById('pbar').style.width='50%';
+}
+
+function s2(c){
+  c2=c;
+  const o=O2[c];
+  document.getElementById('final-title').textContent=o.title;
+  document.getElementById('final-body').innerHTML=o.body;
+  show('scene-final');
+  document.getElementById('pbar').style.width='72%';
+}
+
+function goDebrief(){
+  const key=c1+c2;
+  document.getElementById('skills-panel').innerHTML=`<div class="sp-label">What your choices say about you</div><div class="sp-text">${summaries[key]||''}</div>`;
+  show('scene-debrief');
+  document.getElementById('pbar').style.width='88%';
+}
+
+async function goComplete(){
+  await saveDebrief('inventor-louis-braille');
+  const key=c1+c2;
+  document.getElementById('c-summary').textContent=summaries[key]||'';
+  show('scene-complete');
+  document.getElementById('pbar').style.width='100%';
+}
+
+function goS1A(){
+  show('scene-1a');
+  document.getElementById('pbar').style.width='18%';
+}
+
+function resetAll(){
+  c1=null;c2=null;
+  document.querySelectorAll('textarea').forEach(t=>t.value='');
+  show('scene-intro');
+  document.getElementById('pbar').style.width='5%';
+}
+
+function show(id){
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showJourney(){
+  const textareas = document.querySelectorAll('textarea');
+  const a1 = document.getElementById('dq1') ? document.getElementById('dq1').value.trim() : (textareas[0] ? textareas[0].value.trim() : '');
+  const a2 = document.getElementById('dq2') ? document.getElementById('dq2').value.trim() : (textareas[1] ? textareas[1].value.trim() : '');
+  const a3 = document.getElementById('dq3') ? document.getElementById('dq3').value.trim() : (textareas[2] ? textareas[2].value.trim() : '');
+  const key = (c1||'') + (c2||'');
+  const o1 = c1 && O1[c1] ? O1[c1] : null;
+  const o2 = c2 && O2[c2] ? O2[c2] : null;
+
+  let html = '';
+
+  // Story header
+  html += `<div style="background:rgba(196,165,255,0.06);border:1px solid rgba(196,165,255,0.2);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1rem;text-align:center;">
+    <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:4px;">Your PathForge Story Summary</div>
+    <div style="font-family:var(--serif);font-size:1.1rem;color:var(--accent);font-style:italic;">The Boy Who Read With His Fingers</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">Louis Braille · Paris, 1821–1824</div>
+  </div>`;
+
+  // Scene 1
+  if(o1){
+    html += `<div class="journey-review-scene">
+      <div class="jr-label">Scene 1 — You chose: ${c1||''}</div>
+      <div class="jr-choice">${o1.title||''}</div>
+      <div class="jr-mem" style="margin-top:6px;">${o1.mem||''}</div>
+    </div>`;
+  }
+
+  // Scene 2
+  if(o2){
+    html += `<div class="journey-review-scene">
+      <div class="jr-label">Scene 2 — You chose: ${c2||''}</div>
+      <div class="jr-choice">${o2.title||''}</div>
+    </div>`;
+  }
+
+  // Debrief answers
+  if(a1||a2||a3){
+    html += `<div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin:1rem 0 0.5rem;">Your reflections</div>`;
+    const questions = [
+      'What kept Louis going for three years with no guarantee of success?',
+      'What is the difference between an idea surviving and an idea succeeding?',
+      'Can you think of an idea today that started as something else?'
+    ];
+    [a1,a2,a3].forEach((a,i) => {
+      if(a) html += `<div class="jr-debrief-block">
+        <div class="jr-q">Q${i+1} — ${questions[i]}</div>
+        <div class="jr-a">"${a}"</div>
+      </div>`;
+    });
+  }
+
+  // Skills summary
+  const sum = summaries[key]||'';
+  if(sum){
+    html += `<div class="jr-summary-box">
+      <div class="jr-label" style="margin-bottom:5px;">What your choices say about you</div>
+      <div class="jr-summary-text">${sum}</div>
+    </div>`;
+  }
+
+  // Screenshot prompt
+  html += `<div style="background:rgba(196,165,255,0.04);border:1px dashed rgba(196,165,255,0.2);border-radius:8px;padding:0.75rem 1rem;margin-top:1rem;text-align:center;">
+    <p style="font-size:11px;color:var(--text-dim);line-height:1.6;">📸 Screenshot this page to keep your journey — your choices, your story, your words.</p>
+  </div>`;
+
+  document.getElementById('jr-content').innerHTML = html;
+  show('scene-journey');
+}
+
+async function saveDebrief(simulationName){
+  const textareas=document.querySelectorAll('textarea');
+  const answer1=textareas[0]?textareas[0].value.trim():'';
+  const answer2=textareas[1]?textareas[1].value.trim():'';
+  const answer3=textareas[2]?textareas[2].value.trim():'';
+  const sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+  try{
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({simulationName,sessionId,answer1,answer2,answer3})
+    });
+  }catch(e){console.log('Debrief save failed silently',e);}
+}
+
+setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
+</script>
+
+<div style="text-align:center;padding:2rem 1rem 0;border-top:1px solid rgba(255,255,255,0.08);margin-top:2rem;">
+  <p style="font-size:11px;color:rgba(255,255,255,0.3);line-height:1.8;font-family:inherit;">
+    PathForge · <a href="mailto:salem@usepathforge.io" style="color:rgba(255,255,255,0.45);text-decoration:none;">salem@usepathforge.io</a> · usepathforge.io<br>
+    Questions, feedback, or school enquiries — we read every email.
+  </p>
+</div>
+</body>
+</html>

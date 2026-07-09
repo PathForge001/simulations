@@ -602,6 +602,26 @@
 .pf-home-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:11px;font-weight:600;color:inherit;opacity:0.65;transition:opacity 0.2s;letter-spacing:0.03em}
 .pf-home-link:hover{opacity:1}
 .completion-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:0.5rem}
+
+/* ── Journey Review ── */
+.journey-review-scene{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:1rem 1.25rem;margin-bottom:0.85rem;}
+.jr-label{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:#888;margin-bottom:4px;font-family:monospace;}
+.jr-choice{font-size:13px;font-weight:600;color:#e8eaf8;margin-bottom:4px;}
+.jr-mem{font-size:12px;color:#8890b8;line-height:1.6;}
+.jr-debrief-block{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.85rem 1rem;margin-bottom:0.65rem;}
+.jr-q{font-size:10px;font-weight:600;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em;}
+.jr-a{font-size:12px;color:#e8eaf8;line-height:1.6;font-style:italic;}
+.jr-summary-box{border-radius:8px;padding:1rem 1.1rem;margin:1rem 0;background:rgba(67,0,203,0.1);border:1px solid rgba(67,0,203,0.25);}
+.jr-summary-text{font-size:12px;line-height:1.7;color:#c4b5fd;}
+.review-btn-br{display:inline-flex;align-items:center;gap:7px;padding:0.7rem 1.25rem;background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;color:#8890b8;transition:all 0.2s;margin-top:0.5rem;}
+.review-btn-br:hover{border-color:#00e5ff;color:#00e5ff;}
+/* 5th option */
+.fifth-option-br{margin-top:0.65rem;border:1.5px dashed rgba(255,255,255,0.12);border-radius:6px;padding:0.75rem 1rem;background:transparent;transition:border-color 0.2s;}
+.fifth-option-br:focus-within{border-color:#00e5ff;}
+.fifth-label-br{font-size:10px;font-weight:600;color:#555;margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:0.06em;}
+.fifth-input-br{width:100%;background:transparent;border:none;outline:none;font-family:inherit;font-size:12px;color:#e8eaf8;resize:none;min-height:48px;line-height:1.6;}
+.fifth-input-br::placeholder{color:#404870;}
+
 </style>
     <!-- Open Graph / Social Preview Tags -->
     <meta property="og:title" content="The Bridge That Shook — Can you prevent the collapse?" />
@@ -694,6 +714,10 @@
         </div>
       </button>
     </div>
+<div class="fifth-option-br">
+  <span class="fifth-label-br">💡 I'd do something different —</span>
+  <textarea class="fifth-input-br" id="fifth-s1-br" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+</div>
   </div>
 
   <!-- ============================================================ -->
@@ -780,6 +804,10 @@
         </div>
       </button>
     </div>
+<div class="fifth-option-br">
+  <span class="fifth-label-br">💡 I'd do something different —</span>
+  <textarea class="fifth-input-br" id="fifth-s2-br" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+</div>
   </div>
 
   <!-- ============================================================ -->
@@ -902,7 +930,12 @@
       <div class="completion-actions">
   <button class="replay-btn" onclick="resetSimulation()">↺ Play again with different choices</button>
   <a href="https://pathforge001.github.io/simulations/" class="replay-btn" style="text-decoration:none;">← Try another simulation</a>
-</div>
+
+  <button class="review-btn-br" onclick="showJourneyBridge()">📖 Review my full journey</button></div>
+  <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(255,255,255,0.06);border-radius:10px;text-align:center;border:1px solid rgba(255,255,255,0.1);">
+    <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:8px;font-family:inherit;">👋 For Parents — Tell us what your child thought</p>
+    <a href="https://tally.so/r/kdx5g1" target="_blank" rel="noopener" style="display:inline-block;background:white;color:#4300CB;font-size:13px;font-weight:700;padding:8px 20px;border-radius:6px;text-decoration:none;">Parent Feedback →</a>
+  </div>
     </div>
   </div>
 
@@ -1152,6 +1185,58 @@ async function saveDebrief(simulationName) {
     });
   } catch(e) { console.log('Debrief save failed silently', e); }
 }
+
+function showJourneyBridge(){
+  const a1 = (document.getElementById('answer1')||{}).value||'';
+  const a2 = (document.getElementById('answer2')||{}).value||'';
+  const a3 = (document.getElementById('answer3')||{}).value||'';
+  const key = (choice1||'')+(choice2||'');
+  const o1 = choice1 && outcomes1[choice1] ? outcomes1[choice1] : null;
+  const o2 = choice2 && outcomes2[choice2] ? outcomes2[choice2] : null;
+
+  let html = '';
+  if(o1){
+    html += `<div class="journey-review-scene">
+      <div class="jr-label">Scene 1 — Your choice: ${choice1||''}</div>
+      <div class="jr-choice">${o1.title||''}</div>
+    </div>`;
+  }
+  if(o2){
+    html += `<div class="journey-review-scene">
+      <div class="jr-label">Scene 2 — Your choice: ${choice2||''}</div>
+      <div class="jr-choice">${o2.title||''}</div>
+    </div>`;
+  }
+  if(a1||a2||a3){
+    html += '<div style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin:0.85rem 0 0.5rem;">Your debrief answers</div>';
+    if(a1) html += `<div class="jr-debrief-block"><div class="jr-q">Question 1</div><div class="jr-a">"${a1}"</div></div>`;
+    if(a2) html += `<div class="jr-debrief-block"><div class="jr-q">Question 2</div><div class="jr-a">"${a2}"</div></div>`;
+    if(a3) html += `<div class="jr-debrief-block"><div class="jr-q">Question 3</div><div class="jr-a">"${a3}"</div></div>`;
+  }
+  const sum = skillSummaries[key]||'';
+  if(sum){
+    html += `<div class="jr-summary-box"><div class="jr-label" style="margin-bottom:5px;">What your choices say about you</div><div class="jr-summary-text">${sum}</div></div>`;
+  }
+  document.getElementById('jr-content-br').innerHTML = html;
+  showScene('scene-journey');
+}
+
 </script>
+
+  <div class="scene" id="scene-journey">
+    <div style="padding:0.5rem 0 1rem;">
+      <div style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;">Your full journey</div>
+      <div id="jr-content-br"></div>
+    </div>
+    <button class="review-btn-br" onclick="showScene('scene-complete')">← Back to completion</button>
+  </div>
+
+
+<div style="text-align:center;padding:2rem 1rem 0;border-top:1px solid #e5e7eb;margin-top:2rem;">
+  <p style="font-size:11px;color:#9ca3af;line-height:1.8;font-family:inherit;">
+    PathForge · <a href="mailto:salem@usepathforge.io" style="color:#6b7280;text-decoration:none;">salem@usepathforge.io</a> · usepathforge.io<br>
+    Questions, feedback, or school enquiries — we read every email.
+  </p>
+</div>
 </body>
 </html>
