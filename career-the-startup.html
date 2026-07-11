@@ -277,9 +277,9 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 </div>
 <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem" id="skills-panel"></div>
 <div class="dq-list">
-  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">£85,000 is a lot of money. £28,000 each is life-changing at 17. Why is it still not always the right answer to take it?</div><textarea placeholder="Think about what you would be giving up as well as gaining..."></textarea></div>
-  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">Kai and Priya disagree on almost every decision. What is the difference between a founding team disagreement that makes a company stronger and one that destroys it?</div><textarea placeholder="Think about the role of trust, respect, and decision frameworks..."></textarea></div>
-  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">TutorLink helps tutors earn money and families access education. What responsibility does that create — and how does it change the decisions you can make?</div><textarea placeholder="Who are the stakeholders beyond just the three founders?"></textarea></div>
+  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">£85,000 is a lot of money. £28,000 each is life-changing at 17. Why is it still not always the right answer to take it?</div><textarea id="dq1" placeholder="Think about what you would be giving up as well as gaining..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">Kai and Priya disagree on almost every decision. What is the difference between a founding team disagreement that makes a company stronger and one that destroys it?</div><textarea id="dq2" placeholder="Think about the role of trust, respect, and decision frameworks..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">TutorLink helps tutors earn money and families access education. What responsibility does that create — and how does it change the decisions you can make?</div><textarea id="dq3" placeholder="Who are the stakeholders beyond just the three founders?"></textarea></div>
 </div>
 <button class="final-btn" onclick="goComplete()">Close chapter ✓</button>
 </div>
@@ -392,22 +392,6 @@ function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEac
 function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
 
-async function saveDebrief(simulationName) {
-  const textareas = document.querySelectorAll('textarea');
-  const answer1 = textareas[0] ? textareas[0].value.trim() : '';
-  const answer2 = textareas[1] ? textareas[1].value.trim() : '';
-  const answer3 = textareas[2] ? textareas[2].value.trim() : '';
-  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
-  try {
-    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
-    });
-  } catch(e) { console.log('Debrief save failed silently', e); }
-}
-
 function showJourney(){
   const textareas = document.querySelectorAll('textarea');
   const a1 = textareas[0] ? textareas[0].value.trim() : '';
@@ -451,6 +435,26 @@ function showJourney(){
   show('scene-journey');
 }
 
+
+async function saveDebrief(simulationName){
+  const a1 = (document.getElementById('dq1')||{value:''}).value.trim();
+  const a2 = (document.getElementById('dq2')||{value:''}).value.trim();
+  const a3 = (document.getElementById('dq3')||{value:''}).value.trim();
+  const sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+  try{
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        simulationName,
+        sessionId,
+        answer1: a1 || 'no answer provided',
+        answer2: a2 || 'no answer provided',
+        answer3: a3 || 'no answer provided'
+      })
+    });
+  }catch(e){console.log('Debrief save failed silently',e);}
+}
 </script>
 
   <!-- Journey Review Screen -->

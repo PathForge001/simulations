@@ -602,17 +602,21 @@ function showJourney(){
 }
 
 async function saveDebrief(simulationName){
-  const textareas=document.querySelectorAll('textarea');
-  const answer1=textareas[0]?textareas[0].value.trim():'';
-  const answer2=textareas[1]?textareas[1].value.trim():'';
-  const answer3=textareas[2]?textareas[2].value.trim():'';
+  const a1 = (document.getElementById('dq1')||{value:''}).value.trim();
+  const a2 = (document.getElementById('dq2')||{value:''}).value.trim();
+  const a3 = (document.getElementById('dq3')||{value:''}).value.trim();
   const sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
   try{
     await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
       method:'POST',
-      mode:'no-cors',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({simulationName,sessionId,answer1,answer2,answer3})
+      body:JSON.stringify({
+        simulationName,
+        sessionId,
+        answer1: a1 || 'no answer provided',
+        answer2: a2 || 'no answer provided',
+        answer3: a3 || 'no answer provided'
+      })
     });
   }catch(e){console.log('Debrief save failed silently',e);}
 }

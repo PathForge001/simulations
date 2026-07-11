@@ -281,9 +281,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 <div class="skills-panel" id="skills-panel"></div>
 <div class="dq-list">
-  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">Priya found the problem in her own time and sent you a private message rather than posting it publicly. What does that tell you about the culture she was working in — and what would a healthy culture have looked like instead?</div><textarea placeholder="Think about why she messaged privately rather than raising it openly..."></textarea></div>
-  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">Sarah was not asking you to lie. She was asking you to delay by one week. Where is the line between practical timing and compromising your integrity — and how do you know when you have crossed it?</div><textarea placeholder="This is one of the hardest questions in professional life..."></textarea></div>
-  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">The algorithm discriminated by postcode, not by race. But the effect was the same. What does that tell you about the gap between what a system is designed to do and what it actually does — and whose responsibility is it to close that gap?</div><textarea placeholder="Think about intent versus impact..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">Priya found the problem in her own time and sent you a private message rather than posting it publicly. What does that tell you about the culture she was working in — and what would a healthy culture have looked like instead?</div><textarea id="dq1" placeholder="Think about why she messaged privately rather than raising it openly..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">Sarah was not asking you to lie. She was asking you to delay by one week. Where is the line between practical timing and compromising your integrity — and how do you know when you have crossed it?</div><textarea id="dq2" placeholder="This is one of the hardest questions in professional life..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">The algorithm discriminated by postcode, not by race. But the effect was the same. What does that tell you about the gap between what a system is designed to do and what it actually does — and whose responsibility is it to close that gap?</div><textarea id="dq3" placeholder="Think about intent versus impact..."></textarea></div>
 </div>
 <button class="final-btn" onclick="goComplete()">Complete ✓</button>
 </div>
@@ -403,22 +403,6 @@ function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEac
 function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
 
-async function saveDebrief(simulationName) {
-  const textareas = document.querySelectorAll('textarea');
-  const answer1 = textareas[0] ? textareas[0].value.trim() : '';
-  const answer2 = textareas[1] ? textareas[1].value.trim() : '';
-  const answer3 = textareas[2] ? textareas[2].value.trim() : '';
-  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
-  try {
-    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
-    });
-  } catch(e) { console.log('Debrief save failed silently', e); }
-}
-
 function showJourney(){
   const textareas = document.querySelectorAll('textarea');
   const a1 = textareas[0] ? textareas[0].value.trim() : '';
@@ -462,6 +446,26 @@ function showJourney(){
   show('scene-journey');
 }
 
+
+async function saveDebrief(simulationName){
+  const a1 = (document.getElementById('dq1')||{value:''}).value.trim();
+  const a2 = (document.getElementById('dq2')||{value:''}).value.trim();
+  const a3 = (document.getElementById('dq3')||{value:''}).value.trim();
+  const sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+  try{
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        simulationName,
+        sessionId,
+        answer1: a1 || 'no answer provided',
+        answer2: a2 || 'no answer provided',
+        answer3: a3 || 'no answer provided'
+      })
+    });
+  }catch(e){console.log('Debrief save failed silently',e);}
+}
 </script>
 
   <!-- Journey Review Screen -->

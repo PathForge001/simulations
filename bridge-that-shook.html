@@ -1172,21 +1172,6 @@
     document.getElementById('progress-bar').style.width = '10%';
   }, 300);
 
-async function saveDebrief(simulationName) {
-  const answer1 = (document.getElementById('answer1') || {}).value || '';
-  const answer2 = (document.getElementById('answer2') || {}).value || '';
-  const answer3 = (document.getElementById('answer3') || {}).value || '';
-  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
-  try {
-    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
-    });
-  } catch(e) { console.log('Debrief save failed silently', e); }
-}
-
 function showJourneyBridge(){
   const a1 = (document.getElementById('answer1')||{}).value||'';
   const a2 = (document.getElementById('answer2')||{}).value||'';
@@ -1222,6 +1207,26 @@ function showJourneyBridge(){
   showScene('scene-journey');
 }
 
+
+async function saveDebrief(simulationName){
+  const a1 = (document.getElementById('answer1')||{value:''}).value.trim();
+  const a2 = (document.getElementById('answer2')||{value:''}).value.trim();
+  const a3 = (document.getElementById('answer3')||{value:''}).value.trim();
+  const sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+  try{
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        simulationName,
+        sessionId,
+        answer1: a1 || 'no answer provided',
+        answer2: a2 || 'no answer provided',
+        answer3: a3 || 'no answer provided'
+      })
+    });
+  }catch(e){console.log('Debrief save failed silently',e);}
+}
 </script>
 
   <div class="scene" id="scene-journey">

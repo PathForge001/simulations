@@ -283,9 +283,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 <div class="skills-panel" id="skills-panel"></div>
 <div class="dq-list">
-  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">When you realised Marcus was missing, what was the first thing you felt — and did that feeling lead to a good decision?</div><textarea placeholder="Think about the gap between feeling something and acting on it..."></textarea></div>
-  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">The ban took away one way of communicating. What did it force you to use instead — and was that actually worse, or just different?</div><textarea placeholder="This one is worth being honest about..."></textarea></div>
-  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">If you were a journalist writing about the social media ban, whose voice would you most want people to hear — and why is that voice usually left out?</div><textarea placeholder="Who gets heard in these debates? Who doesn't?"></textarea></div>
+  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">When you realised Marcus was missing, what was the first thing you felt — and did that feeling lead to a good decision?</div><textarea id="dq1" placeholder="Think about the gap between feeling something and acting on it..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">The ban took away one way of communicating. What did it force you to use instead — and was that actually worse, or just different?</div><textarea id="dq2" placeholder="This one is worth being honest about..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">If you were a journalist writing about the social media ban, whose voice would you most want people to hear — and why is that voice usually left out?</div><textarea id="dq3" placeholder="Who gets heard in these debates? Who doesn't?"></textarea></div>
 </div>
 <button class="final-btn" onclick="goComplete()">Complete Simulation ✓</button>
 </div>
@@ -408,22 +408,6 @@ function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEac
 function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
 
-async function saveDebrief(simulationName) {
-  const textareas = document.querySelectorAll('textarea');
-  const answer1 = textareas[0] ? textareas[0].value.trim() : '';
-  const answer2 = textareas[1] ? textareas[1].value.trim() : '';
-  const answer3 = textareas[2] ? textareas[2].value.trim() : '';
-  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
-  try {
-    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
-    });
-  } catch(e) { console.log('Debrief save failed silently', e); }
-}
-
 function showJourney(){
   const textareas = document.querySelectorAll('textarea');
   const a1 = textareas[0] ? textareas[0].value.trim() : '';
@@ -467,6 +451,26 @@ function showJourney(){
   show('scene-journey');
 }
 
+
+async function saveDebrief(simulationName){
+  const a1 = (document.getElementById('dq1')||{value:''}).value.trim();
+  const a2 = (document.getElementById('dq2')||{value:''}).value.trim();
+  const a3 = (document.getElementById('dq3')||{value:''}).value.trim();
+  const sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+  try{
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        simulationName,
+        sessionId,
+        answer1: a1 || 'no answer provided',
+        answer2: a2 || 'no answer provided',
+        answer3: a3 || 'no answer provided'
+      })
+    });
+  }catch(e){console.log('Debrief save failed silently',e);}
+}
 </script>
 
   <!-- Journey Review Screen -->

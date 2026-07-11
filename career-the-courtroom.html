@@ -274,9 +274,9 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 </div>
 <div style="background:var(--surface);border:1px solid var(--border);padding:1rem 1.25rem;margin-bottom:1.5rem" id="skills-panel"></div>
 <div class="dq-list">
-  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">What is the difference between believing someone is guilty and being able to prove it? Why does that difference matter?</div><textarea placeholder="Think about what would happen if courts only needed belief, not proof..."></textarea></div>
-  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">Jade said "fairly confident." In a criminal trial, that phrase could set someone free. Why are words so important in law?</div><textarea placeholder="Lawyers are sometimes called 'wordsmiths' — what do you think that means?"></textarea></div>
-  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">Think of a situation you know about — in school, in the news, in your community — where you think justice was not done. What would it take to change that?</div><textarea placeholder="This is your opinion. There is no wrong answer."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 01</div><div class="dq-text">What is the difference between believing someone is guilty and being able to prove it? Why does that difference matter?</div><textarea id="dq1" placeholder="Think about what would happen if courts only needed belief, not proof..."></textarea></div>
+  <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">Jade said "fairly confident." In a criminal trial, that phrase could set someone free. Why are words so important in law?</div><textarea id="dq2" placeholder="Lawyers are sometimes called 'wordsmiths' — what do you think that means?"></textarea></div>
+  <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">Think of a situation you know about — in school, in the news, in your community — where you think justice was not done. What would it take to change that?</div><textarea id="dq3" placeholder="This is your opinion. There is no wrong answer."></textarea></div>
 </div>
 <button class="final-btn" onclick="goComplete()">Close the case ✓</button>
 </div>
@@ -399,22 +399,6 @@ function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEac
 function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
 
-async function saveDebrief(simulationName) {
-  const textareas = document.querySelectorAll('textarea');
-  const answer1 = textareas[0] ? textareas[0].value.trim() : '';
-  const answer2 = textareas[1] ? textareas[1].value.trim() : '';
-  const answer3 = textareas[2] ? textareas[2].value.trim() : '';
-  const sessionId = 'session-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
-  try {
-    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ simulationName, sessionId, answer1, answer2, answer3 })
-    });
-  } catch(e) { console.log('Debrief save failed silently', e); }
-}
-
 function showJourney(){
   const textareas = document.querySelectorAll('textarea');
   const a1 = textareas[0] ? textareas[0].value.trim() : '';
@@ -458,6 +442,26 @@ function showJourney(){
   show('scene-journey');
 }
 
+
+async function saveDebrief(simulationName){
+  const a1 = (document.getElementById('dq1')||{value:''}).value.trim();
+  const a2 = (document.getElementById('dq2')||{value:''}).value.trim();
+  const a3 = (document.getElementById('dq3')||{value:''}).value.trim();
+  const sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+  try{
+    await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        simulationName,
+        sessionId,
+        answer1: a1 || 'no answer provided',
+        answer2: a2 || 'no answer provided',
+        answer3: a3 || 'no answer provided'
+      })
+    });
+  }catch(e){console.log('Debrief save failed silently',e);}
+}
 </script>
 
   <!-- Journey Review Screen -->
