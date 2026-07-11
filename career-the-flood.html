@@ -264,7 +264,7 @@ body::before{content:'';position:fixed;inset:0;background:linear-gradient(180deg
   <div class="dq"><div class="dq-num">Question 2</div><div class="dq-text">The council were grown-ups. Why did your information still matter?</div><textarea id="dq2" placeholder="What can children notice that adults sometimes miss?"></textarea></div>
   <div class="dq"><div class="dq-num">Question 3</div><div class="dq-text">What is something near where you live that a scientist, engineer or planner might want to study?</div><textarea id="dq3" placeholder="It could be a river, a road, a park, a building..."></textarea></div>
 </div>
-<button class="final-btn" onclick="goComplete()">I'm done thinking! ✓</button>
+<button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goComplete()">I'm done thinking! ✓</button>
 </div>
 
 <!-- COMPLETE -->

@@ -285,7 +285,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">Sarah was not asking you to lie. She was asking you to delay by one week. Where is the line between practical timing and compromising your integrity — and how do you know when you have crossed it?</div><textarea id="dq2" placeholder="This is one of the hardest questions in professional life..."></textarea></div>
   <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">The algorithm discriminated by postcode, not by race. But the effect was the same. What does that tell you about the gap between what a system is designed to do and what it actually does — and whose responsibility is it to close that gap?</div><textarea id="dq3" placeholder="Think about intent versus impact..."></textarea></div>
 </div>
-<button class="final-btn" onclick="goComplete()">Complete ✓</button>
+<button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goComplete()">Complete ✓</button>
 </div>
 
 <!-- COMPLETE -->

@@ -257,7 +257,7 @@ body::before{content:'';position:fixed;inset:0;background-image:repeating-linear
   <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">Dr Okafor asked which kind of doctor you want to be — one who waits to be taught, or one who works through what they know. What is the difference in those two approaches, and which one do you think you are?</div><textarea id="dq2" placeholder="Be honest — this is about you, not about medicine..."></textarea></div>
   <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">Mrs Nwosu's family were worried and wanted answers. What do patients and families deserve to know — and when does "keeping it simple so they don't panic" become not giving them enough information to make their own decisions?</div><textarea id="dq3" placeholder="Think about a time when someone kept information from you to 'protect you'..."></textarea></div>
 </div>
-<button class="final-btn" onclick="goComplete()">Close this case ✓</button>
+<button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goComplete()">Close this case ✓</button>
 </div>
 
 <!-- COMPLETE -->

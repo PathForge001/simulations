@@ -343,7 +343,7 @@ body::before{content:'';position:fixed;inset:0;
     <textarea id="dq3" placeholder="Think about ideas being borrowed, remixed, and transformed..."></textarea>
   </div>
 </div>
-<button class="final-btn" onclick="goComplete()">Complete ✓</button>
+<button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goComplete()">Complete ✓</button>
 </div>
 
 <!-- COMPLETION -->
@@ -512,6 +512,8 @@ async function goComplete(){
   document.getElementById('c-summary').textContent=summaries[key]||'';
   show('scene-complete');
   document.getElementById('pbar').style.width='100%';
+  const btn = document.querySelector('.final-btn');
+  if(btn){ btn.disabled=false; btn.textContent='Complete ✓'; }
 }
 
 function goS1A(){

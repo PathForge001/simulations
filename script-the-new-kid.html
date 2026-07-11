@@ -265,7 +265,7 @@ body::before{content:'';position:fixed;inset:0;background-image:repeating-linear
   <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">When the group was stuck, you had to find a way through. What does it take to move a group of people who all have different ideas — without making anyone feel dismissed?</div><textarea id="dq2" placeholder="Think about the group project moment..."></textarea></div>
   <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">Amara described the noticeboard as "social media but real." What do you think is lost when everything moves online — and what comes back when it is taken away?</div><textarea id="dq3" placeholder="There is no wrong answer here — this one is about what you actually think..."></textarea></div>
 </div>
-<button class="final-btn" onclick="goComplete()">Complete Simulation ✓</button>
+<button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goComplete()">Complete Simulation ✓</button>
 </div>
 
 <!-- COMPLETE -->

@@ -287,7 +287,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="dq"><div class="dq-num">Question 02</div><div class="dq-text">The ban took away one way of communicating. What did it force you to use instead — and was that actually worse, or just different?</div><textarea id="dq2" placeholder="This one is worth being honest about..."></textarea></div>
   <div class="dq"><div class="dq-num">Question 03</div><div class="dq-text">If you were a journalist writing about the social media ban, whose voice would you most want people to hear — and why is that voice usually left out?</div><textarea id="dq3" placeholder="Who gets heard in these debates? Who doesn't?"></textarea></div>
 </div>
-<button class="final-btn" onclick="goComplete()">Complete Simulation ✓</button>
+<button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goComplete()">Complete Simulation ✓</button>
 </div>
 
 <!-- COMPLETE -->

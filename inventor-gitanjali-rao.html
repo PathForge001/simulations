@@ -341,7 +341,7 @@ body::before{content:'';position:fixed;inset:0;
     <textarea id="dq3" placeholder="Think about a time when a setback led you somewhere unexpected..."></textarea>
   </div>
 </div>
-<button class="final-btn" onclick="goComplete()">I'm done thinking! ✓</button>
+<button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goComplete()">I'm done thinking! ✓</button>
 </div>
 
 <!-- COMPLETION -->
@@ -517,6 +517,8 @@ async function goComplete(){
   document.getElementById('c-summary').textContent=summaries[key]||'';
   show('scene-complete');
   document.getElementById('pbar').style.width='100%';
+  const btn = document.querySelector('.final-btn');
+  if(btn){ btn.disabled=false; btn.textContent='Complete ✓'; }
 }
 
 function goS1A(){

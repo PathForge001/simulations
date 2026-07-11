@@ -237,7 +237,7 @@ body::before{content:'';position:fixed;inset:0;background:linear-gradient(160deg
   <div class="dq"><div class="dq-num">Question 2</div><div class="dq-text">Your coach left the room and gave the fifteen minutes to you. Why do you think she did that rather than doing it herself?</div><textarea id="dq2" placeholder="What does a coach know about captaincy that a captain doesn't know yet?"></textarea></div>
   <div class="dq"><div class="dq-num">Question 3</div><div class="dq-text">If you could have one conversation with Jordan before this whole week happened — when things were still normal — what would you have said or done differently?</div><textarea id="dq3" placeholder="Think about the difference between noticing and acting before a crisis versus during one..."></textarea></div>
 </div>
-<button class="final-btn" onclick="goComplete()">I'm done thinking! ✓</button>
+<button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goComplete()">I'm done thinking! ✓</button>
 </div>
 
 <!-- COMPLETE -->
