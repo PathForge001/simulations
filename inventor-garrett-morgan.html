@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Crash at the Crossing — PathForge</title>
+<meta name="description" content="Step into the decision moments of Garrett Morgan, inventor of the traffic signal and the safety hood. A PathForge inventor story.">
+<meta property="og:title" content="The Crash at the Crossing — PathForge">
+<meta property="og:description" content="Step into the decision moments of Garrett Morgan, inventor of the traffic signal and the safety hood. A PathForge inventor story.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCT2NS7ET8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCT2NS7ET8');
+</script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xbl1zshvdm");
+</script>
+<style>
+  :root{--accent:#7a1010;--accent2:#e0574a;--bg:#0f0a1e;--card:#1a1230;--text:#ece8f5;--muted:#a99fc4;--sans:'Segoe UI',system-ui,sans-serif;--serif:Georgia,serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;padding:0;}
+  .wrap{max-width:640px;margin:0 auto;padding:20px 18px 80px;}
+  .topnav{display:flex;justify-content:space-between;align-items:center;padding:10px 0 20px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:24px;}
+  .brand{font-weight:800;letter-spacing:0.5px;color:var(--accent2);font-size:15px;text-decoration:none;}
+  .brand span{color:var(--text);}
+  .nav-link{color:var(--muted);text-decoration:none;font-size:13px;}
+  .scene{display:none;animation:fade 0.4s ease;}
+  .scene.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--accent2);font-weight:700;margin-bottom:10px;}
+  h1{font-family:var(--serif);font-size:30px;line-height:1.2;margin-bottom:8px;}
+  h2{font-family:var(--serif);font-size:24px;margin-bottom:12px;}
+  .subtitle{color:var(--muted);font-size:17px;margin-bottom:24px;}
+  .narrative{font-size:17px;margin-bottom:18px;}
+  .narrative strong{color:#fff;}
+  .narrative em{color:var(--accent2);font-style:italic;}
+  .progress-wrap{margin-bottom:20px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .progress-track{height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width 0.5s ease;}
+  .fact-card{display:flex;gap:14px;background:var(--card);border-radius:12px;padding:16px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.08);}
+  .fact-icon{font-size:24px;flex-shrink:0;}
+  .fact-label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);font-weight:700;margin-bottom:4px;}
+  .fact-body{font-size:15px;color:var(--text);}
+  .tension{background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));border-left:3px solid var(--accent2);border-radius:8px;padding:16px;margin:20px 0;}
+  .tension p{margin-bottom:8px;}.tension p:last-child{margin-bottom:0;}
+  .continue-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:16px 24px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:var(--sans);transition:background 0.2s;}
+  .continue-btn:hover{background:var(--accent2);}
+  .arrow{margin-left:6px;}
+  .dp{text-align:center;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:2px;margin:24px 0 16px;}
+  .choice-btn{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;font-family:var(--sans);color:var(--text);transition:border-color 0.2s,transform 0.08s ease;}
+  .choice-btn:hover{border-color:var(--accent2);}
+  .choice-btn:active{transform:scale(0.96);}
+  .choice-btn{-webkit-tap-highlight-color:transparent;}
+  .cletter{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:14px;}
+  .ctext{font-weight:600;font-size:16px;margin-bottom:3px;}
+  .csub{color:var(--muted);font-size:14px;}
+  .ob{border-radius:10px;padding:16px;margin:18px 0;border:1px solid;}
+  .ob-green{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);}
+  .ob-amber{background:rgba(217,119,6,0.08);border-color:rgba(217,119,6,0.3);}
+  .ob-red{background:rgba(220,38,38,0.08);border-color:rgba(220,38,38,0.3);}
+  .ob-blue{background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.3);}
+  .ob-label{display:flex;align-items:center;gap:8px;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px;color:var(--accent2);}
+  .ob-dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);}
+  .ob-text{font-size:15px;}
+  .ob-text strong{color:#fff;}
+  .skill-tag{display:inline-block;margin-top:10px;font-size:13px;background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:20px;color:var(--accent2);font-weight:600;}
+  .mem-badge{background:rgba(255,255,255,0.05);border-radius:10px;padding:14px;margin-bottom:20px;font-size:14px;color:var(--muted);border:1px dashed rgba(255,255,255,0.15);}
+  .mem-badge strong{color:var(--accent2);}
+  .fifth{margin-top:8px;margin-bottom:20px;}
+  .fifth-label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block;}
+  .fifth-input{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px;color:var(--text);font-family:var(--sans);font-size:14px;resize:vertical;}
+  .fifth-continue{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:transparent;border:1px solid var(--accent2);color:var(--accent2);border-radius:8px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all 0.2s;}
+  .fifth-continue:hover{background:var(--accent2);color:#fff;}
+  .fifth-continue:active{transform:scale(0.96);}
+  .fifth-hint{font-size:12px;color:var(--muted);margin-top:8px;opacity:0;transition:opacity 0.2s;}
+  .fifth-hint.show{opacity:1;}
+  .completion{text-align:center;margin-bottom:24px;}
+  .completion-icon{font-size:48px;margin-bottom:12px;}
+  #c-summary,#path-rarity{text-align:center;}
+  #c-summary{color:var(--accent2);font-weight:700;font-size:16px;margin:0 auto;max-width:520px;}
+  #path-rarity{font-size:12px;opacity:0.65;margin-top:8px;}
+  .career-reveal{margin:28px 0;}
+  .career-reveal h3{text-align:center;font-family:var(--serif);margin-bottom:16px;}
+  .career-card{display:flex;gap:14px;background:var(--card);border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.08);}
+  .career-icon{font-size:22px;}
+  .career-title{font-weight:700;font-size:15px;}
+  .career-desc{color:var(--muted);font-size:14px;}
+  .debrief-q{margin-bottom:18px;}
+  .debrief-q label{display:block;font-size:15px;margin-bottom:8px;font-weight:600;}
+  .debrief-q textarea{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:var(--sans);font-size:15px;resize:vertical;min-height:70px;}
+  .final-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:var(--sans);margin-top:8px;transition:background 0.2s;}
+  .final-btn:hover{background:var(--accent2);}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+  .actions button,.actions a{flex:1;min-width:140px;text-align:center;background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--text);border-radius:8px;padding:12px;font-size:14px;cursor:pointer;text-decoration:none;font-family:var(--sans);}
+  .epilogue{background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(212,175,55,0.03));border:1px solid rgba(212,175,55,0.25);border-radius:12px;padding:18px;margin:22px 0;}
+  .epilogue .ob-label{color:#d4af37;}.epilogue .ob-dot{background:#d4af37;}
+  .footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+  .footer a{color:var(--accent2);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topnav">
+    <a href="https://pathforge001.github.io/simulations/" class="brand">PATH<span>FORGE</span></a>
+    <a href="https://pathforge001.github.io/simulations/" class="nav-link">← All simulations</a>
+  </div>
+
+  <!-- INTRO -->
+  <div class="scene active" id="scene-intro">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span id="pl0">Begin</span></div><div class="progress-track"><div class="progress-fill" id="pbar" style="width:6%"></div></div></div>
+    <div class="eyebrow">Cleveland, 1923</div>
+    <h1>The Crash at the Crossing</h1>
+    <p class="subtitle">He saw the accident happen. He knew he could stop the next one.</p>
+    <p class="narrative">Garrett Morgan was born in 1877 in Kentucky, the son of formerly enslaved parents. He left school after the sixth grade to find work. But Garrett had a gift — he could look at a machine and see how to make it better.</p>
+ <p class="narrative">By 1923 he has already invented a breathing device — a "safety hood" that lets people breathe in smoke and toxic air. He once used it himself to <strong>rescue men trapped in a collapsed tunnel</strong> filling with poison gas. But when fire departments in the South learned the inventor was a Black man, many cancelled their orders.</p>
+ <p class="narrative">Now Garrett is stopped at a Cleveland intersection when he sees it happen — <em>a car slams into a horse-drawn carriage.</em> The signals of the day only said STOP and GO. There was no warning. No moment to clear the crossing. He watches the wreck and thinks: this will keep happening until someone fixes the signal itself.</p>
+    <button class="continue-btn" onclick="goS1A()">What does he do? <span class="arrow">→</span></button>
+  </div>
+
+  <!-- SCENE 1 SETUP -->
+  <div class="scene" id="scene-1a">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 1</span></div><div class="progress-track"><div class="progress-fill" style="width:22%"></div></div></div>
+    <p class="narrative">Garrett has an idea: a signal with a third position — a warning between STOP and GO, so the crossing can clear before traffic moves. It could save countless lives.</p>
+ <div class="fact-card"><div class="fact-icon">⚙️</div><div><div class="fact-label">What he is weighing</div><div class="fact-body">Garrett already runs several businesses and has patents. But developing and patenting a new invention costs money and time — and he knows that being a Black inventor in 1923 means his ideas are often dismissed or stolen outright.</div></div></div>
+ <div class="tension"><p>He has the idea and the skill. The question is how to bring it into the world in a way that actually reaches people — and survives.</p><p><strong>What does Garrett do?</strong></p></div>
+    <div class="dp">— Scene 1 — What does Garrett do? —</div>
+    <div id="s1-choices">
+        <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Design and patent the signal properly before showing anyone</div><div class="csub">Protect the idea legally first. A patent is proof of ownership that is hard to argue with.</div></div></button>
+        <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Build a working model and demonstrate it to city officials</div><div class="csub">Show, don't tell. Let them see it work at a real intersection.</div></div></button>
+        <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Partner with a large company that has the reach to manufacture it widely</div><div class="csub">Alone he can build one. With a big company behind it, the signal could reach every city.</div></div></button>
+        <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Let it go — his safety hood was already rejected for his race, why expect different?</div><div class="csub">He has been burned before. Nobody would blame him for protecting himself from that again.</div></div></button>
+    </div>
+    <div class="fifth">
+      <label class="fifth-label" for="fifth-s1">💡 I'd do something different —</label>
+      <textarea class="fifth-input" id="fifth-s1" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+      <div><button class="fifth-continue" onclick="s1own(1)">Continue with my own idea <span class="arrow">→</span></button></div>
+      <div class="fifth-hint" id="hint-s1">Write your idea above, or pick one of the options.</div>
+    </div>
+  </div>
+
+  <!-- SCENE 1 OUTCOME -->
+  <div class="scene" id="scene-1b">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 1 result</span></div><div class="progress-track"><div class="progress-fill" style="width:45%"></div></div></div>
+    <h2 id="o1-title"></h2>
+    <div id="o1-body"></div>
+    <button class="continue-btn" onclick="goS2A()">What happens next <span class="arrow">→</span></button>
+  </div>
+
+  <!-- SCENE 2 SETUP -->
+  <div class="scene" id="scene-2a">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 2</span></div><div class="progress-track"><div class="progress-fill" style="width:66%"></div></div></div>
+    <div class="mem-badge" id="mem-badge"></div>
+    <p class="narrative">Garrett's traffic signal is real and it works. Now comes the decision that will determine how many lives it actually saves — and what happens to the man who invented it.</p>
+ <p class="narrative">A major company — General Electric — has taken an interest in the patent. They are offering to buy it.</p>
+ <div class="fact-card"><div class="fact-icon">📜</div><div><div class="fact-label">The offer on the table</div><div class="fact-body">General Electric offers $40,000 for the rights to his traffic signal patent — an enormous sum in 1923, roughly a lifetime of a working man's wages. But selling means the invention, and the credit, largely pass to them.</div></div></div>
+    <div class="dp">— Scene 2 — What does he decide? —</div>
+    <div id="s2-choices">
+        <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">Sell the patent to General Electric so it can be manufactured nationwide</div><div class="csub">His signal on every corner in America, saving lives everywhere — even if his name fades from it.</div></div></button>
+        <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">Refuse to sell and manufacture it himself to keep control and credit</div><div class="csub">Keep his name on it and build it his way — but reach far fewer intersections.</div></div></button>
+        <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">License it — let GE build it but keep his name and a share of every sale</div><div class="csub">Try to get both: wide reach AND lasting credit and income.</div></div></button>
+        <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">Hold the patent and do nothing until he is certain of the best deal</div><div class="csub">Wait. Study the options. Don't rush a decision this big.</div></div></button>
+    </div>
+    <div class="fifth">
+      <label class="fifth-label" for="fifth-s2">💡 I'd do something different —</label>
+      <textarea class="fifth-input" id="fifth-s2" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+      <div><button class="fifth-continue" onclick="s2own(2)">Continue with my own idea <span class="arrow">→</span></button></div>
+      <div class="fifth-hint" id="hint-s2">Write your idea above, or pick one of the options.</div>
+    </div>
+  </div>
+
+  <!-- SCENE 2 OUTCOME -->
+  <div class="scene" id="scene-2b">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 2 result</span></div><div class="progress-track"><div class="progress-fill" style="width:85%"></div></div></div>
+    <h2 id="o2-title"></h2>
+    <div id="o2-body"></div>
+    <div class="epilogue"><div class="ob-label"><span class="ob-dot"></span> What happened next</div><div class="ob-text">Garrett Morgan sold his traffic signal patent to General Electric for $40,000. His three-position design became the foundation of <strong>the modern traffic light</strong> used around the world. His earlier "safety hood" was a forerunner of the gas masks that saved soldiers' lives in World War I. He spent his life inventing, running businesses, and funding Black education and civil rights — a man with a sixth-grade education whose ideas still protect you every single day.</div></div>
+    <button class="continue-btn" onclick="goComplete()">See what this reveals <span class="arrow">→</span></button>
+  </div>
+
+  <!-- COMPLETE -->
+  <div class="scene" id="scene-complete">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Complete</span></div><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></div>
+    <div class="completion">
+      <div class="completion-icon">🚦</div>
+      <h2>Your journey through Garrett's decision</h2>
+    </div>
+    <p id="c-summary"></p>
+    <p id="path-rarity"></p>
+
+    <div class="career-reveal">
+      <h3>Careers this connects to</h3>
+      <div class="career-card"><div class="career-icon">⚙️</div><div><div class="career-title">Mechanical Engineer</div><div class="career-desc">Designs machines and systems that solve real-world problems — the way Garrett redesigned the traffic signal.</div></div></div>
+<div class="career-card"><div class="career-icon">🦺</div><div><div class="career-title">Safety Engineer</div><div class="career-desc">Invents and improves the devices that keep people safe, from breathing masks to road systems.</div></div></div>
+<div class="career-card"><div class="career-icon">💡</div><div><div class="career-title">Inventor / Product Developer</div><div class="career-desc">Turns an observed problem into a working solution — Garrett's core genius.</div></div></div>
+<div class="career-card"><div class="career-icon">⚖️</div><div><div class="career-title">Patent Attorney / IP Specialist</div><div class="career-desc">Protects inventors' ideas legally — the exact protection that shielded Garrett's work.</div></div></div>
+<div class="career-card"><div class="career-icon">🚦</div><div><div class="career-title">Transport / Traffic Engineer</div><div class="career-desc">Designs the systems that move people safely through cities — a field Garrett helped create.</div></div></div>
+    </div>
+
+    <div class="dp">— One last thing —</div>
+    <div class="debrief-q"><label>Garrett had already been rejected once because of his race. Why do you think he chose to invent again anyway, knowing the same thing might happen?</label><textarea id="dq1" placeholder="Your thoughts..."></textarea></div>
+    <div class="debrief-q"><label>When General Electric offered to buy his patent, Garrett had to choose between keeping the credit and reaching more people. Which would you have chosen, and why?</label><textarea id="dq2" placeholder="Your thoughts..."></textarea></div>
+    <div class="debrief-q"><label>Garrett left school after sixth grade but changed the world with his inventions. What does his story tell you about where good ideas actually come from?</label><textarea id="dq3" placeholder="Your thoughts..."></textarea></div>
+    <button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goFinish()">Complete ✓</button>
+
+    <div class="actions">
+      <button onclick="showJourney()">📖 Review my journey</button>
+      <button onclick="resetAll()">↺ Replay</button>
+      <a href="https://pathforge001.github.io/simulations/">← Try another</a>
+    </div>
+    <div id="journey-review" style="display:none;margin-top:20px;"></div>
+  </div>
+
+  <div class="footer">
+    PathForge · <a href="https://pathforge001.github.io/simulations/">usepathforge.io</a> · <a href="https://tally.so/r/kdx5g1">Parent feedback</a><br>
+    Questions? <a href="mailto:salem@usepathforge.io">salem@usepathforge.io</a>
+  </div>
+</div>
+
+<script>
+  var c1=null,c2=null;
+  var S1={A: {
+      title: "He patented it first.",
+      mem: "You designed the three-position signal carefully and filed for a patent \u2014 legal proof that the idea is yours. In a world that often stole from Black inventors, that document is armour. Now you have to decide how to get it built.",
+      body: "<p class=\"narrative\">Garrett worked out the design \u2014 a T-shaped pole with a third \"all-stop\" warning position \u2014 and filed a patent in 1923, securing legal ownership before anyone else could claim it.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">The patent was <strong>a shield.</strong> For a Black inventor in 1923, whose safety hood had already been dismissed because of his race, a legal document that said \"this is mine\" was one of the few protections that held. Ideas can be stolen. A patent makes it far harder.</div><span class=\"skill-tag\">\ud83d\udd35 Protected the idea \u00b7 Armour first</span></div>"
+    },
+    B: {
+      title: "He built and demonstrated it.",
+      mem: "You built a working model and showed it in action. When people see a thing work with their own eyes, race and pedigree matter less than results. The demonstration is winning people over \u2014 but an unprotected idea is exposed.",
+      body: "<p class=\"narrative\">Garrett built a working model and demonstrated the three-position signal to city officials, letting them watch traffic move safely through a crossing that used to be chaos.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Seeing is believing. A working demonstration <strong>cut straight through the prejudice</strong> that dismissed him on paper \u2014 the signal simply worked, in front of their eyes. The risk: an idea shown before it is protected can be copied. But proof in motion is a powerful thing.</div><span class=\"skill-tag\">\ud83d\udfe2 Proof in action \u00b7 Results over reputation</span></div>"
+    },
+    C: {
+      title: "He looked for a partner.",
+      mem: "You approached larger companies who could manufacture and distribute the signal far beyond what you could reach alone. One name keeps coming up: General Electric. Partnership means reach \u2014 but it also means giving up some control.",
+      body: "<p class=\"narrative\">Garrett understood that one man could build a signal, but a large company could put one on every corner in America. He looked for a partner with real manufacturing reach.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This was <strong>thinking at the scale of the actual problem.</strong> Traffic deaths were happening everywhere, not just in Cleveland. A partnership could put his invention in cities he would never visit. The trade-off is always control and credit \u2014 but the reach can be enormous.</div><span class=\"skill-tag\">\ud83d\udd35 Scale thinking \u00b7 Reach over ownership</span></div>"
+    },
+    D: {
+      title: "He almost let it go.",
+      mem: "You told yourself it was not worth the heartbreak \u2014 the safety hood had already been rejected for the colour of your skin. For a while you believed it. Then you remembered the sound of that crash, and thought about the next one, and the child who might be in it.",
+      body: "<p class=\"narrative\">Garrett thought about the safety hood \u2014 a device that saved lives, rejected by fire departments the moment they learned he was Black. Why put himself through that again?</p><div class=\"ob ob-red\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This is the honest truth: <strong>this is the choice injustice is designed to produce.</strong> Make talented people stop trying. And for a moment, it almost worked. What pulled Garrett back was not that he stopped fearing the prejudice \u2014 it was real, and it would come. It was that he could not unsee the crash, or stop imagining the next one. The problem mattered more than the fear of being dismissed. He picked up his tools.</div><span class=\"skill-tag\">\ud83d\udd34 What injustice intends \u00b7 He refused it</span></div>"
+    }};
+  var S2={A: {
+      title: "He sold it \u2014 and saved lives everywhere.",
+      mem: "",
+      body: "<p class=\"narrative\">Garrett sold the patent to General Electric for $40,000. His three-position signal became the template for traffic lights across America \u2014 and eventually the world.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">He chose <strong>impact over ownership.</strong> By selling to a company with national reach, his invention spread to intersections he would never see, preventing countless crashes like the one he witnessed. The traffic light you stop at today descends from Garrett Morgan's idea. He understood that a life saved in a city he never visited was still a life saved.</div><span class=\"skill-tag\">\ud83d\udfe2 Impact over ego \u00b7 Lives everywhere</span></div>"
+    },
+    B: {
+      title: "He kept control.",
+      mem: "",
+      body: "<p class=\"narrative\">Garrett refused the sale and manufactured the signal himself, keeping his name firmly attached and building it on his own terms.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This protected his <strong>credit and independence</strong> \u2014 no company could erase his name from his own work. The trade-off is reach: one inventor, however brilliant, cannot manufacture for a whole nation. He would save lives in his region and keep every ounce of the recognition. Sometimes owning your work matters as much as spreading it.</div><span class=\"skill-tag\">\ud83d\udd35 Ownership \u00b7 His name, his terms</span></div>"
+    },
+    C: {
+      title: "He tried for both.",
+      mem: "",
+      body: "<p class=\"narrative\">Garrett sought a licensing arrangement \u2014 letting a big manufacturer build the signal at scale while he retained his name and a share of the proceeds.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Licensing is the clever middle path: <strong>reach AND recognition.</strong> In 1923, a Black inventor negotiating to keep credit and income from a major corporation was doing something genuinely difficult and ambitious. It does not always work perfectly \u2014 big companies hold the power \u2014 but attempting to keep your name on your work while still letting it spread is exactly how modern inventors protect themselves.</div><span class=\"skill-tag\">\ud83d\udd35 The clever middle \u00b7 Reach and recognition</span></div>"
+    },
+    D: {
+      title: "He weighed it carefully.",
+      mem: "",
+      body: "<p class=\"narrative\">Garrett held the patent and took his time, studying every option before committing to a decision worth a lifetime's wages.</p><div class=\"ob ob-amber\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Caution on a decision this size is wise \u2014 but there is a cost to waiting too. <strong>Every month the signal is not out there, crashes keep happening.</strong> The hardest part of a big decision is knowing when studying it has become avoiding it. Garrett had already seen what delay costs at an intersection. He did not wait forever.</div><span class=\"skill-tag\">\ud83d\udfe1 Careful counsel \u00b7 But the clock is real</span></div>"
+    }};
+  var summaries={AA: "You protected the idea with a patent, then sold it so it could save lives everywhere. You secured ownership first, then chose impact over ego. Armour, then generosity \u2014 exactly how Garrett Morgan actually did it.",
+    AB: "You patented it, then manufactured it yourself. You believe in owning your work completely \u2014 protecting it legally and building it on your own terms. Your name stays on what you make.",
+    AC: "You patented it, then licensed it for reach and recognition. You play the long game with real sophistication \u2014 legal protection first, then a deal designed to give you both spread and credit.",
+    AD: "You protected the idea, then weighed the decision carefully. You are thorough and cautious \u2014 good instincts for something this big. Just remember Morgan's lesson: the crash he witnessed did not wait, and neither could he, forever.",
+    BA: "You proved it worked in action, then sold it to reach the whole country. You win people over with results, then choose impact at scale. Demonstration first, then lives saved everywhere \u2014 a powerful combination.",
+    BB: "You demonstrated it, then built it yourself. You lead with proof and you keep control. You show the world it works, and you make sure the world knows who made it.",
+    BC: "You demonstrated it, then licensed it for reach and credit. You believe in showing your work AND in protecting your stake in it. Proof plus a smart deal is how inventions survive and inventors get their due.",
+    BD: "You proved it in action, then took time on the big decision. You earn belief through results and you refuse to be rushed. Careful \u2014 but Morgan's crash is a reminder that the cost of waiting is measured in the next accident.",
+    CA: "You thought at national scale from the start, then sold to make it real. You saw the size of the actual problem \u2014 crashes everywhere \u2014 and chose the path that reached everywhere. Impact was always your compass.",
+    CB: "You sought a big partner, then chose to keep control instead. You think big about reach but you would not let your name be erased. Ambition balanced by a refusal to disappear from your own work.",
+    CC: "You looked for reach, then licensed to get reach and recognition together. Consistent, sophisticated thinking \u2014 you want your invention everywhere AND your name on it. That is how the best modern inventors operate.",
+    CD: "You thought about scale, then paused to weigh the deal. You are ambitious and careful at once. Just remember: Morgan had already seen what delay costs at a crossing, and he did not wait too long.",
+    DA: "You almost let it go \u2014 then patented nothing, held nothing back, and sold it to save lives everywhere. The man injustice tried to silence became the reason traffic stops safely worldwide. The person who nearly quit reached the most people of all.",
+    DB: "You nearly walked away, then built it yourself with your name on it. Having felt the pull of giving up under prejudice, you answered it by refusing to be erased. People who almost quit sometimes hold onto their credit most fiercely \u2014 because they know what it cost to continue.",
+    DC: "You almost stopped, then licensed your work for both reach and recognition. The inventor who nearly let injustice win came back and insisted on keeping his name AND spreading his work. Doubt that turns into determination is the strongest kind.",
+    DD: "You nearly let it go, then took careful command of the biggest decision of your life. Garrett Morgan's whole story is refusing the silence that prejudice tried to impose. The courage was never the absence of that pressure. It was building anyway, and thinking clearly while he did."};
+
+  var OWN1={title:"You chose your own path.",mem:"You did not take any of the four options — you wrote your own. That instinct, to look at a situation and think there is another way, is exactly how the best ideas begin.",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">There was no single right answer here — and you refused to be limited to the choices in front of you. <strong>Thinking beyond the options you are given is one of the rarest and most valuable habits there is.</strong> Every real breakthrough started with someone who would not just pick from the menu. Hold on to that. Now let us see how the situation unfolds.</div><span class=\"skill-tag\">🔵 Independent thinking · You wrote your own path</span></div>"};
+  var OWN2={title:"You chose your own path again.",mem:"",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">Once again you looked past the options and thought for yourself. <strong>People who consistently generate their own answers — rather than only choosing between the ones offered — are the ones who end up changing how things are done.</strong> That is a genuine strength, and it is worth developing wherever your path takes you.</div><span class=\"skill-tag\">🔵 Independent thinking · Your own path, twice</span></div>"};
+
+  function show(id){document.querySelectorAll('.scene').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+  function goS1A(){show('scene-1a');}
+  function s1(c){c1=c;var o=S1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-1b');}
+  function s1own(){var t=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(!t){var h=document.getElementById('hint-s1');if(h)h.classList.add('show');return;}c1='E';document.getElementById('o1-title').textContent=OWN1.title;document.getElementById('o1-body').innerHTML=OWN1.body;show('scene-1b');}
+  function goS2A(){var o=(c1==='E')?OWN1:S1[c1];document.getElementById('mem-badge').innerHTML='<strong>Where you are:</strong> '+(o.mem||'');show('scene-2a');}
+  function s2(c){c2=c;var o=S2[c];document.getElementById('o2-title').textContent=o.title;document.getElementById('o2-body').innerHTML=o.body;show('scene-2b');}
+  function s2own(){var t=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(!t){var h=document.getElementById('hint-s2');if(h)h.classList.add('show');return;}c2='E';document.getElementById('o2-title').textContent=OWN2.title;document.getElementById('o2-body').innerHTML=OWN2.body;show('scene-2b');}
+  function ownSummary(){
+    if(c1==='E'&&c2==='E')return 'You wrote your own path at every turn — refusing both times to be limited to the options in front of you. That is the instinct of an inventor, a founder, a leader: the belief that the best answer might be one nobody has offered yet. Keep thinking like that.';
+    if(c1==='E'||c2==='E')return 'At one of the two decisions, you looked past every option offered and wrote your own. That willingness to think beyond the menu is rare and valuable — it is where original ideas come from. Hold on to it wherever your path leads.';
+    return '';
+  }
+  function goComplete(){var os=ownSummary();document.getElementById('c-summary').textContent=os||summaries[c1+c2]||'';var _r=document.getElementById('path-rarity');if(_r){var p=(c1||'')+(c2||'');_r.textContent=(c1==='E'||c2==='E')?('Your path: '+p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+p+' — one of 16 possible journeys. Replay to discover another.');}show('scene-complete');}
+
+  function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(function(t){t.value='';});show('scene-intro');document.getElementById('pbar').style.width='6%';}
+
+  function showJourney(){
+    var jr=document.getElementById('journey-review');
+    var a1=(document.getElementById('dq1')||{value:''}).value.trim();
+    var a2=(document.getElementById('dq2')||{value:''}).value.trim();
+    var a3=(document.getElementById('dq3')||{value:''}).value.trim();
+    var h='<div class="ob ob-blue"><div class="ob-label"><span class="ob-dot"></span> Your full journey</div>';
+    h+='<p style="margin-bottom:10px;"><strong>Scene 1:</strong> '+((c1==='E')?OWN1.title:(S1[c1]?S1[c1].title:''))+'</p>';var f1=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(f1)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 1 idea:</strong> '+f1+'</p>';
+    h+='<p style="margin-bottom:10px;"><strong>Scene 2:</strong> '+((c2==='E')?OWN2.title:(S2[c2]?S2[c2].title:''))+'</p>';var f2=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(f2)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 2 idea:</strong> '+f2+'</p>';
+    h+='<p style="margin-bottom:10px;"><strong>What this revealed:</strong> '+(ownSummary()||summaries[c1+c2]||'')+'</p>';
+    if(a1||a2||a3){h+='<p style="margin-top:12px;opacity:0.85;"><strong>Your reflections:</strong></p>';if(a1)h+='<p style="font-size:14px;margin-top:6px;">• '+a1+'</p>';if(a2)h+='<p style="font-size:14px;margin-top:6px;">• '+a2+'</p>';if(a3)h+='<p style="font-size:14px;margin-top:6px;">• '+a3+'</p>';}
+    h+='<p style="margin-top:12px;font-size:13px;opacity:0.7;">📸 Screenshot this to keep or share your journey.</p></div>';
+    jr.innerHTML=h;jr.style.display='block';jr.scrollIntoView({behavior:'smooth'});
+  }
+
+  async function saveDebrief(simulationName){
+    var a1=(document.getElementById('dq1')||{value:''}).value.trim();
+    var a2=(document.getElementById('dq2')||{value:''}).value.trim();
+    var a3=(document.getElementById('dq3')||{value:''}).value.trim();
+    var sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+    try{
+      await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({simulationName:simulationName,sessionId:sessionId,answer1:a1||'no answer provided',answer2:a2||'no answer provided',answer3:a3||'no answer provided'})
+      });
+    }catch(e){console.log('Debrief save failed silently',e);}
+  }
+
+  async function goFinish(){
+    await saveDebrief('inventor-garrett-morgan');
+    showJourney();
+    var btn=document.querySelector('.final-btn');
+    if(btn){btn.textContent='Saved ✓ — thank you';}
+  }
+
+  setTimeout(function(){document.getElementById('pbar').style.width='8%';},400);
+</script>
+</body>
+</html>

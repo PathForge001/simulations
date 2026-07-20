@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Visit — PathForge</title>
+<meta name="description" content="Step into the role of a home care worker facing a decision no rulebook covers. A PathForge career simulation on social care.">
+<meta property="og:title" content="The Visit — PathForge">
+<meta property="og:description" content="Step into the role of a home care worker facing a decision no rulebook covers. A PathForge career simulation on social care.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCT2NS7ET8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCT2NS7ET8');
+</script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xbl1zshvdm");
+</script>
+<style>
+  :root{--accent:#5a2a6a;--accent2:#c084fc;--bg:#0f0a1e;--card:#1a1230;--text:#ece8f5;--muted:#a99fc4;--sans:'Segoe UI',system-ui,sans-serif;--serif:Georgia,serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;padding:0;}
+  .wrap{max-width:640px;margin:0 auto;padding:20px 18px 80px;}
+  .topnav{display:flex;justify-content:space-between;align-items:center;padding:10px 0 20px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:24px;}
+  .brand{font-weight:800;letter-spacing:0.5px;color:var(--accent2);font-size:15px;text-decoration:none;}
+  .brand span{color:var(--text);}
+  .nav-link{color:var(--muted);text-decoration:none;font-size:13px;}
+  .scene{display:none;animation:fade 0.4s ease;}
+  .scene.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--accent2);font-weight:700;margin-bottom:10px;}
+  h1{font-family:var(--serif);font-size:30px;line-height:1.2;margin-bottom:8px;}
+  h2{font-family:var(--serif);font-size:24px;margin-bottom:12px;}
+  .subtitle{color:var(--muted);font-size:17px;margin-bottom:24px;}
+  .narrative{font-size:17px;margin-bottom:18px;}
+  .narrative strong{color:#fff;}
+  .narrative em{color:var(--accent2);font-style:italic;}
+  .progress-wrap{margin-bottom:20px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .progress-track{height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width 0.5s ease;}
+  .fact-card{display:flex;gap:14px;background:var(--card);border-radius:12px;padding:16px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.08);}
+  .fact-icon{font-size:24px;flex-shrink:0;}
+  .fact-label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);font-weight:700;margin-bottom:4px;}
+  .fact-body{font-size:15px;color:var(--text);}
+  .tension{background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));border-left:3px solid var(--accent2);border-radius:8px;padding:16px;margin:20px 0;}
+  .tension p{margin-bottom:8px;}.tension p:last-child{margin-bottom:0;}
+  .continue-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:16px 24px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:var(--sans);transition:background 0.2s;}
+  .continue-btn:hover{background:var(--accent2);}
+  .arrow{margin-left:6px;}
+  .dp{text-align:center;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:2px;margin:24px 0 16px;}
+  .choice-btn{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;font-family:var(--sans);color:var(--text);transition:border-color 0.2s,transform 0.08s ease;}
+  .choice-btn:hover{border-color:var(--accent2);}
+  .choice-btn:active{transform:scale(0.96);}
+  .choice-btn{-webkit-tap-highlight-color:transparent;}
+  .cletter{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:14px;}
+  .ctext{font-weight:600;font-size:16px;margin-bottom:3px;}
+  .csub{color:var(--muted);font-size:14px;}
+  .ob{border-radius:10px;padding:16px;margin:18px 0;border:1px solid;}
+  .ob-green{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);}
+  .ob-amber{background:rgba(217,119,6,0.08);border-color:rgba(217,119,6,0.3);}
+  .ob-red{background:rgba(220,38,38,0.08);border-color:rgba(220,38,38,0.3);}
+  .ob-blue{background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.3);}
+  .ob-label{display:flex;align-items:center;gap:8px;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px;color:var(--accent2);}
+  .ob-dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);}
+  .ob-text{font-size:15px;}
+  .ob-text strong{color:#fff;}
+  .skill-tag{display:inline-block;margin-top:10px;font-size:13px;background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:20px;color:var(--accent2);font-weight:600;}
+  .mem-badge{background:rgba(255,255,255,0.05);border-radius:10px;padding:14px;margin-bottom:20px;font-size:14px;color:var(--muted);border:1px dashed rgba(255,255,255,0.15);}
+  .mem-badge strong{color:var(--accent2);}
+  .fifth{margin-top:8px;margin-bottom:20px;}
+  .fifth-label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block;}
+  .fifth-input{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px;color:var(--text);font-family:var(--sans);font-size:14px;resize:vertical;}
+  .fifth-continue{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:transparent;border:1px solid var(--accent2);color:var(--accent2);border-radius:8px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all 0.2s;}
+  .fifth-continue:hover{background:var(--accent2);color:#fff;}
+  .fifth-continue:active{transform:scale(0.96);}
+  .fifth-hint{font-size:12px;color:var(--muted);margin-top:8px;opacity:0;transition:opacity 0.2s;}
+  .fifth-hint.show{opacity:1;}
+  .completion{text-align:center;margin-bottom:24px;}
+  .completion-icon{font-size:48px;margin-bottom:12px;}
+  #c-summary,#path-rarity{text-align:center;}
+  #c-summary{color:var(--accent2);font-weight:700;font-size:16px;margin:0 auto;max-width:520px;}
+  #path-rarity{font-size:12px;opacity:0.65;margin-top:8px;}
+  .career-reveal{margin:28px 0;}
+  .career-reveal h3{text-align:center;font-family:var(--serif);margin-bottom:16px;}
+  .career-card{display:flex;gap:14px;background:var(--card);border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.08);}
+  .career-icon{font-size:22px;}
+  .career-title{font-weight:700;font-size:15px;}
+  .career-desc{color:var(--muted);font-size:14px;}
+  .debrief-q{margin-bottom:18px;}
+  .debrief-q label{display:block;font-size:15px;margin-bottom:8px;font-weight:600;}
+  .debrief-q textarea{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:var(--sans);font-size:15px;resize:vertical;min-height:70px;}
+  .final-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:var(--sans);margin-top:8px;transition:background 0.2s;}
+  .final-btn:hover{background:var(--accent2);}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+  .actions button,.actions a{flex:1;min-width:140px;text-align:center;background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--text);border-radius:8px;padding:12px;font-size:14px;cursor:pointer;text-decoration:none;font-family:var(--sans);}
+  .epilogue{background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(212,175,55,0.03));border:1px solid rgba(212,175,55,0.25);border-radius:12px;padding:18px;margin:22px 0;}
+  .epilogue .ob-label{color:#d4af37;}.epilogue .ob-dot{background:#d4af37;}
+  .footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+  .footer a{color:var(--accent2);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topnav">
+    <a href="https://pathforge001.github.io/simulations/" class="brand">PATH<span>FORGE</span></a>
+    <a href="https://pathforge001.github.io/simulations/" class="nav-link">← All simulations</a>
+  </div>
+
+  <!-- INTRO -->
+  <div class="scene active" id="scene-intro">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span id="pl0">Begin</span></div><div class="progress-track"><div class="progress-fill" id="pbar" style="width:6%"></div></div></div>
+    <div class="eyebrow">Home care round · 8:10am</div>
+    <h1>The Visit</h1>
+    <p class="subtitle">You have fifteen minutes booked. Mr Adeyemi needs more than that.</p>
+    <p class="narrative">You are a home care worker. Your job is to visit older and disabled people in their own homes — helping them wash, dress, take medication, and eat. You have eleven visits booked today, each one timed to the minute.</p>
+ <p class="narrative">Your third visit is Mr Adeyemi, 82, who lives alone since his wife died last year. You are booked for fifteen minutes: help him with breakfast and his tablets, then move on.</p>
+ <p class="narrative">But when you arrive, something is wrong. His curtains are still shut. He is sitting in his chair, still in yesterday's clothes, and he has not eaten. <em>He looks at you and quietly says he did not see the point in getting up.</em></p>
+    <button class="continue-btn" onclick="goS1A()">What do you do? <span class="arrow">→</span></button>
+  </div>
+
+  <!-- SCENE 1 SETUP -->
+  <div class="scene" id="scene-1a">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 1</span></div><div class="progress-track"><div class="progress-fill" style="width:22%"></div></div></div>
+    <p class="narrative">This is not a medical emergency you can point to. Mr Adeyemi is clean, safe, and physically fine. But he is clearly low — perhaps very low — and lonely in a way that fifteen minutes cannot fix.</p>
+ <div class="fact-card"><div class="fact-icon">⏱️</div><div><div class="fact-label">The pressure you're under</div><div class="fact-body">You have eight more people to visit, several of whom need you at specific times for medication. If you stay longer with Mr Adeyemi, someone later in your round gets a rushed or late visit. Your schedule has no slack in it.</div></div></div>
+ <div class="tension"><p>The task on your sheet is breakfast and tablets. The person in front of you needs something the sheet does not mention.</p><p><strong>What do you do?</strong></p></div>
+    <div class="dp">— Scene 1 — What do you do? —</div>
+    <div id="s1-choices">
+        <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Do the tasks, but sit with him for a few extra minutes and really listen</div><div class="csub">You'll run a little behind, but right now he needs a human being more than a schedule.</div></div></button>
+        <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Do the tasks efficiently and report your concern to your supervisor after the visit</div><div class="csub">You can't fix his loneliness in one visit — but you can make sure the right people know.</div></div></button>
+        <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Gently encourage him up, open the curtains, and make breakfast together to lift his mood</div><div class="csub">Sometimes doing an ordinary thing alongside someone is the kindest medicine.</div></div></button>
+        <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Stick strictly to the fifteen minutes — it's not your role to deal with his mood</div><div class="csub">You're not a counsellor. Do your tasks, stay on time, and don't get involved. It's safer.</div></div></button>
+    </div>
+    <div class="fifth">
+      <label class="fifth-label" for="fifth-s1">💡 I'd do something different —</label>
+      <textarea class="fifth-input" id="fifth-s1" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+      <div><button class="fifth-continue" onclick="s1own(1)">Continue with my own idea <span class="arrow">→</span></button></div>
+      <div class="fifth-hint" id="hint-s1">Write your idea above, or pick one of the options.</div>
+    </div>
+  </div>
+
+  <!-- SCENE 1 OUTCOME -->
+  <div class="scene" id="scene-1b">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 1 result</span></div><div class="progress-track"><div class="progress-fill" style="width:45%"></div></div></div>
+    <h2 id="o1-title"></h2>
+    <div id="o1-body"></div>
+    <button class="continue-btn" onclick="goS2A()">What happens next <span class="arrow">→</span></button>
+  </div>
+
+  <!-- SCENE 2 SETUP -->
+  <div class="scene" id="scene-2a">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 2</span></div><div class="progress-track"><div class="progress-fill" style="width:66%"></div></div></div>
+    <div class="mem-badge" id="mem-badge"></div>
+    <p class="narrative">Whatever you did that morning, Mr Adeyemi stayed on your mind. Over the next few weeks you notice a pattern: several of the older people on your round are desperately isolated. The care system keeps them clean, fed, and safe — but not connected.</p>
+ <p class="narrative">At a team meeting, your supervisor asks if anyone has ideas for improving care quality. You have been thinking about exactly this.</p>
+ <div class="fact-card"><div class="fact-icon">💡</div><div><div class="fact-label">Your chance to change something</div><div class="fact-body">You are just one carer, new-ish, not senior. But you have seen something real that the people who design the schedules may not see: the fifteen-minute visit keeps bodies alive while leaving people profoundly alone.</div></div></div>
+    <div class="dp">— Scene 2 — What do you do? —</div>
+    <div id="s2-choices">
+        <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">Speak up in the meeting about the loneliness you're seeing and push for longer visits</div><div class="csub">Name the real problem. The schedule itself is failing people, and someone has to say it.</div></div></button>
+        <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">Suggest a practical idea — like linking isolated clients to local befriending services</div><div class="csub">Don't just name the problem; bring a solution the team can actually act on.</div></div></button>
+        <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">Start informally checking on your most isolated clients and build small connections yourself</div><div class="csub">Change what you can control. Learn their lives, link neighbours, do the human work quietly.</div></div></button>
+        <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">Say nothing — you're too junior, and the schedules are set by people above you</div><div class="csub">It's not your place to challenge how the whole service is run. Just do your visits well.</div></div></button>
+    </div>
+    <div class="fifth">
+      <label class="fifth-label" for="fifth-s2">💡 I'd do something different —</label>
+      <textarea class="fifth-input" id="fifth-s2" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+      <div><button class="fifth-continue" onclick="s2own(2)">Continue with my own idea <span class="arrow">→</span></button></div>
+      <div class="fifth-hint" id="hint-s2">Write your idea above, or pick one of the options.</div>
+    </div>
+  </div>
+
+  <!-- SCENE 2 OUTCOME -->
+  <div class="scene" id="scene-2b">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 2 result</span></div><div class="progress-track"><div class="progress-fill" style="width:85%"></div></div></div>
+    <h2 id="o2-title"></h2>
+    <div id="o2-body"></div>
+    
+    <button class="continue-btn" onclick="goComplete()">See what this reveals <span class="arrow">→</span></button>
+  </div>
+
+  <!-- COMPLETE -->
+  <div class="scene" id="scene-complete">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Complete</span></div><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></div>
+    <div class="completion">
+      <div class="completion-icon">🤲</div>
+      <h2>Your journey through the visit</h2>
+    </div>
+    <p id="c-summary"></p>
+    <p id="path-rarity"></p>
+
+    <div class="career-reveal">
+      <h3>Careers this connects to</h3>
+      <div class="career-card"><div class="career-icon">🤲</div><div><div class="career-title">Care Worker / Support Worker</div><div class="career-desc">Supports people to live with dignity in their own homes and communities — the role you just stepped into.</div></div></div>
+<div class="career-card"><div class="career-icon">👩‍⚕️</div><div><div class="career-title">Social Worker</div><div class="career-desc">Assesses needs and coordinates support for vulnerable people and families — the advocacy side of care.</div></div></div>
+<div class="career-card"><div class="career-icon">🧠</div><div><div class="career-title">Occupational Therapist</div><div class="career-desc">Helps people regain independence in daily life — the "do it together" instinct as a whole profession.</div></div></div>
+<div class="career-card"><div class="career-icon">🏡</div><div><div class="career-title">Care Home / Service Manager</div><div class="career-desc">Leads teams and shapes how care is delivered — the person who can change the schedules you questioned.</div></div></div>
+<div class="career-card"><div class="career-icon">💜</div><div><div class="career-title">Community & Wellbeing Coordinator</div><div class="career-desc">Connects isolated people to befriending and community services — solving exactly the loneliness you saw.</div></div></div>
+    </div>
+
+    <div class="dp">— One last thing —</div>
+    <div class="debrief-q"><label>Mr Adeyemi was clean, fed, and safe — but deeply lonely. Why do you think loneliness is so easy for a busy system to miss, even when everything else is being done right?</label><textarea id="dq1" placeholder="Your thoughts..."></textarea></div>
+    <div class="debrief-q"><label>You were under real pressure from your schedule. How do you think a carer should balance being kind to one person against being fair to everyone else waiting for them?</label><textarea id="dq2" placeholder="Your thoughts..."></textarea></div>
+    <div class="debrief-q"><label>You were new and junior, but you noticed something real. Why might the newest person on a team sometimes see problems that experienced people have stopped noticing?</label><textarea id="dq3" placeholder="Your thoughts..."></textarea></div>
+    <button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goFinish()">Complete ✓</button>
+
+    <div class="actions">
+      <button onclick="showJourney()">📖 Review my journey</button>
+      <button onclick="resetAll()">↺ Replay</button>
+      <a href="https://pathforge001.github.io/simulations/">← Try another</a>
+    </div>
+    <div id="journey-review" style="display:none;margin-top:20px;"></div>
+  </div>
+
+  <div class="footer">
+    PathForge · <a href="https://pathforge001.github.io/simulations/">usepathforge.io</a> · <a href="https://tally.so/r/kdx5g1">Parent feedback</a><br>
+    Questions? <a href="mailto:salem@usepathforge.io">salem@usepathforge.io</a>
+  </div>
+</div>
+
+<script>
+  var c1=null,c2=null;
+  var S1={A: {
+      title: "You sat with him.",
+      mem: "You did his tasks, then pulled a chair over and listened. He talked about his wife for the first time in weeks \u2014 you could see something ease in him. You left ten minutes behind, but he stood up to see you out. That mattered.",
+      body: "<p class=\"narrative\">You helped with breakfast and tablets, then simply sat and let him talk. He spoke about his wife, about the silence of the house. You listened.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This is the heart of good care. <strong>Loneliness is not a problem you solve \u2014 it is a person you sit with.</strong> Those extra minutes gave Mr Adeyemi something no task on a sheet could: the feeling of being seen. You will run behind today, and that is a real cost. But you understood that care is about people, not just tasks \u2014 and that is why this work matters.</div><span class=\"skill-tag\">\ud83d\udfe2 Compassion \u00b7 Saw the person, not the task</span></div>"
+    },
+    B: {
+      title: "You did the tasks and reported it.",
+      mem: "You completed his care efficiently and stayed on time, then called your supervisor to flag that Mr Adeyemi seemed very low and might need more support. You did what one visit allowed \u2014 and made sure it did not stop there.",
+      body: "<p class=\"narrative\">You completed his care warmly but efficiently, kept your round on track, and then reported your concern about his mood to your supervisor.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This is professional and responsible. <strong>You recognised that you cannot solve loneliness in one visit \u2014 but you can make sure the system knows.</strong> A referral for a wellbeing check, a befriending service, or a GP conversation can do more than your fifteen minutes could. Good carers know the limits of a single visit and use the team around them. The only thing missing was the human moment \u2014 but you protected everyone else's care too.</div><span class=\"skill-tag\">\ud83d\udd35 Responsible \u00b7 Used the wider team</span></div>"
+    },
+    C: {
+      title: "You did it together.",
+      mem: "You gently coaxed him up, opened the curtains, and made breakfast side by side, chatting as you went. By the time you left, he was dressed and at the table. It cost you a few minutes, but you changed the whole shape of his morning.",
+      body: "<p class=\"narrative\">Rather than doing things for him, you did them with him \u2014 curtains open, kettle on, breakfast made together while you talked.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This is quietly brilliant care. <strong>Doing something alongside someone restores their dignity in a way that doing it for them cannot.</strong> You did not just feed him \u2014 you helped him re-enter his own day. Encouraging independence rather than dependence is one of the most skilled things a carer does, and it lifted his mood far more than a rushed task ever could.</div><span class=\"skill-tag\">\ud83d\udfe2 Dignity \u00b7 Restored his independence</span></div>"
+    },
+    D: {
+      title: "You almost kept your distance.",
+      mem: "You told yourself it wasn't your role \u2014 you're a carer, not a counsellor, and getting involved was risky. You did the tasks and headed for the door. Then he said \"thank you for coming\" in a way that stopped you, and you turned back.",
+      body: "<p class=\"narrative\">You told yourself to stay in your lane. Do the tasks, keep to time, don't get drawn into his sadness. You finished and moved toward the door.</p><div class=\"ob ob-red\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Here is the honest truth: <strong>the pressure of the schedule constantly tempts carers to treat people as tasks.</strong> It is understandable \u2014 the timings are brutal and getting involved feels risky. But as you reached the door, his quiet \"thank you for coming\" stopped you. You realised you might be the only person he speaks to all day. You turned back, even just for a moment. Care is not the tasks. Care is the turning back.</div><span class=\"skill-tag\">\ud83d\udd34 The schedule's pull to look away \u00b7 You turned back</span></div>"
+    }};
+  var S2={A: {
+      title: "You named the real problem.",
+      mem: "",
+      body: "<p class=\"narrative\">You spoke honestly in the meeting: the fifteen-minute model keeps people alive but leaves them lonely, and that is a form of harm the schedule does not measure.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This took courage. <strong>Naming a problem built into the system \u2014 not just an individual's bad day \u2014 is how care actually improves.</strong> You may not have the power to change the schedules yourself, but the people who do cannot fix what they never hear about. Frontline carers see truths that spreadsheets miss. Speaking that truth, respectfully, is advocacy \u2014 and advocacy is part of great care.</div><span class=\"skill-tag\">\ud83d\udfe2 Advocacy \u00b7 Named what others missed</span></div>"
+    },
+    B: {
+      title: "You brought a solution.",
+      mem: "",
+      body: "<p class=\"narrative\">You did not just describe the problem \u2014 you proposed linking your most isolated clients to local befriending and community services, and offered to help set it up.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This is how change actually happens. <strong>A problem with a workable solution attached is far harder to ignore than a complaint.</strong> By connecting your clients to services that already exist, you found a way to address loneliness without needing the whole schedule rewritten first. Practical, resourceful, and generous \u2014 you turned frustration into something the team could act on Monday morning.</div><span class=\"skill-tag\">\ud83d\udfe2 Problem-solver \u00b7 Solution, not just complaint</span></div>"
+    },
+    C: {
+      title: "You changed what you could.",
+      mem: "",
+      body: "<p class=\"narrative\">Rather than wait for the system to change, you quietly started learning your isolated clients' lives \u2014 connecting neighbours, remembering details, making each visit genuinely human.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">There is deep wisdom in this. <strong>You focused on the difference you could actually make, today, without permission from anyone.</strong> You cannot fix a national care system alone, but you can make sure every person on your round feels known. The risk is burnout if you carry it all yourself \u2014 but within your visits, you became the connection these people were missing. Small, consistent kindness is not small at all.</div><span class=\"skill-tag\">\ud83d\udd35 Quiet impact \u00b7 Changed what she could reach</span></div>"
+    },
+    D: {
+      title: "You almost stayed quiet.",
+      mem: "",
+      body: "<p class=\"narrative\">You nearly kept your thoughts to yourself \u2014 too junior, too new, the schedules set far above you. Who were you to question the whole model?</p><div class=\"ob ob-amber\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">The instinct is understandable \u2014 but staying silent has a cost. <strong>The people closest to the work often see the clearest truths, and those truths die when juniors assume their voice does not count.</strong> You do not need to be senior to notice that people are lonely; you need to be present, and you were. The carers who improve this field are often the newest ones, who still see with fresh eyes what everyone else has stopped noticing. Your view matters precisely because you are close to it.</div><span class=\"skill-tag\">\ud83d\udfe1 \"Too junior to speak\" \u00b7 Your view matters most</span></div>"
+    }};
+  var summaries={AA: "You sat with him, then named the systemic problem out loud. Compassion in the moment, courage in the meeting. You understand that great care is both the human touch and the willingness to challenge what fails people. This is the whole heart of the profession.",
+    AB: "You gave him your time, then brought a practical solution to the team. You lead with warmth and follow with resourcefulness. Feeling deeply AND fixing things is exactly the combination social care needs most.",
+    AC: "You sat with him, then quietly transformed how you care for everyone on your round. Consistent, person-centred, humane. You changed what you could reach \u2014 and for the people you reach, that is everything.",
+    AD: "You gave him real human time \u2014 then held back from speaking up about the bigger problem. Your compassion is the core of this work. The next step is trusting that the truths you see up close deserve to be heard by those who set the rules.",
+    BA: "You handled it responsibly, then named the systemic problem. You used the team in the moment and found your voice for the bigger picture. Professional and principled \u2014 you protect both today's round and tomorrow's clients.",
+    BB: "You reported it properly, then proposed a real solution. Consistently constructive \u2014 you work through the system and you improve the system. This is how thoughtful carers become the ones who change things.",
+    BC: "You flagged it responsibly, then quietly built connection into your daily work. You respect the team AND take personal ownership. Reliable and deeply humane \u2014 the kind of carer families are grateful for.",
+    BD: "You did the responsible thing in the moment \u2014 then held back from the bigger conversation. Reporting concerns is good practice. But you saw something real about loneliness, and the field needs frontline voices like yours to name it, not just log it.",
+    CA: "You restored his dignity, then named the problem the system misses. You understand care at its deepest level \u2014 it is about independence and voice, for clients and for the truth. Person-centred and brave.",
+    CB: "You did it alongside him, then brought a practical fix to the team. You empower people in your visits and you empower change in your service. Resourceful and warm \u2014 a natural improver of whatever you touch.",
+    CC: "You worked with him not for him, then wove that same connection through your whole round. Beautifully consistent \u2014 every person you care for gets their dignity and their humanity back. This is care as it should be.",
+    CD: "You cared for him with real skill and dignity \u2014 then stayed quiet about the wider problem. Your instinct to restore independence is excellent. The growth is in believing that the insight behind it is worth sharing, not just practising.",
+    DA: "You almost kept your distance \u2014 then not only turned back for him but stood up and named the problem for everyone. The carer who nearly looked away became the one who spoke the hardest truth. Turning back, and then speaking up, is the whole journey of this work.",
+    DB: "You nearly stayed in your lane, then came back and brought a real solution to the team. Having felt the pull to disengage, you understood exactly why connection matters \u2014 and you built it into the service. Your near-miss became everyone's gain.",
+    DC: "You almost looked away, then quietly rebuilt your whole way of caring around connection. The person who nearly treated care as tasks became the one who made every visit human. Turning back once taught you to turn toward people always.",
+    DD: "You nearly stayed distant, and nearly stayed silent \u2014 and each time, something pulled you back toward the person in front of you. Social care is full of moments where the schedule invites you to look away. The courage was never fearlessness. It was turning back, again and again, toward people who needed to be seen."};
+
+  var OWN1={title:"You chose your own path.",mem:"You did not take any of the four options — you wrote your own. That instinct, to look at a situation and think there is another way, is exactly how the best ideas begin.",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">There was no single right answer here — and you refused to be limited to the choices in front of you. <strong>Thinking beyond the options you are given is one of the rarest and most valuable habits there is.</strong> Every real breakthrough started with someone who would not just pick from the menu. Hold on to that. Now let us see how the situation unfolds.</div><span class=\"skill-tag\">🔵 Independent thinking · You wrote your own path</span></div>"};
+  var OWN2={title:"You chose your own path again.",mem:"",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">Once again you looked past the options and thought for yourself. <strong>People who consistently generate their own answers — rather than only choosing between the ones offered — are the ones who end up changing how things are done.</strong> That is a genuine strength, and it is worth developing wherever your path takes you.</div><span class=\"skill-tag\">🔵 Independent thinking · Your own path, twice</span></div>"};
+
+  function show(id){document.querySelectorAll('.scene').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+  function goS1A(){show('scene-1a');}
+  function s1(c){c1=c;var o=S1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-1b');}
+  function s1own(){var t=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(!t){var h=document.getElementById('hint-s1');if(h)h.classList.add('show');return;}c1='E';document.getElementById('o1-title').textContent=OWN1.title;document.getElementById('o1-body').innerHTML=OWN1.body;show('scene-1b');}
+  function goS2A(){var o=(c1==='E')?OWN1:S1[c1];document.getElementById('mem-badge').innerHTML='<strong>Where you are:</strong> '+(o.mem||'');show('scene-2a');}
+  function s2(c){c2=c;var o=S2[c];document.getElementById('o2-title').textContent=o.title;document.getElementById('o2-body').innerHTML=o.body;show('scene-2b');}
+  function s2own(){var t=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(!t){var h=document.getElementById('hint-s2');if(h)h.classList.add('show');return;}c2='E';document.getElementById('o2-title').textContent=OWN2.title;document.getElementById('o2-body').innerHTML=OWN2.body;show('scene-2b');}
+  function ownSummary(){
+    if(c1==='E'&&c2==='E')return 'You wrote your own path at every turn — refusing both times to be limited to the options in front of you. That is the instinct of an inventor, a founder, a leader: the belief that the best answer might be one nobody has offered yet. Keep thinking like that.';
+    if(c1==='E'||c2==='E')return 'At one of the two decisions, you looked past every option offered and wrote your own. That willingness to think beyond the menu is rare and valuable — it is where original ideas come from. Hold on to it wherever your path leads.';
+    return '';
+  }
+  function goComplete(){var os=ownSummary();document.getElementById('c-summary').textContent=os||summaries[c1+c2]||'';var _r=document.getElementById('path-rarity');if(_r){var p=(c1||'')+(c2||'');_r.textContent=(c1==='E'||c2==='E')?('Your path: '+p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+p+' — one of 16 possible journeys. Replay to discover another.');}show('scene-complete');}
+
+  function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(function(t){t.value='';});show('scene-intro');document.getElementById('pbar').style.width='6%';}
+
+  function showJourney(){
+    var jr=document.getElementById('journey-review');
+    var a1=(document.getElementById('dq1')||{value:''}).value.trim();
+    var a2=(document.getElementById('dq2')||{value:''}).value.trim();
+    var a3=(document.getElementById('dq3')||{value:''}).value.trim();
+    var h='<div class="ob ob-blue"><div class="ob-label"><span class="ob-dot"></span> Your full journey</div>';
+    h+='<p style="margin-bottom:10px;"><strong>Scene 1:</strong> '+((c1==='E')?OWN1.title:(S1[c1]?S1[c1].title:''))+'</p>';var f1=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(f1)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 1 idea:</strong> '+f1+'</p>';
+    h+='<p style="margin-bottom:10px;"><strong>Scene 2:</strong> '+((c2==='E')?OWN2.title:(S2[c2]?S2[c2].title:''))+'</p>';var f2=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(f2)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 2 idea:</strong> '+f2+'</p>';
+    h+='<p style="margin-bottom:10px;"><strong>What this revealed:</strong> '+(ownSummary()||summaries[c1+c2]||'')+'</p>';
+    if(a1||a2||a3){h+='<p style="margin-top:12px;opacity:0.85;"><strong>Your reflections:</strong></p>';if(a1)h+='<p style="font-size:14px;margin-top:6px;">• '+a1+'</p>';if(a2)h+='<p style="font-size:14px;margin-top:6px;">• '+a2+'</p>';if(a3)h+='<p style="font-size:14px;margin-top:6px;">• '+a3+'</p>';}
+    h+='<p style="margin-top:12px;font-size:13px;opacity:0.7;">📸 Screenshot this to keep or share your journey.</p></div>';
+    jr.innerHTML=h;jr.style.display='block';jr.scrollIntoView({behavior:'smooth'});
+  }
+
+  async function saveDebrief(simulationName){
+    var a1=(document.getElementById('dq1')||{value:''}).value.trim();
+    var a2=(document.getElementById('dq2')||{value:''}).value.trim();
+    var a3=(document.getElementById('dq3')||{value:''}).value.trim();
+    var sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+    try{
+      await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({simulationName:simulationName,sessionId:sessionId,answer1:a1||'no answer provided',answer2:a2||'no answer provided',answer3:a3||'no answer provided'})
+      });
+    }catch(e){console.log('Debrief save failed silently',e);}
+  }
+
+  async function goFinish(){
+    await saveDebrief('career-the-visit');
+    showJourney();
+    var btn=document.querySelector('.final-btn');
+    if(btn){btn.textContent='Saved ✓ — thank you';}
+  }
+
+  setTimeout(function(){document.getElementById('pbar').style.width='8%';},400);
+</script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number That Doesn't Add Up — PathForge</title>
+<meta name="description" content="Step into the role of a junior financial analyst who spots something wrong in a major deal. A PathForge career simulation.">
+<meta property="og:title" content="The Number That Doesn't Add Up — PathForge">
+<meta property="og:description" content="Step into the role of a junior financial analyst who spots something wrong in a major deal. A PathForge career simulation.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCT2NS7ET8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCT2NS7ET8');
+</script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xbl1zshvdm");
+</script>
+<style>
+  :root{--accent:#0a4a35;--accent2:#34d399;--bg:#0f0a1e;--card:#1a1230;--text:#ece8f5;--muted:#a99fc4;--sans:'Segoe UI',system-ui,sans-serif;--serif:Georgia,serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;padding:0;}
+  .wrap{max-width:640px;margin:0 auto;padding:20px 18px 80px;}
+  .topnav{display:flex;justify-content:space-between;align-items:center;padding:10px 0 20px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:24px;}
+  .brand{font-weight:800;letter-spacing:0.5px;color:var(--accent2);font-size:15px;text-decoration:none;}
+  .brand span{color:var(--text);}
+  .nav-link{color:var(--muted);text-decoration:none;font-size:13px;}
+  .scene{display:none;animation:fade 0.4s ease;}
+  .scene.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--accent2);font-weight:700;margin-bottom:10px;}
+  h1{font-family:var(--serif);font-size:30px;line-height:1.2;margin-bottom:8px;}
+  h2{font-family:var(--serif);font-size:24px;margin-bottom:12px;}
+  .subtitle{color:var(--muted);font-size:17px;margin-bottom:24px;}
+  .narrative{font-size:17px;margin-bottom:18px;}
+  .narrative strong{color:#fff;}
+  .narrative em{color:var(--accent2);font-style:italic;}
+  .progress-wrap{margin-bottom:20px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .progress-track{height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width 0.5s ease;}
+  .fact-card{display:flex;gap:14px;background:var(--card);border-radius:12px;padding:16px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.08);}
+  .fact-icon{font-size:24px;flex-shrink:0;}
+  .fact-label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);font-weight:700;margin-bottom:4px;}
+  .fact-body{font-size:15px;color:var(--text);}
+  .tension{background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));border-left:3px solid var(--accent2);border-radius:8px;padding:16px;margin:20px 0;}
+  .tension p{margin-bottom:8px;}.tension p:last-child{margin-bottom:0;}
+  .continue-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:16px 24px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:var(--sans);transition:background 0.2s;}
+  .continue-btn:hover{background:var(--accent2);}
+  .arrow{margin-left:6px;}
+  .dp{text-align:center;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:2px;margin:24px 0 16px;}
+  .choice-btn{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;font-family:var(--sans);color:var(--text);transition:border-color 0.2s,transform 0.08s ease;}
+  .choice-btn:hover{border-color:var(--accent2);}
+  .choice-btn:active{transform:scale(0.96);}
+  .choice-btn{-webkit-tap-highlight-color:transparent;}
+  .cletter{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:14px;}
+  .ctext{font-weight:600;font-size:16px;margin-bottom:3px;}
+  .csub{color:var(--muted);font-size:14px;}
+  .ob{border-radius:10px;padding:16px;margin:18px 0;border:1px solid;}
+  .ob-green{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);}
+  .ob-amber{background:rgba(217,119,6,0.08);border-color:rgba(217,119,6,0.3);}
+  .ob-red{background:rgba(220,38,38,0.08);border-color:rgba(220,38,38,0.3);}
+  .ob-blue{background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.3);}
+  .ob-label{display:flex;align-items:center;gap:8px;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px;color:var(--accent2);}
+  .ob-dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);}
+  .ob-text{font-size:15px;}
+  .ob-text strong{color:#fff;}
+  .skill-tag{display:inline-block;margin-top:10px;font-size:13px;background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:20px;color:var(--accent2);font-weight:600;}
+  .mem-badge{background:rgba(255,255,255,0.05);border-radius:10px;padding:14px;margin-bottom:20px;font-size:14px;color:var(--muted);border:1px dashed rgba(255,255,255,0.15);}
+  .mem-badge strong{color:var(--accent2);}
+  .fifth{margin-top:8px;margin-bottom:20px;}
+  .fifth-label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block;}
+  .fifth-input{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px;color:var(--text);font-family:var(--sans);font-size:14px;resize:vertical;}
+  .fifth-continue{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:transparent;border:1px solid var(--accent2);color:var(--accent2);border-radius:8px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all 0.2s;}
+  .fifth-continue:hover{background:var(--accent2);color:#fff;}
+  .fifth-continue:active{transform:scale(0.96);}
+  .fifth-hint{font-size:12px;color:var(--muted);margin-top:8px;opacity:0;transition:opacity 0.2s;}
+  .fifth-hint.show{opacity:1;}
+  .completion{text-align:center;margin-bottom:24px;}
+  .completion-icon{font-size:48px;margin-bottom:12px;}
+  #c-summary,#path-rarity{text-align:center;}
+  #c-summary{color:var(--accent2);font-weight:700;font-size:16px;margin:0 auto;max-width:520px;}
+  #path-rarity{font-size:12px;opacity:0.65;margin-top:8px;}
+  .career-reveal{margin:28px 0;}
+  .career-reveal h3{text-align:center;font-family:var(--serif);margin-bottom:16px;}
+  .career-card{display:flex;gap:14px;background:var(--card);border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.08);}
+  .career-icon{font-size:22px;}
+  .career-title{font-weight:700;font-size:15px;}
+  .career-desc{color:var(--muted);font-size:14px;}
+  .debrief-q{margin-bottom:18px;}
+  .debrief-q label{display:block;font-size:15px;margin-bottom:8px;font-weight:600;}
+  .debrief-q textarea{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:var(--sans);font-size:15px;resize:vertical;min-height:70px;}
+  .final-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:var(--sans);margin-top:8px;transition:background 0.2s;}
+  .final-btn:hover{background:var(--accent2);}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+  .actions button,.actions a{flex:1;min-width:140px;text-align:center;background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--text);border-radius:8px;padding:12px;font-size:14px;cursor:pointer;text-decoration:none;font-family:var(--sans);}
+  .epilogue{background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(212,175,55,0.03));border:1px solid rgba(212,175,55,0.25);border-radius:12px;padding:18px;margin:22px 0;}
+  .epilogue .ob-label{color:#d4af37;}.epilogue .ob-dot{background:#d4af37;}
+  .footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+  .footer a{color:var(--accent2);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topnav">
+    <a href="https://pathforge001.github.io/simulations/" class="brand">PATH<span>FORGE</span></a>
+    <a href="https://pathforge001.github.io/simulations/" class="nav-link">← All simulations</a>
+  </div>
+
+  <!-- INTRO -->
+  <div class="scene active" id="scene-intro">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span id="pl0">Begin</span></div><div class="progress-track"><div class="progress-fill" id="pbar" style="width:6%"></div></div></div>
+    <div class="eyebrow">Investment firm · Thursday, 9pm</div>
+    <h1>The Number That Doesn't Add Up</h1>
+    <p class="subtitle">Everyone wants this deal to close Friday. You just found a problem.</p>
+    <p class="narrative">You are a junior analyst at an investment firm. For three weeks the whole team has been working late on one thing: a £40 million deal to buy a company called Halden Logistics. It closes Friday. Everyone is exhausted and everyone is ready.</p>
+ <p class="narrative">It is Thursday, 9pm. You are doing a final check of Halden's accounts — routine, box-ticking work nobody expects to find anything in. Then a number catches your eye. <strong>The company's reported profits don't match its cash.</strong></p>
+ <p class="narrative">You check again. The revenue looks strong on paper, but the actual money coming in is far lower. <em>Something has been made to look better than it really is.</em> And you are the most junior person in the building.</p>
+    <button class="continue-btn" onclick="goS1A()">What do you do? <span class="arrow">→</span></button>
+  </div>
+
+  <!-- SCENE 1 SETUP -->
+  <div class="scene" id="scene-1a">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 1</span></div><div class="progress-track"><div class="progress-fill" style="width:22%"></div></div></div>
+    <p class="narrative">If you are right, the company is worth far less than £40 million — maybe the whole deal is a mistake. But you are 23, it is your first job, and the senior partners have staked three weeks and their reputations on this closing tomorrow.</p>
+ <div class="fact-card"><div class="fact-icon">📉</div><div><div class="fact-label">What you're seeing</div><div class="fact-body">Profits and cash should move together. When reported profit is high but cash is low, it can mean revenue is being recorded that hasn't actually arrived — sometimes an honest timing issue, sometimes something worse.</div></div></div>
+ <div class="tension"><p>You could be about to stop a £40 million mistake — or embarrass yourself over something you misread as a junior.</p><p><strong>What do you do?</strong></p></div>
+    <div class="dp">— Scene 1 — What do you do? —</div>
+    <div id="s1-choices">
+        <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Double and triple-check your analysis before saying anything</div><div class="csub">Be certain first. If you raise this, you need your numbers to be unshakeable.</div></div></button>
+        <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Take it straight to your manager tonight, even though it's late</div><div class="csub">The deal closes tomorrow. There is no time to sit on this — flag it now.</div></div></button>
+        <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Quietly ask a trusted senior colleague to sanity-check what you're seeing</div><div class="csub">Get a second opinion from someone experienced before escalating formally.</div></div></button>
+        <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Say nothing — you're the junior, the seniors surely already checked this</div><div class="csub">Who are you to question a £40m deal three weeks in? You'll look foolish. Let it go.</div></div></button>
+    </div>
+    <div class="fifth">
+      <label class="fifth-label" for="fifth-s1">💡 I'd do something different —</label>
+      <textarea class="fifth-input" id="fifth-s1" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+      <div><button class="fifth-continue" onclick="s1own(1)">Continue with my own idea <span class="arrow">→</span></button></div>
+      <div class="fifth-hint" id="hint-s1">Write your idea above, or pick one of the options.</div>
+    </div>
+  </div>
+
+  <!-- SCENE 1 OUTCOME -->
+  <div class="scene" id="scene-1b">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 1 result</span></div><div class="progress-track"><div class="progress-fill" style="width:45%"></div></div></div>
+    <h2 id="o1-title"></h2>
+    <div id="o1-body"></div>
+    <button class="continue-btn" onclick="goS2A()">What happens next <span class="arrow">→</span></button>
+  </div>
+
+  <!-- SCENE 2 SETUP -->
+  <div class="scene" id="scene-2a">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 2</span></div><div class="progress-track"><div class="progress-fill" style="width:66%"></div></div></div>
+    <div class="mem-badge" id="mem-badge"></div>
+    <p class="narrative">However you got there, the concern is now on the table. The senior partners gather in a room at 10pm, deal documents everywhere, and they turn to you. The most junior person in the building is about to explain why the deal they've worked three weeks on might be worth far less than they think.</p>
+ <div class="fact-card"><div class="fact-icon">🎯</div><div><div class="fact-label">The moment</div><div class="fact-body">One partner is clearly annoyed — this is deeply inconvenient. Another is listening carefully. They want to know: is this a real problem, or a junior misreading normal accounting? How you handle this room matters as much as the numbers.</div></div></div>
+    <div class="dp">— Scene 2 — How do you handle the room? —</div>
+    <div id="s2-choices">
+        <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">Present just the facts clearly and let the numbers speak</div><div class="csub">No drama, no accusations. Here is the profit, here is the cash, here is the gap. Calm and precise.</div></div></button>
+        <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">Acknowledge you might be wrong, but explain why it's worth one more day to check</div><div class="csub">Humble but firm. You're not certain it's fraud — you're certain it needs checking before £40m moves.</div></div></button>
+        <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">Recommend delaying the deal until an independent audit confirms the accounts</div><div class="csub">The strong call: don't close tomorrow. Get outside experts to verify before anyone commits.</div></div></button>
+        <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">Downplay it now that the partners seem annoyed — maybe soften it to save face</div><div class="csub">The room feels hostile. Backing off slightly would be more comfortable right now.</div></div></button>
+    </div>
+    <div class="fifth">
+      <label class="fifth-label" for="fifth-s2">💡 I'd do something different —</label>
+      <textarea class="fifth-input" id="fifth-s2" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+      <div><button class="fifth-continue" onclick="s2own(2)">Continue with my own idea <span class="arrow">→</span></button></div>
+      <div class="fifth-hint" id="hint-s2">Write your idea above, or pick one of the options.</div>
+    </div>
+  </div>
+
+  <!-- SCENE 2 OUTCOME -->
+  <div class="scene" id="scene-2b">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 2 result</span></div><div class="progress-track"><div class="progress-fill" style="width:85%"></div></div></div>
+    <h2 id="o2-title"></h2>
+    <div id="o2-body"></div>
+    
+    <button class="continue-btn" onclick="goComplete()">See what this reveals <span class="arrow">→</span></button>
+  </div>
+
+  <!-- COMPLETE -->
+  <div class="scene" id="scene-complete">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Complete</span></div><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></div>
+    <div class="completion">
+      <div class="completion-icon">📊</div>
+      <h2>Your journey through the number</h2>
+    </div>
+    <p id="c-summary"></p>
+    <p id="path-rarity"></p>
+
+    <div class="career-reveal">
+      <h3>Careers this connects to</h3>
+      <div class="career-card"><div class="career-icon">📊</div><div><div class="career-title">Financial Analyst</div><div class="career-desc">Examines company accounts and deals to find what the numbers really say — exactly what you just did.</div></div></div>
+<div class="career-card"><div class="career-icon">🔍</div><div><div class="career-title">Forensic Accountant</div><div class="career-desc">Investigates financial records to uncover fraud and errors hidden beneath the surface.</div></div></div>
+<div class="career-card"><div class="career-icon">🏦</div><div><div class="career-title">Investment Analyst</div><div class="career-desc">Decides whether deals and companies are worth the money — protecting millions from bad bets.</div></div></div>
+<div class="career-card"><div class="career-icon">📋</div><div><div class="career-title">Auditor</div><div class="career-desc">Independently verifies that companies' accounts are honest and accurate. The exact check you called for.</div></div></div>
+<div class="career-card"><div class="career-icon">💼</div><div><div class="career-title">Corporate Finance Adviser</div><div class="career-desc">Guides companies through major deals and acquisitions, spotting risks before money moves.</div></div></div>
+    </div>
+
+    <div class="dp">— One last thing —</div>
+    <div class="debrief-q"><label>You were the most junior person in the building, questioning senior experts. What makes it so hard to speak up in that position — and why does it matter that people do?</label><textarea id="dq1" placeholder="Your thoughts..."></textarea></div>
+    <div class="debrief-q"><label>When the room turned hostile, staying firm was harder than backing down. Why is it so important that a financial analyst tells people what they need to hear, not what they want to hear?</label><textarea id="dq2" placeholder="Your thoughts..."></textarea></div>
+    <div class="debrief-q"><label>The whole problem started because everyone assumed someone else had already checked. What does that teach you about responsibility on a team?</label><textarea id="dq3" placeholder="Your thoughts..."></textarea></div>
+    <button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goFinish()">Complete ✓</button>
+
+    <div class="actions">
+      <button onclick="showJourney()">📖 Review my journey</button>
+      <button onclick="resetAll()">↺ Replay</button>
+      <a href="https://pathforge001.github.io/simulations/">← Try another</a>
+    </div>
+    <div id="journey-review" style="display:none;margin-top:20px;"></div>
+  </div>
+
+  <div class="footer">
+    PathForge · <a href="https://pathforge001.github.io/simulations/">usepathforge.io</a> · <a href="https://tally.so/r/kdx5g1">Parent feedback</a><br>
+    Questions? <a href="mailto:salem@usepathforge.io">salem@usepathforge.io</a>
+  </div>
+</div>
+
+<script>
+  var c1=null,c2=null;
+  var S1={A: {
+      title: "You checked, and checked again.",
+      mem: "You went through the numbers three times. You built a clean comparison of reported profit against actual cash across two years. The gap is real, it is large, and now you can prove it. Whatever happens next, your analysis will hold.",
+      body: "<p class=\"narrative\">You did not raise the alarm on a hunch. You rebuilt the analysis carefully, comparing reported profit to actual cash flow across two years, until you were certain.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">In finance, <strong>being right is not enough \u2014 you have to be able to prove you're right.</strong> By verifying rigorously before speaking, you turned a nervous hunch into an unshakeable case. When you do raise it, no one can wave it away as a junior's mistake. The risk is time \u2014 the deal closes tomorrow \u2014 but a proven concern beats a vague one every time.</div><span class=\"skill-tag\">\ud83d\udd35 Rigour \u00b7 Proof before alarm</span></div>"
+    },
+    B: {
+      title: "You raised it immediately.",
+      mem: "You messaged your manager that night: \"I think there's a problem with the Halden numbers we need to look at before tomorrow.\" It took nerve. Your manager is now awake, concerned, and asking you to walk them through exactly what you found.",
+      body: "<p class=\"narrative\">You did not wait. You took your concern straight to your manager that night, knowing the deal closed in hours.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Speed mattered here \u2014 <strong>a problem found the night before is worth infinitely more than one found the day after.</strong> Raising it took real courage as the most junior person in the room. Your manager will want to see your evidence, so you'll need to back it up, but flagging a potential \u00a340m error before it's too late is exactly what a good analyst does.</div><span class=\"skill-tag\">\ud83d\udfe2 Courage \u00b7 Spoke up in time</span></div>"
+    },
+    C: {
+      title: "You sought a second opinion.",
+      mem: "You quietly asked a senior analyst you trust to look at what you'd found. They studied it, went quiet, and said: \"You're right to be worried. We need to take this up \u2014 now.\" Having them beside you changes everything.",
+      body: "<p class=\"narrative\">You asked a senior colleague you trusted to sanity-check your finding before you made noise. They looked, paused, and confirmed your worry was real.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This was shrewd. <strong>A second experienced pair of eyes both strengthens your case and gives you an ally.</strong> Now it is not a lone junior raising a doubt \u2014 it is two analysts, one senior, flagging a serious issue. You lost a little time, but you gained credibility that a solo escalation would have lacked.</div><span class=\"skill-tag\">\ud83d\udd35 Judgment \u00b7 Built an ally first</span></div>"
+    },
+    D: {
+      title: "You almost said nothing.",
+      mem: "You told yourself the seniors must have checked it \u2014 who were you to question a \u00a340m deal? For an hour you tried to let it go. Then you thought: if I'm right and I stayed silent, that's worse than being wrong out loud. You opened your laptop again.",
+      body: "<p class=\"narrative\">You almost convinced yourself to stay quiet. You were 23, it was your first job, and surely the experienced people had already checked the basics.</p><div class=\"ob ob-red\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Here is the honest truth: <strong>this is how expensive mistakes survive \u2014 everyone assumes someone senior already checked.</strong> Often nobody did, because everyone assumed the same thing. What saved you was a simple thought: if you are right and you say nothing, your silence helped waste \u00a340 million. Being wrong out loud is survivable. Being right and silent is not. You opened your laptop again.</div><span class=\"skill-tag\">\ud83d\udd34 The silence of \"not my place\" \u00b7 You spoke anyway</span></div>"
+    }};
+  var S2={A: {
+      title: "You let the numbers speak.",
+      mem: "",
+      body: "<p class=\"narrative\">You did not accuse anyone or dramatise. You put up two lines \u2014 reported profit and actual cash \u2014 and let the gap between them speak for itself.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This is how professionals win hard rooms. <strong>Facts, calmly presented, are harder to dismiss than arguments.</strong> By removing emotion and accusation, you made it impossible to write you off as a panicking junior. The numbers did the confronting; you just made them visible. Even the annoyed partner had to engage with what was on the screen.</div><span class=\"skill-tag\">\ud83d\udfe2 Calm precision \u00b7 Let evidence lead</span></div>"
+    },
+    B: {
+      title: "You were humble but firm.",
+      mem: "",
+      body: "<p class=\"narrative\">You acknowledged openly that you might be misreading it \u2014 then held your ground that a \u00a340m decision was worth one more day of checking.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This is genuine maturity. <strong>Admitting uncertainty actually made you more credible, not less.</strong> You were not claiming to have caught fraud \u2014 you were insisting that a huge decision deserved certainty. That is very hard to argue against, and it let the partners save face while still doing the right thing. Confidence and humility together is a rare, powerful combination.</div><span class=\"skill-tag\">\ud83d\udfe2 Humble and firm \u00b7 Credible under pressure</span></div>"
+    },
+    C: {
+      title: "You called for a delay.",
+      mem: "",
+      body: "<p class=\"narrative\">You made the strong recommendation: do not close tomorrow. Bring in an independent audit to verify the accounts before \u00a340m changes hands.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This took real conviction. <strong>Recommending a delay on a deal everyone wants to close is one of the hardest calls in finance</strong> \u2014 you become the person who slowed everything down. But if you are right, an independent audit is exactly how you protect \u00a340m and everyone's reputation. Sometimes the most valuable thing an analyst does is say \"not yet.\"</div><span class=\"skill-tag\">\ud83d\udd35 Conviction \u00b7 Protected the decision</span></div>"
+    },
+    D: {
+      title: "You almost softened it.",
+      mem: "",
+      body: "<p class=\"narrative\">Feeling the hostility in the room, you were tempted to soften your finding \u2014 to walk it back just enough to make the discomfort go away.</p><div class=\"ob ob-amber\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This is the most human temptation there is \u2014 and the most dangerous. <strong>If the numbers are real, softening them to please the room helps \u00a340m flow into a bad deal.</strong> The whole value of your role is telling people what they need to hear, not what they want to. Backing down under social pressure is how analysts become useless. The ones who matter hold the line precisely when the room wants them to fold.</div><span class=\"skill-tag\">\ud83d\udfe1 The urge to please the room \u00b7 Hold the line</span></div>"
+    }};
+  var summaries={AA: "You proved it rigorously, then let the facts speak in the room. Certainty built quietly, delivered calmly. This is the analyst everyone eventually trusts \u2014 precise before speaking, unshakeable when they do.",
+    AB: "You verified thoroughly, then presented it with humble confidence. You did the work AND you handled the people. Rigour plus emotional intelligence is exactly what turns a good analyst into a leader.",
+    AC: "You checked exhaustively, then called for an independent audit. Meticulous and brave \u2014 you built certainty, then had the conviction to act on it even when it slowed a deal everyone wanted. Impressive judgment.",
+    AD: "You did the rigorous analysis \u2014 then felt the pull to soften it under pressure. Your technical work was excellent, but finance tests something harder: whether you can deliver an unwelcome truth to a hostile room. The numbers only help if you hold the line.",
+    BA: "You raised it fast, then let the numbers speak calmly. Courage to flag it in time, composure to present it well. Speaking up early and staying calm under scrutiny is a rare and valuable pairing.",
+    BB: "You spoke up quickly, then handled the room with humble confidence. You have nerve and you have grace \u2014 you flagged the problem in time and made it easy for others to do the right thing. Strong instincts.",
+    BC: "You raised it immediately, then pushed for a proper audit. Decisive from start to finish \u2014 flag it fast, then insist on verifying it properly. You protect decisions without needing to be certain you're right alone.",
+    BD: "You bravely raised it \u2014 then wavered under the room's pressure. Speaking up took real courage. The harder lesson is that the pressure gets worse in the room, not better, and the value of your warning depends on holding it there too.",
+    CA: "You got a second opinion, then let the facts speak. You built your case with an ally, then presented it without drama. Collaborative and composed \u2014 you know a strong case is one others have tested too.",
+    CB: "You sought a senior ally, then handled the room with humility and firmness. You gather support AND carry yourself well under pressure. This is how careful people build influence beyond their job title.",
+    CC: "You confirmed with a colleague, then called for an audit. Thorough and principled all the way through \u2014 build the case with allies, then protect the decision with outside verification. Excellent professional instincts.",
+    CD: "You wisely sought a second opinion \u2014 then felt tempted to soften under pressure. Building an ally was smart. But the room is where it counts, and the analysts who matter hold their finding steady even when the partners push back.",
+    DA: "You almost stayed silent \u2014 then found your voice and let the numbers speak for themselves. The junior who nearly assumed \"someone senior checked\" became the one who calmly stopped a \u00a340m mistake. Overriding your own self-doubt is the whole job.",
+    DB: "You nearly said nothing, then spoke up with humble confidence. Having felt the pull of silence, you understood exactly how much courage speaking took \u2014 and you did it with grace. Your near-silence became quiet strength.",
+    DC: "You almost let it go, then came back and called for a full audit. The person who nearly stayed quiet became the one who insisted on protecting \u00a340m properly. Doubt that turns into conviction is the most powerful arc there is.",
+    DD: "You nearly stayed silent twice \u2014 the quiet junior who almost let it slide, tempted again to fold in the room. But you spoke, and you held. Finance runs on people willing to say the unwelcome, true thing. The courage was never certainty. It was speaking despite the doubt."};
+
+  var OWN1={title:"You chose your own path.",mem:"You did not take any of the four options — you wrote your own. That instinct, to look at a situation and think there is another way, is exactly how the best ideas begin.",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">There was no single right answer here — and you refused to be limited to the choices in front of you. <strong>Thinking beyond the options you are given is one of the rarest and most valuable habits there is.</strong> Every real breakthrough started with someone who would not just pick from the menu. Hold on to that. Now let us see how the situation unfolds.</div><span class=\"skill-tag\">🔵 Independent thinking · You wrote your own path</span></div>"};
+  var OWN2={title:"You chose your own path again.",mem:"",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">Once again you looked past the options and thought for yourself. <strong>People who consistently generate their own answers — rather than only choosing between the ones offered — are the ones who end up changing how things are done.</strong> That is a genuine strength, and it is worth developing wherever your path takes you.</div><span class=\"skill-tag\">🔵 Independent thinking · Your own path, twice</span></div>"};
+
+  function show(id){document.querySelectorAll('.scene').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+  function goS1A(){show('scene-1a');}
+  function s1(c){c1=c;var o=S1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-1b');}
+  function s1own(){var t=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(!t){var h=document.getElementById('hint-s1');if(h)h.classList.add('show');return;}c1='E';document.getElementById('o1-title').textContent=OWN1.title;document.getElementById('o1-body').innerHTML=OWN1.body;show('scene-1b');}
+  function goS2A(){var o=(c1==='E')?OWN1:S1[c1];document.getElementById('mem-badge').innerHTML='<strong>Where you are:</strong> '+(o.mem||'');show('scene-2a');}
+  function s2(c){c2=c;var o=S2[c];document.getElementById('o2-title').textContent=o.title;document.getElementById('o2-body').innerHTML=o.body;show('scene-2b');}
+  function s2own(){var t=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(!t){var h=document.getElementById('hint-s2');if(h)h.classList.add('show');return;}c2='E';document.getElementById('o2-title').textContent=OWN2.title;document.getElementById('o2-body').innerHTML=OWN2.body;show('scene-2b');}
+  function ownSummary(){
+    if(c1==='E'&&c2==='E')return 'You wrote your own path at every turn — refusing both times to be limited to the options in front of you. That is the instinct of an inventor, a founder, a leader: the belief that the best answer might be one nobody has offered yet. Keep thinking like that.';
+    if(c1==='E'||c2==='E')return 'At one of the two decisions, you looked past every option offered and wrote your own. That willingness to think beyond the menu is rare and valuable — it is where original ideas come from. Hold on to it wherever your path leads.';
+    return '';
+  }
+  function goComplete(){var os=ownSummary();document.getElementById('c-summary').textContent=os||summaries[c1+c2]||'';var _r=document.getElementById('path-rarity');if(_r){var p=(c1||'')+(c2||'');_r.textContent=(c1==='E'||c2==='E')?('Your path: '+p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+p+' — one of 16 possible journeys. Replay to discover another.');}show('scene-complete');}
+
+  function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(function(t){t.value='';});show('scene-intro');document.getElementById('pbar').style.width='6%';}
+
+  function showJourney(){
+    var jr=document.getElementById('journey-review');
+    var a1=(document.getElementById('dq1')||{value:''}).value.trim();
+    var a2=(document.getElementById('dq2')||{value:''}).value.trim();
+    var a3=(document.getElementById('dq3')||{value:''}).value.trim();
+    var h='<div class="ob ob-blue"><div class="ob-label"><span class="ob-dot"></span> Your full journey</div>';
+    h+='<p style="margin-bottom:10px;"><strong>Scene 1:</strong> '+((c1==='E')?OWN1.title:(S1[c1]?S1[c1].title:''))+'</p>';var f1=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(f1)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 1 idea:</strong> '+f1+'</p>';
+    h+='<p style="margin-bottom:10px;"><strong>Scene 2:</strong> '+((c2==='E')?OWN2.title:(S2[c2]?S2[c2].title:''))+'</p>';var f2=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(f2)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 2 idea:</strong> '+f2+'</p>';
+    h+='<p style="margin-bottom:10px;"><strong>What this revealed:</strong> '+(ownSummary()||summaries[c1+c2]||'')+'</p>';
+    if(a1||a2||a3){h+='<p style="margin-top:12px;opacity:0.85;"><strong>Your reflections:</strong></p>';if(a1)h+='<p style="font-size:14px;margin-top:6px;">• '+a1+'</p>';if(a2)h+='<p style="font-size:14px;margin-top:6px;">• '+a2+'</p>';if(a3)h+='<p style="font-size:14px;margin-top:6px;">• '+a3+'</p>';}
+    h+='<p style="margin-top:12px;font-size:13px;opacity:0.7;">📸 Screenshot this to keep or share your journey.</p></div>';
+    jr.innerHTML=h;jr.style.display='block';jr.scrollIntoView({behavior:'smooth'});
+  }
+
+  async function saveDebrief(simulationName){
+    var a1=(document.getElementById('dq1')||{value:''}).value.trim();
+    var a2=(document.getElementById('dq2')||{value:''}).value.trim();
+    var a3=(document.getElementById('dq3')||{value:''}).value.trim();
+    var sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+    try{
+      await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({simulationName:simulationName,sessionId:sessionId,answer1:a1||'no answer provided',answer2:a2||'no answer provided',answer3:a3||'no answer provided'})
+      });
+    }catch(e){console.log('Debrief save failed silently',e);}
+  }
+
+  async function goFinish(){
+    await saveDebrief('career-the-number');
+    showJourney();
+    var btn=document.querySelector('.final-btn');
+    if(btn){btn.textContent='Saved ✓ — thank you';}
+  }
+
+  setTimeout(function(){document.getElementById('pbar').style.width='8%';},400);
+</script>
+</body>
+</html>

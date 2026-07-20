@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Breach — PathForge</title>
+<meta name="description" content="Step into the role of a cybersecurity analyst during a live security breach. A PathForge career simulation.">
+<meta property="og:title" content="The Breach — PathForge">
+<meta property="og:description" content="Step into the role of a cybersecurity analyst during a live security breach. A PathForge career simulation.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCT2NS7ET8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCT2NS7ET8');
+</script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xbl1zshvdm");
+</script>
+<style>
+  :root{--accent:#0a3a5a;--accent2:#38bdf8;--bg:#0f0a1e;--card:#1a1230;--text:#ece8f5;--muted:#a99fc4;--sans:'Segoe UI',system-ui,sans-serif;--serif:Georgia,serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;padding:0;}
+  .wrap{max-width:640px;margin:0 auto;padding:20px 18px 80px;}
+  .topnav{display:flex;justify-content:space-between;align-items:center;padding:10px 0 20px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:24px;}
+  .brand{font-weight:800;letter-spacing:0.5px;color:var(--accent2);font-size:15px;text-decoration:none;}
+  .brand span{color:var(--text);}
+  .nav-link{color:var(--muted);text-decoration:none;font-size:13px;}
+  .scene{display:none;animation:fade 0.4s ease;}
+  .scene.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--accent2);font-weight:700;margin-bottom:10px;}
+  h1{font-family:var(--serif);font-size:30px;line-height:1.2;margin-bottom:8px;}
+  h2{font-family:var(--serif);font-size:24px;margin-bottom:12px;}
+  .subtitle{color:var(--muted);font-size:17px;margin-bottom:24px;}
+  .narrative{font-size:17px;margin-bottom:18px;}
+  .narrative strong{color:#fff;}
+  .narrative em{color:var(--accent2);font-style:italic;}
+  .progress-wrap{margin-bottom:20px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .progress-track{height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width 0.5s ease;}
+  .fact-card{display:flex;gap:14px;background:var(--card);border-radius:12px;padding:16px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.08);}
+  .fact-icon{font-size:24px;flex-shrink:0;}
+  .fact-label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);font-weight:700;margin-bottom:4px;}
+  .fact-body{font-size:15px;color:var(--text);}
+  .tension{background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));border-left:3px solid var(--accent2);border-radius:8px;padding:16px;margin:20px 0;}
+  .tension p{margin-bottom:8px;}.tension p:last-child{margin-bottom:0;}
+  .continue-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:16px 24px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:var(--sans);transition:background 0.2s;}
+  .continue-btn:hover{background:var(--accent2);}
+  .arrow{margin-left:6px;}
+  .dp{text-align:center;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:2px;margin:24px 0 16px;}
+  .choice-btn{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;font-family:var(--sans);color:var(--text);transition:border-color 0.2s,transform 0.08s ease;}
+  .choice-btn:hover{border-color:var(--accent2);}
+  .choice-btn:active{transform:scale(0.96);}
+  .choice-btn{-webkit-tap-highlight-color:transparent;}
+  .cletter{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:14px;}
+  .ctext{font-weight:600;font-size:16px;margin-bottom:3px;}
+  .csub{color:var(--muted);font-size:14px;}
+  .ob{border-radius:10px;padding:16px;margin:18px 0;border:1px solid;}
+  .ob-green{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);}
+  .ob-amber{background:rgba(217,119,6,0.08);border-color:rgba(217,119,6,0.3);}
+  .ob-red{background:rgba(220,38,38,0.08);border-color:rgba(220,38,38,0.3);}
+  .ob-blue{background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.3);}
+  .ob-label{display:flex;align-items:center;gap:8px;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px;color:var(--accent2);}
+  .ob-dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);}
+  .ob-text{font-size:15px;}
+  .ob-text strong{color:#fff;}
+  .skill-tag{display:inline-block;margin-top:10px;font-size:13px;background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:20px;color:var(--accent2);font-weight:600;}
+  .mem-badge{background:rgba(255,255,255,0.05);border-radius:10px;padding:14px;margin-bottom:20px;font-size:14px;color:var(--muted);border:1px dashed rgba(255,255,255,0.15);}
+  .mem-badge strong{color:var(--accent2);}
+  .fifth{margin-top:8px;margin-bottom:20px;}
+  .fifth-label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block;}
+  .fifth-input{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px;color:var(--text);font-family:var(--sans);font-size:14px;resize:vertical;}
+  .fifth-continue{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:transparent;border:1px solid var(--accent2);color:var(--accent2);border-radius:8px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all 0.2s;}
+  .fifth-continue:hover{background:var(--accent2);color:#fff;}
+  .fifth-continue:active{transform:scale(0.96);}
+  .fifth-hint{font-size:12px;color:var(--muted);margin-top:8px;opacity:0;transition:opacity 0.2s;}
+  .fifth-hint.show{opacity:1;}
+  .completion{text-align:center;margin-bottom:24px;}
+  .completion-icon{font-size:48px;margin-bottom:12px;}
+  #c-summary,#path-rarity{text-align:center;}
+  #c-summary{color:var(--accent2);font-weight:700;font-size:16px;margin:0 auto;max-width:520px;}
+  #path-rarity{font-size:12px;opacity:0.65;margin-top:8px;}
+  .career-reveal{margin:28px 0;}
+  .career-reveal h3{text-align:center;font-family:var(--serif);margin-bottom:16px;}
+  .career-card{display:flex;gap:14px;background:var(--card);border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.08);}
+  .career-icon{font-size:22px;}
+  .career-title{font-weight:700;font-size:15px;}
+  .career-desc{color:var(--muted);font-size:14px;}
+  .debrief-q{margin-bottom:18px;}
+  .debrief-q label{display:block;font-size:15px;margin-bottom:8px;font-weight:600;}
+  .debrief-q textarea{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:var(--sans);font-size:15px;resize:vertical;min-height:70px;}
+  .final-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:var(--sans);margin-top:8px;transition:background 0.2s;}
+  .final-btn:hover{background:var(--accent2);}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+  .actions button,.actions a{flex:1;min-width:140px;text-align:center;background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--text);border-radius:8px;padding:12px;font-size:14px;cursor:pointer;text-decoration:none;font-family:var(--sans);}
+  .epilogue{background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(212,175,55,0.03));border:1px solid rgba(212,175,55,0.25);border-radius:12px;padding:18px;margin:22px 0;}
+  .epilogue .ob-label{color:#d4af37;}.epilogue .ob-dot{background:#d4af37;}
+  .footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+  .footer a{color:var(--accent2);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topnav">
+    <a href="https://pathforge001.github.io/simulations/" class="brand">PATH<span>FORGE</span></a>
+    <a href="https://pathforge001.github.io/simulations/" class="nav-link">← All simulations</a>
+  </div>
+
+  <!-- INTRO -->
+  <div class="scene active" id="scene-intro">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span id="pl0">Begin</span></div><div class="progress-track"><div class="progress-fill" id="pbar" style="width:6%"></div></div></div>
+    <div class="eyebrow">Security Operations Centre · 3:47am</div>
+    <h1>The Breach</h1>
+    <p class="subtitle">3:47am. An alert just lit up. Something is inside the network.</p>
+    <p class="narrative">You are a cybersecurity analyst on the night shift at a hospital trust's Security Operations Centre. The screens glow quietly. Most nights, nothing happens.</p>
+ <p class="narrative">Then at 3:47am, an alert flares red. <strong>Unusual data is moving out of the network</strong> — large files, encrypted, heading to an address nobody recognises. Someone, or something, is inside.</p>
+ <p class="narrative">This is a hospital. Patient records. Appointment systems. Equipment that keeps people alive. <em>And you are the only analyst awake.</em></p>
+    <button class="continue-btn" onclick="goS1A()">What do you do first? <span class="arrow">→</span></button>
+  </div>
+
+  <!-- SCENE 1 SETUP -->
+  <div class="scene" id="scene-1a">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 1</span></div><div class="progress-track"><div class="progress-fill" style="width:22%"></div></div></div>
+    <p class="narrative">The alert could be a real attack — or a false alarm from a routine backup. But if it is real, every minute you wait is more data stolen, or worse, systems locked by ransomware.</p>
+ <div class="fact-card"><div class="fact-icon">⏱️</div><div><div class="fact-label">What you know</div><div class="fact-body">Disconnecting the affected server would stop the data leak instantly — but if it is running a live system, you could knock out something a ward depends on. You have minutes, not hours.</div></div></div>
+ <div class="tension"><p>Act too slowly and the breach spreads. Act too rashly and you cause the outage yourself.</p><p><strong>What do you do first?</strong></p></div>
+    <div class="dp">— Scene 1 — What do you do first? —</div>
+    <div id="s1-choices">
+        <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Isolate the affected server from the network immediately</div><div class="csub">Stop the bleeding now. Cut off the data leak, then investigate what you cut off.</div></div></button>
+        <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Investigate quickly to confirm it is a real attack before acting</div><div class="csub">Don't cause an outage over a false alarm. Verify first, then respond.</div></div></button>
+        <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Escalate — wake the on-call security lead and the hospital duty manager</div><div class="csub">This is bigger than one analyst should decide alone. Get the right people awake.</div></div></button>
+        <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Wait and watch — it is probably a routine backup, and you don't want to overreact</div><div class="csub">It is nearly 4am. Raising a false alarm is embarrassing. Maybe it resolves itself.</div></div></button>
+    </div>
+    <div class="fifth">
+      <label class="fifth-label" for="fifth-s1">💡 I'd do something different —</label>
+      <textarea class="fifth-input" id="fifth-s1" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+      <div><button class="fifth-continue" onclick="s1own(1)">Continue with my own idea <span class="arrow">→</span></button></div>
+      <div class="fifth-hint" id="hint-s1">Write your idea above, or pick one of the options.</div>
+    </div>
+  </div>
+
+  <!-- SCENE 1 OUTCOME -->
+  <div class="scene" id="scene-1b">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 1 result</span></div><div class="progress-track"><div class="progress-fill" style="width:45%"></div></div></div>
+    <h2 id="o1-title"></h2>
+    <div id="o1-body"></div>
+    <button class="continue-btn" onclick="goS2A()">What happens next <span class="arrow">→</span></button>
+  </div>
+
+  <!-- SCENE 2 SETUP -->
+  <div class="scene" id="scene-2a">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 2</span></div><div class="progress-track"><div class="progress-fill" style="width:66%"></div></div></div>
+    <div class="mem-badge" id="mem-badge"></div>
+    <p class="narrative">The immediate threat is contained. Now the harder part begins — because a breach is never just a technical problem. It is people, trust, and consequences.</p>
+ <p class="narrative">Your investigation reveals how they got in: <strong>a nurse clicked a link in a convincing fake email</strong> three days ago, handing over a password without realising. The attacker walked in through that door.</p>
+ <div class="fact-card"><div class="fact-icon">💬</div><div><div class="fact-label">The human question</div><div class="fact-body">The nurse did nothing malicious — she was busy, the email looked real, and anyone could have fallen for it. Some patient data was accessed before you stopped it. This now has to be handled — technically, legally, and humanely.</div></div></div>
+    <div class="dp">— Scene 2 — How do you handle it? —</div>
+    <div id="s2-choices">
+        <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">Document everything factually and report the breach through proper channels</div><div class="csub">Patient data was accessed — there are legal duties to report it. Do it properly and honestly.</div></div></button>
+        <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">Focus on the nurse — make sure she is supported, not blamed, and learns from it</div><div class="csub">She is a victim of the attack too. Blame makes people hide mistakes. Support makes systems safer.</div></div></button>
+        <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">Fix the root cause — push for better email filtering and staff training trust-wide</div><div class="csub">One nurse clicked, but the real failure was a system that let the email through. Fix the system.</div></div></button>
+        <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">Keep it quiet — you contained it, why cause panic and get the nurse in trouble?</div><div class="csub">The damage is stopped. Reporting it means paperwork, scrutiny, and consequences for everyone.</div></div></button>
+    </div>
+    <div class="fifth">
+      <label class="fifth-label" for="fifth-s2">💡 I'd do something different —</label>
+      <textarea class="fifth-input" id="fifth-s2" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+      <div><button class="fifth-continue" onclick="s2own(2)">Continue with my own idea <span class="arrow">→</span></button></div>
+      <div class="fifth-hint" id="hint-s2">Write your idea above, or pick one of the options.</div>
+    </div>
+  </div>
+
+  <!-- SCENE 2 OUTCOME -->
+  <div class="scene" id="scene-2b">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 2 result</span></div><div class="progress-track"><div class="progress-fill" style="width:85%"></div></div></div>
+    <h2 id="o2-title"></h2>
+    <div id="o2-body"></div>
+    
+    <button class="continue-btn" onclick="goComplete()">See what this reveals <span class="arrow">→</span></button>
+  </div>
+
+  <!-- COMPLETE -->
+  <div class="scene" id="scene-complete">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Complete</span></div><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></div>
+    <div class="completion">
+      <div class="completion-icon">🛡️</div>
+      <h2>Your journey through the breach</h2>
+    </div>
+    <p id="c-summary"></p>
+    <p id="path-rarity"></p>
+
+    <div class="career-reveal">
+      <h3>Careers this connects to</h3>
+      <div class="career-card"><div class="career-icon">🛡️</div><div><div class="career-title">Security Analyst / SOC Analyst</div><div class="career-desc">Monitors networks and responds to threats in real time — exactly the role you just stepped into.</div></div></div>
+<div class="career-card"><div class="career-icon">🔍</div><div><div class="career-title">Incident Responder</div><div class="career-desc">Leads the response when a breach happens — containment, investigation, and recovery under pressure.</div></div></div>
+<div class="career-card"><div class="career-icon">🕵️</div><div><div class="career-title">Penetration Tester / Ethical Hacker</div><div class="career-desc">Attacks systems legally to find the weaknesses before the real attackers do.</div></div></div>
+<div class="career-card"><div class="career-icon">🏗️</div><div><div class="career-title">Security Engineer</div><div class="career-desc">Builds the defences and systems that stop attacks reaching people in the first place.</div></div></div>
+<div class="career-card"><div class="career-icon">📋</div><div><div class="career-title">Governance, Risk & Compliance Analyst</div><div class="career-desc">Makes sure organisations handle data lawfully and report breaches properly — the integrity side of security.</div></div></div>
+    </div>
+
+    <div class="dp">— One last thing —</div>
+    <div class="debrief-q"><label>You had to choose between acting instantly and verifying first. In a real emergency, how do you decide when you have enough information to act?</label><textarea id="dq1" placeholder="Your thoughts..."></textarea></div>
+    <div class="debrief-q"><label>The nurse was fooled by a fake email that anyone could have fallen for. Why might blaming her actually make an organisation less safe, not more?</label><textarea id="dq2" placeholder="Your thoughts..."></textarea></div>
+    <div class="debrief-q"><label>Keeping the breach quiet would have been easier for everyone in the short term. Why is honesty so important in a job like this, even when it causes trouble?</label><textarea id="dq3" placeholder="Your thoughts..."></textarea></div>
+    <button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goFinish()">Complete ✓</button>
+
+    <div class="actions">
+      <button onclick="showJourney()">📖 Review my journey</button>
+      <button onclick="resetAll()">↺ Replay</button>
+      <a href="https://pathforge001.github.io/simulations/">← Try another</a>
+    </div>
+    <div id="journey-review" style="display:none;margin-top:20px;"></div>
+  </div>
+
+  <div class="footer">
+    PathForge · <a href="https://pathforge001.github.io/simulations/">usepathforge.io</a> · <a href="https://tally.so/r/kdx5g1">Parent feedback</a><br>
+    Questions? <a href="mailto:salem@usepathforge.io">salem@usepathforge.io</a>
+  </div>
+</div>
+
+<script>
+  var c1=null,c2=null;
+  var S1={A: {
+      title: "You isolated the server.",
+      mem: "You cut the affected server off the network. The data leak stopped instantly \u2014 you could see the outbound traffic flatline. Now you need to find out what you just disconnected, and whether the attacker reached anywhere else first.",
+      body: "<p class=\"narrative\">You moved fast, isolating the server. The outbound data flow stopped dead the moment you pulled it off the network.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">In a live breach, <strong>speed contains damage.</strong> You stopped the leak before more data left the building. The discipline now is to check what that server was running and whether the attacker had already moved somewhere else \u2014 containment is the first move, not the last.</div><span class=\"skill-tag\">\ud83d\udd35 Decisive containment \u00b7 Stopped the bleeding</span></div>"
+    },
+    B: {
+      title: "You verified first.",
+      mem: "You dug into the logs fast and confirmed it: this is real. The traffic matches a known attack pattern, not a backup. You lost a few minutes, but now you know exactly what you are dealing with \u2014 and you can respond precisely instead of blindly.",
+      body: "<p class=\"narrative\">You pulled the logs and analysed the traffic. Within minutes you confirmed it matched a known data-exfiltration pattern \u2014 a genuine attack, not a false alarm.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Verification cost you minutes but bought you <strong>precision.</strong> You now know it is real and what kind of attack it is, so your next move can be surgical instead of a guess. The risk in a live breach is that those minutes are also minutes of data leaving \u2014 a real trade-off analysts weigh constantly.</div><span class=\"skill-tag\">\ud83d\udd35 Evidence first \u00b7 Precise not panicked</span></div>"
+    },
+    C: {
+      title: "You escalated.",
+      mem: "You woke the on-call security lead and the duty manager. Within minutes there are more experienced people on the line making decisions with you. You are not alone anymore \u2014 but the clock kept ticking while you made the calls.",
+      body: "<p class=\"narrative\">You recognised this was bigger than one night-shift analyst should shoulder alone and escalated immediately \u2014 security lead, duty manager, incident line.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Knowing when to escalate is <strong>a real professional skill, not a weakness.</strong> A hospital breach affects patient safety, legal duties, and communications \u2014 decisions above one analyst's pay grade. The cost is the minutes spent making calls while data may still be moving, which is why the best analysts often contain first, then escalate.</div><span class=\"skill-tag\">\ud83d\udd35 Knew when to escalate \u00b7 Brought in the team</span></div>"
+    },
+    D: {
+      title: "You almost waited it out.",
+      mem: "You told yourself it was probably a backup and you didn't want to be the analyst who raised a false alarm at 4am. For a few minutes you watched. Then the outbound data doubled \u2014 and you realised waiting was the most dangerous choice of all.",
+      body: "<p class=\"narrative\">You hesitated. It was nearly 4am, false alarms are embarrassing, and you did not want to cause a fuss over a routine backup.</p><div class=\"ob ob-red\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Here is the honest truth: <strong>in security, the wish to not overreact is exactly what attackers count on.</strong> They move at 4am precisely because tired people hesitate. As you watched, the data outflow doubled. What saved you was catching yourself \u2014 you stopped waiting and acted. In a real breach, the analyst who hesitates and then commits still beats the one who freezes. But the lesson is permanent: verify fast, but never do nothing.</div><span class=\"skill-tag\">\ud83d\udd34 The hesitation attackers exploit \u00b7 You caught it</span></div>"
+    }};
+  var S2={A: {
+      title: "You reported it properly.",
+      mem: "",
+      body: "<p class=\"narrative\">You documented the incident factually and reported it through the correct channels, including the data protection authorities, as the law requires when patient data is accessed.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This was <strong>the lawful and ethical choice.</strong> When personal medical data is breached, hiding it is both illegal and a betrayal of the patients whose information it is. Honest reporting protects people, maintains trust, and is a legal duty under data protection law. Integrity under pressure is the core of this profession.</div><span class=\"skill-tag\">\ud83d\udfe2 Integrity \u00b7 Honest and lawful</span></div>"
+    },
+    B: {
+      title: "You protected the person.",
+      mem: "",
+      body: "<p class=\"narrative\">You made sure the nurse was supported rather than scapegoated \u2014 explaining how sophisticated the fake email was and that anyone could have been fooled.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This is wiser than it looks. <strong>Blame drives mistakes underground.</strong> In a culture where people are punished for clicking, the next person who clicks will hide it \u2014 and hidden breaches are the deadliest kind. By treating her as a fellow target of the attacker, you make the whole organisation safer, because people report problems early instead of concealing them.</div><span class=\"skill-tag\">\ud83d\udfe2 Just culture \u00b7 Safety through trust</span></div>"
+    },
+    C: {
+      title: "You fixed the system.",
+      mem: "",
+      body: "<p class=\"narrative\">You pushed beyond the single incident to the root cause \u2014 better email filtering to catch fakes, and training so staff can spot them across the whole trust.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This is how real security thinks. <strong>One nurse clicked, but the true failure was a system that let a dangerous email reach her at all.</strong> Fixing the person fixes one case; fixing the system prevents the next hundred. The best security professionals treat every incident as a lesson the whole organisation should learn from.</div><span class=\"skill-tag\">\ud83d\udd35 Systems thinking \u00b7 Prevent the next hundred</span></div>"
+    },
+    D: {
+      title: "You considered staying quiet.",
+      mem: "",
+      body: "<p class=\"narrative\">You weighed keeping it quiet \u2014 the breach was contained, and reporting it meant scrutiny, paperwork, and trouble for the nurse.</p><div class=\"ob ob-amber\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">The temptation is understandable \u2014 but this is the choice that ends careers and harms patients. <strong>Concealing a breach of medical data is illegal, and it leaves the people whose data was stolen defenceless.</strong> They cannot protect themselves from fraud they do not know happened. Containing a breach is competence; hiding one is a betrayal. The professionals who last are the ones who do the hard, honest thing precisely when it would be easy not to.</div><span class=\"skill-tag\">\ud83d\udfe1 The easy silence \u00b7 Honesty is the job</span></div>"
+    }};
+  var summaries={AA: "You contained fast, then reported honestly. Speed to stop the damage, integrity to handle the aftermath. That combination \u2014 decisive in the moment, honest afterwards \u2014 is the core of a trusted security professional.",
+    AB: "You isolated the threat, then protected the person who was targeted. You stopped the attack and refused to scapegoat the victim of it. Technical decisiveness plus human wisdom \u2014 rare and valuable together.",
+    AC: "You contained the breach, then fixed the system that allowed it. You think in two timeframes at once: stop it now, prevent it forever. That is exactly how senior security engineers operate.",
+    AD: "You acted fast to contain \u2014 then weighed staying quiet. You have the instincts for the technical job, but security is also about integrity: the field runs on trust, and the analysts who last are the ones who report honestly even when silence is easier.",
+    BA: "You verified before acting, then reported properly. You are precise and principled \u2014 you refuse to act blind, and you refuse to hide the truth. Evidence-led and honest is the foundation of the whole profession.",
+    BB: "You confirmed the attack, then protected the person who was fooled. You lead with evidence and with empathy. You understand that security is a human system, not just a technical one.",
+    BC: "You verified the threat, then fixed the root cause. Methodical all the way through \u2014 understand precisely what happened, then engineer it out of existence. This is how breaches stop repeating.",
+    BD: "You investigated carefully \u2014 then considered staying quiet. Your analytical instincts are strong, but the field's hardest test is integrity under pressure. Verifying the truth only matters if you are also willing to report it.",
+    CA: "You escalated to the right people, then reported through proper channels. You understand that a hospital breach is bigger than one analyst, and you handle it with process and integrity. Team-minded and principled.",
+    CB: "You brought in the team, then protected the person targeted. You know when to share a decision and how to treat people caught in an attack. Collaborative and humane \u2014 good leadership instincts.",
+    CC: "You escalated, then drove a system-wide fix. You pull in the right people AND push for lasting change. You treat incidents as organisational lessons, not individual failures. That mindset builds secure institutions.",
+    CD: "You escalated appropriately \u2014 then weighed staying quiet. Knowing when to bring in help is a genuine strength, but the profession's bedrock is honesty. A breach of patient data reported openly protects the people it belongs to.",
+    DA: "You almost waited \u2014 then caught yourself and reported everything honestly. The analyst who nearly hesitated became the one who did the fully lawful, ethical thing. Recognising your own hesitation and overriding it is exactly the self-awareness this job demands.",
+    DB: "You nearly did nothing, then came back and protected the person the attacker fooled. Having felt the pull of hesitation yourself, you understood how easily anyone can be caught out. Your near-mistake became empathy.",
+    DC: "You almost waited it out, then drove a fix across the whole system. The hesitation you nearly gave in to became the reason you insisted no one else should face that email unprotected. Doubt turned into prevention.",
+    DD: "You nearly froze, then took honest command of a hard situation. Security is full of 4am moments when doing nothing feels safest. The professionals who matter are the ones who catch their own hesitation and choose to act, honestly, anyway."};
+
+  var OWN1={title:"You chose your own path.",mem:"You did not take any of the four options — you wrote your own. That instinct, to look at a situation and think there is another way, is exactly how the best ideas begin.",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">There was no single right answer here — and you refused to be limited to the choices in front of you. <strong>Thinking beyond the options you are given is one of the rarest and most valuable habits there is.</strong> Every real breakthrough started with someone who would not just pick from the menu. Hold on to that. Now let us see how the situation unfolds.</div><span class=\"skill-tag\">🔵 Independent thinking · You wrote your own path</span></div>"};
+  var OWN2={title:"You chose your own path again.",mem:"",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">Once again you looked past the options and thought for yourself. <strong>People who consistently generate their own answers — rather than only choosing between the ones offered — are the ones who end up changing how things are done.</strong> That is a genuine strength, and it is worth developing wherever your path takes you.</div><span class=\"skill-tag\">🔵 Independent thinking · Your own path, twice</span></div>"};
+
+  function show(id){document.querySelectorAll('.scene').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+  function goS1A(){show('scene-1a');}
+  function s1(c){c1=c;var o=S1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-1b');}
+  function s1own(){var t=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(!t){var h=document.getElementById('hint-s1');if(h)h.classList.add('show');return;}c1='E';document.getElementById('o1-title').textContent=OWN1.title;document.getElementById('o1-body').innerHTML=OWN1.body;show('scene-1b');}
+  function goS2A(){var o=(c1==='E')?OWN1:S1[c1];document.getElementById('mem-badge').innerHTML='<strong>Where you are:</strong> '+(o.mem||'');show('scene-2a');}
+  function s2(c){c2=c;var o=S2[c];document.getElementById('o2-title').textContent=o.title;document.getElementById('o2-body').innerHTML=o.body;show('scene-2b');}
+  function s2own(){var t=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(!t){var h=document.getElementById('hint-s2');if(h)h.classList.add('show');return;}c2='E';document.getElementById('o2-title').textContent=OWN2.title;document.getElementById('o2-body').innerHTML=OWN2.body;show('scene-2b');}
+  function ownSummary(){
+    if(c1==='E'&&c2==='E')return 'You wrote your own path at every turn — refusing both times to be limited to the options in front of you. That is the instinct of an inventor, a founder, a leader: the belief that the best answer might be one nobody has offered yet. Keep thinking like that.';
+    if(c1==='E'||c2==='E')return 'At one of the two decisions, you looked past every option offered and wrote your own. That willingness to think beyond the menu is rare and valuable — it is where original ideas come from. Hold on to it wherever your path leads.';
+    return '';
+  }
+  function goComplete(){var os=ownSummary();document.getElementById('c-summary').textContent=os||summaries[c1+c2]||'';var _r=document.getElementById('path-rarity');if(_r){var p=(c1||'')+(c2||'');_r.textContent=(c1==='E'||c2==='E')?('Your path: '+p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+p+' — one of 16 possible journeys. Replay to discover another.');}show('scene-complete');}
+
+  function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(function(t){t.value='';});show('scene-intro');document.getElementById('pbar').style.width='6%';}
+
+  function showJourney(){
+    var jr=document.getElementById('journey-review');
+    var a1=(document.getElementById('dq1')||{value:''}).value.trim();
+    var a2=(document.getElementById('dq2')||{value:''}).value.trim();
+    var a3=(document.getElementById('dq3')||{value:''}).value.trim();
+    var h='<div class="ob ob-blue"><div class="ob-label"><span class="ob-dot"></span> Your full journey</div>';
+    h+='<p style="margin-bottom:10px;"><strong>Scene 1:</strong> '+((c1==='E')?OWN1.title:(S1[c1]?S1[c1].title:''))+'</p>';var f1=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(f1)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 1 idea:</strong> '+f1+'</p>';
+    h+='<p style="margin-bottom:10px;"><strong>Scene 2:</strong> '+((c2==='E')?OWN2.title:(S2[c2]?S2[c2].title:''))+'</p>';var f2=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(f2)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 2 idea:</strong> '+f2+'</p>';
+    h+='<p style="margin-bottom:10px;"><strong>What this revealed:</strong> '+(ownSummary()||summaries[c1+c2]||'')+'</p>';
+    if(a1||a2||a3){h+='<p style="margin-top:12px;opacity:0.85;"><strong>Your reflections:</strong></p>';if(a1)h+='<p style="font-size:14px;margin-top:6px;">• '+a1+'</p>';if(a2)h+='<p style="font-size:14px;margin-top:6px;">• '+a2+'</p>';if(a3)h+='<p style="font-size:14px;margin-top:6px;">• '+a3+'</p>';}
+    h+='<p style="margin-top:12px;font-size:13px;opacity:0.7;">📸 Screenshot this to keep or share your journey.</p></div>';
+    jr.innerHTML=h;jr.style.display='block';jr.scrollIntoView({behavior:'smooth'});
+  }
+
+  async function saveDebrief(simulationName){
+    var a1=(document.getElementById('dq1')||{value:''}).value.trim();
+    var a2=(document.getElementById('dq2')||{value:''}).value.trim();
+    var a3=(document.getElementById('dq3')||{value:''}).value.trim();
+    var sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+    try{
+      await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({simulationName:simulationName,sessionId:sessionId,answer1:a1||'no answer provided',answer2:a2||'no answer provided',answer3:a3||'no answer provided'})
+      });
+    }catch(e){console.log('Debrief save failed silently',e);}
+  }
+
+  async function goFinish(){
+    await saveDebrief('career-the-breach');
+    showJourney();
+    var btn=document.querySelector('.final-btn');
+    if(btn){btn.textContent='Saved ✓ — thank you';}
+  }
+
+  setTimeout(function(){document.getElementById('pbar').style.width='8%';},400);
+</script>
+</body>
+</html>

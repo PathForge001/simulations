@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Pour — PathForge</title>
+<meta name="description" content="Step into the role of a construction apprentice who spots a safety problem. A PathForge career simulation on the building trades.">
+<meta property="og:title" content="The Pour — PathForge">
+<meta property="og:description" content="Step into the role of a construction apprentice who spots a safety problem. A PathForge career simulation on the building trades.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YCT2NS7ET8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YCT2NS7ET8');
+</script>
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xbl1zshvdm");
+</script>
+<style>
+  :root{--accent:#8a4a10;--accent2:#fb923c;--bg:#0f0a1e;--card:#1a1230;--text:#ece8f5;--muted:#a99fc4;--sans:'Segoe UI',system-ui,sans-serif;--serif:Georgia,serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;padding:0;}
+  .wrap{max-width:640px;margin:0 auto;padding:20px 18px 80px;}
+  .topnav{display:flex;justify-content:space-between;align-items:center;padding:10px 0 20px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:24px;}
+  .brand{font-weight:800;letter-spacing:0.5px;color:var(--accent2);font-size:15px;text-decoration:none;}
+  .brand span{color:var(--text);}
+  .nav-link{color:var(--muted);text-decoration:none;font-size:13px;}
+  .scene{display:none;animation:fade 0.4s ease;}
+  .scene.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:12px;color:var(--accent2);font-weight:700;margin-bottom:10px;}
+  h1{font-family:var(--serif);font-size:30px;line-height:1.2;margin-bottom:8px;}
+  h2{font-family:var(--serif);font-size:24px;margin-bottom:12px;}
+  .subtitle{color:var(--muted);font-size:17px;margin-bottom:24px;}
+  .narrative{font-size:17px;margin-bottom:18px;}
+  .narrative strong{color:#fff;}
+  .narrative em{color:var(--accent2);font-style:italic;}
+  .progress-wrap{margin-bottom:20px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .progress-track{height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width 0.5s ease;}
+  .fact-card{display:flex;gap:14px;background:var(--card);border-radius:12px;padding:16px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.08);}
+  .fact-icon{font-size:24px;flex-shrink:0;}
+  .fact-label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);font-weight:700;margin-bottom:4px;}
+  .fact-body{font-size:15px;color:var(--text);}
+  .tension{background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));border-left:3px solid var(--accent2);border-radius:8px;padding:16px;margin:20px 0;}
+  .tension p{margin-bottom:8px;}.tension p:last-child{margin-bottom:0;}
+  .continue-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:16px 24px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:var(--sans);transition:background 0.2s;}
+  .continue-btn:hover{background:var(--accent2);}
+  .arrow{margin-left:6px;}
+  .dp{text-align:center;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:2px;margin:24px 0 16px;}
+  .choice-btn{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;font-family:var(--sans);color:var(--text);transition:border-color 0.2s,transform 0.08s ease;}
+  .choice-btn:hover{border-color:var(--accent2);}
+  .choice-btn:active{transform:scale(0.96);}
+  .choice-btn{-webkit-tap-highlight-color:transparent;}
+  .cletter{background:var(--accent);color:#fff;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;font-size:14px;}
+  .ctext{font-weight:600;font-size:16px;margin-bottom:3px;}
+  .csub{color:var(--muted);font-size:14px;}
+  .ob{border-radius:10px;padding:16px;margin:18px 0;border:1px solid;}
+  .ob-green{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);}
+  .ob-amber{background:rgba(217,119,6,0.08);border-color:rgba(217,119,6,0.3);}
+  .ob-red{background:rgba(220,38,38,0.08);border-color:rgba(220,38,38,0.3);}
+  .ob-blue{background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.3);}
+  .ob-label{display:flex;align-items:center;gap:8px;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px;color:var(--accent2);}
+  .ob-dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);}
+  .ob-text{font-size:15px;}
+  .ob-text strong{color:#fff;}
+  .skill-tag{display:inline-block;margin-top:10px;font-size:13px;background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:20px;color:var(--accent2);font-weight:600;}
+  .mem-badge{background:rgba(255,255,255,0.05);border-radius:10px;padding:14px;margin-bottom:20px;font-size:14px;color:var(--muted);border:1px dashed rgba(255,255,255,0.15);}
+  .mem-badge strong{color:var(--accent2);}
+  .fifth{margin-top:8px;margin-bottom:20px;}
+  .fifth-label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block;}
+  .fifth-input{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px;color:var(--text);font-family:var(--sans);font-size:14px;resize:vertical;}
+  .fifth-continue{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:transparent;border:1px solid var(--accent2);color:var(--accent2);border-radius:8px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all 0.2s;}
+  .fifth-continue:hover{background:var(--accent2);color:#fff;}
+  .fifth-continue:active{transform:scale(0.96);}
+  .fifth-hint{font-size:12px;color:var(--muted);margin-top:8px;opacity:0;transition:opacity 0.2s;}
+  .fifth-hint.show{opacity:1;}
+  .completion{text-align:center;margin-bottom:24px;}
+  .completion-icon{font-size:48px;margin-bottom:12px;}
+  #c-summary,#path-rarity{text-align:center;}
+  #c-summary{color:var(--accent2);font-weight:700;font-size:16px;margin:0 auto;max-width:520px;}
+  #path-rarity{font-size:12px;opacity:0.65;margin-top:8px;}
+  .career-reveal{margin:28px 0;}
+  .career-reveal h3{text-align:center;font-family:var(--serif);margin-bottom:16px;}
+  .career-card{display:flex;gap:14px;background:var(--card);border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.08);}
+  .career-icon{font-size:22px;}
+  .career-title{font-weight:700;font-size:15px;}
+  .career-desc{color:var(--muted);font-size:14px;}
+  .debrief-q{margin-bottom:18px;}
+  .debrief-q label{display:block;font-size:15px;margin-bottom:8px;font-weight:600;}
+  .debrief-q textarea{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px;color:var(--text);font-family:var(--sans);font-size:15px;resize:vertical;min-height:70px;}
+  .final-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:var(--sans);margin-top:8px;transition:background 0.2s;}
+  .final-btn:hover{background:var(--accent2);}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+  .actions button,.actions a{flex:1;min-width:140px;text-align:center;background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--text);border-radius:8px;padding:12px;font-size:14px;cursor:pointer;text-decoration:none;font-family:var(--sans);}
+  .epilogue{background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(212,175,55,0.03));border:1px solid rgba(212,175,55,0.25);border-radius:12px;padding:18px;margin:22px 0;}
+  .epilogue .ob-label{color:#d4af37;}.epilogue .ob-dot{background:#d4af37;}
+  .footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+  .footer a{color:var(--accent2);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topnav">
+    <a href="https://pathforge001.github.io/simulations/" class="brand">PATH<span>FORGE</span></a>
+    <a href="https://pathforge001.github.io/simulations/" class="nav-link">← All simulations</a>
+  </div>
+
+  <!-- INTRO -->
+  <div class="scene active" id="scene-intro">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span id="pl0">Begin</span></div><div class="progress-track"><div class="progress-fill" id="pbar" style="width:6%"></div></div></div>
+    <div class="eyebrow">Building site · 6:52am</div>
+    <h1>The Pour</h1>
+    <p class="subtitle">The concrete truck is here. You just noticed the rebar is wrong.</p>
+    <p class="narrative">You are a construction apprentice, six months into your training. Today the site is pouring the concrete foundation for a new block of flats — a big, expensive job that has to happen in one go. Once concrete is poured, there is no undoing it.</p>
+ <p class="narrative">The concrete truck arrives at 6:52am. The pour is scheduled for 7. As you do a last check of the foundation, you notice something about the steel reinforcement bars — the "rebar" that gives concrete its strength. <strong>The spacing looks wrong to you.</strong> Wider apart than the drawings showed.</p>
+ <p class="narrative">You are the most junior person on site. The rebar was signed off by an experienced worker last night. <em>And in eight minutes, tonnes of concrete will bury it forever.</em></p>
+    <button class="continue-btn" onclick="goS1A()">What do you do? <span class="arrow">→</span></button>
+  </div>
+
+  <!-- SCENE 1 SETUP -->
+  <div class="scene" id="scene-1a">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 1</span></div><div class="progress-track"><div class="progress-fill" style="width:22%"></div></div></div>
+    <p class="narrative">If you are right, the foundation could be weaker than the design requires — a serious structural problem, hidden under concrete, in a building where people will live. If you are wrong, you have halted a major pour and cost the company money and time over nothing.</p>
+ <div class="fact-card"><div class="fact-icon">🧱</div><div><div class="fact-label">Why it matters</div><div class="fact-body">Rebar spacing is not a detail — it is what stops concrete cracking and failing under load. Get it wrong and the flaw is invisible once poured, but it can weaken the whole structure for the life of the building.</div></div></div>
+ <div class="tension"><p>The truck is running. The site manager is watching the clock. And you have a nagging feeling you cannot ignore.</p><p><strong>What do you do?</strong></p></div>
+    <div class="dp">— Scene 1 — What do you do? —</div>
+    <div id="s1-choices">
+        <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Stop and tell the site manager immediately, before the pour starts</div><div class="csub">Concrete can't be un-poured. Whatever the cost, this has to be checked now, not later.</div></div></button>
+        <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Quickly check the drawings yourself first to be sure before raising it</div><div class="csub">You're only six months in. Confirm you're reading it right before you halt a whole pour.</div></div></button>
+        <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Ask the experienced worker who signed it off to double-check with you</div><div class="csub">Go to the person who approved it — respectfully raise it and check together.</div></div></button>
+        <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Say nothing — it was signed off by someone who knows more than you</div><div class="csub">Who are you to question an experienced tradesperson? You'll look like you don't know your job.</div></div></button>
+    </div>
+    <div class="fifth">
+      <label class="fifth-label" for="fifth-s1">💡 I'd do something different —</label>
+      <textarea class="fifth-input" id="fifth-s1" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+      <div><button class="fifth-continue" onclick="s1own(1)">Continue with my own idea <span class="arrow">→</span></button></div>
+      <div class="fifth-hint" id="hint-s1">Write your idea above, or pick one of the options.</div>
+    </div>
+  </div>
+
+  <!-- SCENE 1 OUTCOME -->
+  <div class="scene" id="scene-1b">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 1 result</span></div><div class="progress-track"><div class="progress-fill" style="width:45%"></div></div></div>
+    <h2 id="o1-title"></h2>
+    <div id="o1-body"></div>
+    <button class="continue-btn" onclick="goS2A()">What happens next <span class="arrow">→</span></button>
+  </div>
+
+  <!-- SCENE 2 SETUP -->
+  <div class="scene" id="scene-2a">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 2</span></div><div class="progress-track"><div class="progress-fill" style="width:66%"></div></div></div>
+    <div class="mem-badge" id="mem-badge"></div>
+    <p class="narrative">You were right. The rebar spacing was wrong — a genuine error that would have weakened the foundation. The pour was delayed, the steelwork corrected, and the job done properly. It cost the company half a day.</p>
+ <p class="narrative">The experienced worker who signed it off is embarrassed. Word has gone round the site that the six-month apprentice caught what a time-served tradesperson missed. At break, how you handle this will shape how you're treated for months.</p>
+ <div class="fact-card"><div class="fact-icon">👷</div><div><div class="fact-label">The site is watching</div><div class="fact-body">You could become "the apprentice who thinks they know better" — or someone the crew respects. On a building site, being trusted by the people around you is not just nice; it keeps everyone safe when it matters.</div></div></div>
+    <div class="dp">— Scene 2 — How do you handle it? —</div>
+    <div id="s2-choices">
+        <button class="choice-btn" onclick="s2('A')"><span class="cletter">A</span><div><div class="ctext">Be modest — play it down and make clear anyone could have caught it</div><div class="csub">Don't gloat. Take the heat out of it and protect the older worker's pride.</div></div></button>
+        <button class="choice-btn" onclick="s2('B')"><span class="cletter">B</span><div><div class="ctext">Thank the worker for teaching you what to look for in the first place</div><div class="csub">Turn it around — credit the people who trained you. Humility builds trust faster than being right.</div></div></button>
+        <button class="choice-btn" onclick="s2('C')"><span class="cletter">C</span><div><div class="ctext">Quietly ask the worker to show you more, so they stay the expert and you keep learning</div><div class="csub">Reframe yourself as their apprentice, not their rival. Let them keep their standing.</div></div></button>
+        <button class="choice-btn" onclick="s2('D')"><span class="cletter">D</span><div><div class="ctext">Enjoy the credit — you caught it, you earned the recognition, let people know</div><div class="csub">You were right and they were wrong. Why hide it? Take the win you deserve.</div></div></button>
+    </div>
+    <div class="fifth">
+      <label class="fifth-label" for="fifth-s2">💡 I'd do something different —</label>
+      <textarea class="fifth-input" id="fifth-s2" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+      <div><button class="fifth-continue" onclick="s2own(2)">Continue with my own idea <span class="arrow">→</span></button></div>
+      <div class="fifth-hint" id="hint-s2">Write your idea above, or pick one of the options.</div>
+    </div>
+  </div>
+
+  <!-- SCENE 2 OUTCOME -->
+  <div class="scene" id="scene-2b">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Scene 2 result</span></div><div class="progress-track"><div class="progress-fill" style="width:85%"></div></div></div>
+    <h2 id="o2-title"></h2>
+    <div id="o2-body"></div>
+    
+    <button class="continue-btn" onclick="goComplete()">See what this reveals <span class="arrow">→</span></button>
+  </div>
+
+  <!-- COMPLETE -->
+  <div class="scene" id="scene-complete">
+    <div class="progress-wrap"><div class="progress-label"><span>Progress</span><span>Complete</span></div><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></div>
+    <div class="completion">
+      <div class="completion-icon">🏗️</div>
+      <h2>Your journey through the pour</h2>
+    </div>
+    <p id="c-summary"></p>
+    <p id="path-rarity"></p>
+
+    <div class="career-reveal">
+      <h3>Careers this connects to</h3>
+      <div class="career-card"><div class="career-icon">🏗️</div><div><div class="career-title">Site Manager</div><div class="career-desc">Runs the whole build, balancing safety, cost, and time — the person who held the truck for you.</div></div></div>
+<div class="career-card"><div class="career-icon">📐</div><div><div class="career-title">Structural Engineer</div><div class="career-desc">Designs the foundations and frames that keep buildings standing — the rebar spacing was their maths.</div></div></div>
+<div class="career-card"><div class="career-icon">🧱</div><div><div class="career-title">Skilled Tradesperson</div><div class="career-desc">Bricklayer, steelfixer, groundworker — the experts whose hands and judgment build everything.</div></div></div>
+<div class="career-card"><div class="career-icon">✅</div><div><div class="career-title">Building Inspector / Quality Surveyor</div><div class="career-desc">Checks that work meets the design and the law — professionalising exactly the catch you made.</div></div></div>
+<div class="career-card"><div class="career-icon">👷</div><div><div class="career-title">Health & Safety Officer</div><div class="career-desc">Makes sure sites are safe and mistakes get caught before they're buried. Your instinct as a career.</div></div></div>
+    </div>
+
+    <div class="dp">— One last thing —</div>
+    <div class="debrief-q"><label>Once concrete is poured, a mistake is hidden forever. How does knowing a decision is irreversible change how carefully you should check it?</label><textarea id="dq1" placeholder="Your thoughts..."></textarea></div>
+    <div class="debrief-q"><label>You were right, but the experienced worker was embarrassed. Why is it that being right about something is not enough — how you handle being right matters too?</label><textarea id="dq2" placeholder="Your thoughts..."></textarea></div>
+    <div class="debrief-q"><label>It would have been easy to assume the senior worker knew best and stay quiet. Why is it dangerous for a team when junior people are too afraid to question what they see?</label><textarea id="dq3" placeholder="Your thoughts..."></textarea></div>
+    <button class="final-btn" onclick="this.disabled=true;this.textContent='Saving...';goFinish()">Complete ✓</button>
+
+    <div class="actions">
+      <button onclick="showJourney()">📖 Review my journey</button>
+      <button onclick="resetAll()">↺ Replay</button>
+      <a href="https://pathforge001.github.io/simulations/">← Try another</a>
+    </div>
+    <div id="journey-review" style="display:none;margin-top:20px;"></div>
+  </div>
+
+  <div class="footer">
+    PathForge · <a href="https://pathforge001.github.io/simulations/">usepathforge.io</a> · <a href="https://tally.so/r/kdx5g1">Parent feedback</a><br>
+    Questions? <a href="mailto:salem@usepathforge.io">salem@usepathforge.io</a>
+  </div>
+</div>
+
+<script>
+  var c1=null,c2=null;
+  var S1={A: {
+      title: "You stopped the pour.",
+      mem: "You went straight to the site manager: \"I think the rebar spacing is wrong \u2014 can we check before we pour?\" They were not thrilled to pause, but they held the truck. Now everyone is looking at the drawings, and at you.",
+      body: "<p class=\"narrative\">You did not hesitate. You went straight to the site manager and asked them to hold the pour until the rebar could be checked.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This took real nerve \u2014 and it is exactly right. <strong>Once concrete is poured, a mistake is buried for the life of the building.</strong> The cost of pausing is money and grumbling. The cost of pouring over a real fault is a weakened structure where families will live. A good tradesperson knows which risks can wait and which cannot. This one could not.</div><span class=\"skill-tag\">\ud83d\udfe2 Safety first \u00b7 Stopped the irreversible</span></div>"
+    },
+    B: {
+      title: "You checked the drawings first.",
+      mem: "You grabbed the drawings and checked fast. You were right \u2014 the spacing on site is wider than the design specifies. Now you know it for certain, and you can raise it with proof instead of just a feeling. But the clock kept ticking.",
+      body: "<p class=\"narrative\">You pulled the drawings and checked the specified spacing against what was on the ground. You were right \u2014 the gaps were too wide.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Confirming before raising the alarm made your case solid. <strong>\"The drawing says 150mm and it's 200mm on site\" is impossible to wave away</strong> \u2014 far stronger than a vague worry from an apprentice. The one risk is time: those minutes are minutes closer to the pour. But walking up with proof rather than a hunch is how junior people get taken seriously.</div><span class=\"skill-tag\">\ud83d\udd35 Evidence \u00b7 Certainty before speaking</span></div>"
+    },
+    C: {
+      title: "You went to the person who signed it.",
+      mem: "You found the experienced worker and raised it respectfully: \"Can we just double-check this spacing together?\" They were defensive at first \u2014 then went quiet as they looked. Being right and respectful at once is a hard balance, and you struck it.",
+      body: "<p class=\"narrative\">You approached the tradesperson who had signed off the rebar and asked, respectfully, to check the spacing together.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This was diplomatically smart. <strong>Going to them directly, without accusation, let them save face while still catching the error.</strong> Nobody likes being corrected by an apprentice in front of the whole site \u2014 by raising it privately and as a question, you made it easy for them to look again honestly. Being right about safety AND respectful of people is one of the hardest, most valuable skills on any site.</div><span class=\"skill-tag\">\ud83d\udd35 Diplomacy \u00b7 Right and respectful</span></div>"
+    },
+    D: {
+      title: "You almost said nothing.",
+      mem: "You told yourself an experienced worker signed it off, so who were you to question it? You watched the truck get ready. Then you pictured the finished building, families inside, that hidden flaw under everything \u2014 and you couldn't stay quiet.",
+      body: "<p class=\"narrative\">You almost let it go. It had been signed off by someone with years more experience. Speaking up risked looking like an apprentice who did not understand the job.</p><div class=\"ob ob-red\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Here is the honest truth: <strong>on site, the fear of looking foolish silences more safety concerns than anything else.</strong> \"Someone senior signed it off\" is how buried faults stay buried. What stopped you was the picture in your head \u2014 the finished flats, families living above a flaw you could have caught. Being wrong out loud costs you a little pride. Being right and silent can cost far more. You spoke up.</div><span class=\"skill-tag\">\ud83d\udd34 The fear of looking foolish \u00b7 You spoke anyway</span></div>"
+    }};
+  var S2={A: {
+      title: "You played it down.",
+      mem: "",
+      body: "<p class=\"narrative\">At break you were modest \u2014 you shrugged it off, said it was luck, and made clear anyone doing a last check could have spotted it.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This was wise beyond your experience. <strong>Being right and humble at the same time is how you earn respect without making enemies.</strong> You took the sting out of the moment for the older worker, and the crew noticed that you did not gloat. On a site, people watch how you treat someone who has just been shown up. You passed that test \u2014 and that matters more for your future than the catch itself.</div><span class=\"skill-tag\">\ud83d\udfe2 Humility \u00b7 Right without rubbing it in</span></div>"
+    },
+    B: {
+      title: "You credited your teachers.",
+      mem: "",
+      body: "<p class=\"narrative\">You thanked the experienced worker directly \u2014 pointing out that you only knew to check the spacing because people like them had trained you to.</p><div class=\"ob ob-green\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">This was genuinely skilful. <strong>By crediting the very person who missed it, you turned an awkward moment into a bond instead of a rivalry.</strong> You reminded everyone that catching the error was the training working, not the apprentice being clever. People remember how you make them feel \u2014 and you made a potentially humiliated colleague feel valued. That is how you become someone a crew trusts and protects.</div><span class=\"skill-tag\">\ud83d\udfe2 Grace \u00b7 Turned rivalry into respect</span></div>"
+    },
+    C: {
+      title: "You stayed the apprentice.",
+      mem: "",
+      body: "<p class=\"narrative\">You went to the worker and asked them to teach you more \u2014 keeping yourself firmly in the role of learner and them in the role of expert.</p><div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">Quietly clever. <strong>By positioning yourself as their student rather than their rival, you let them keep their standing and kept a valuable mentor on your side.</strong> You did not need to win the moment \u2014 you needed to keep learning and keep the peace. There is a small risk of underselling your own good judgment, but on balance, protecting a working relationship early in your career is worth a great deal.</div><span class=\"skill-tag\">\ud83d\udd35 Long game \u00b7 Kept a mentor, kept the peace</span></div>"
+    },
+    D: {
+      title: "You took the credit.",
+      mem: "",
+      body: "<p class=\"narrative\">You let people know you had caught it \u2014 you were right, they were wrong, and you felt you had earned the recognition.</p><div class=\"ob ob-amber\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> What happened</div><div class=\"ob-text\">You did earn it \u2014 and there is nothing wrong with being proud of good work. But be careful. <strong>On a site, the apprentice who is seen to enjoy an older worker's mistake can find the whole crew closes ranks against them.</strong> Being right is not the same as being trusted. The most respected tradespeople are the ones who are quietly brilliant, not loudly correct. How you win a moment shapes whether people want to work with you for years.</div><span class=\"skill-tag\">\ud83d\udfe1 Earned it \u00b7 But how you win matters</span></div>"
+    }};
+  var summaries={AA: "You stopped the pour, then played the win down. Decisive about safety, modest about being right. This is the tradesperson everyone wants on their crew \u2014 the one who catches the dangerous thing and never lords it over anyone.",
+    AB: "You halted the pour, then thanked the people who trained you. Courage when it counted, grace afterwards. You understand that on a site, being trusted matters as much as being right \u2014 and you've earned both.",
+    AC: "You stopped the irreversible mistake, then kept yourself in the learner's seat. Bold about safety, humble about status. You protect the building AND the relationships. That balance takes people years to learn.",
+    AD: "You made the brave safety call \u2014 then took the credit a bit loudly. Stopping that pour was exactly right and took real nerve. The next lesson is that on a crew, how you handle being right shapes whether people trust you next time.",
+    BA: "You confirmed it with the drawings, then stayed modest about the catch. Methodical and grounded \u2014 you proved you were right, then refused to make anyone feel small about it. Quietly excellent.",
+    BB: "You checked the evidence, then credited your teachers. You build your case carefully and you build your relationships generously. This is how a thoughtful apprentice becomes a respected tradesperson.",
+    BC: "You verified the problem, then kept a mentor onside. Precise and diplomatic \u2014 you make sure you're right, then make sure you don't make enemies being right. Strong instincts for a long career.",
+    BD: "You proved the error carefully \u2014 then enjoyed the credit a little too openly. Your evidence-first instinct is excellent. Just remember that on site, the quietly-right people are trusted longest.",
+    CA: "You raised it respectfully with the worker, then played it down afterwards. Diplomatic all the way through \u2014 you caught a serious fault without ever making it a fight. Crews trust people like you.",
+    CB: "You checked it together, then thanked them for the training. Consistently generous \u2014 you gave the older worker a way to catch it and a reason to feel valued. You turn awkward moments into loyalty.",
+    CC: "You went to them as a question, then stayed their student. Beautifully humble from start to finish \u2014 you protected safety and someone's dignity at once, and kept a mentor for life. Wise beyond six months.",
+    CD: "You raised it respectfully \u2014 then took the credit loudly afterwards. Handling the catch diplomatically was smart. Undoing that goodwill by gloating is the risk; the respect you built is worth protecting.",
+    DA: "You almost stayed silent \u2014 then stopped the pour and stayed humble about it. The apprentice who nearly assumed \"someone senior checked\" became the one who caught it and never gloated. Speaking up and staying gracious is the whole craft.",
+    DB: "You nearly said nothing, then spoke up and thanked the people who trained you. Having felt the fear of looking foolish, you handled being right with real grace. Your near-silence became quiet strength.",
+    DC: "You almost let it go, then raised it respectfully and kept learning. The apprentice who nearly stayed quiet became one who protects both the building and the people on it. Doubt turned into careful courage.",
+    DD: "You nearly stayed silent, then nearly let it become a rivalry \u2014 and each time you chose the harder, better path. On a site, the pull to not make a fuss is constant. The courage was never being unafraid. It was speaking up about the thing that mattered, and staying humble once you had."};
+
+  var OWN1={title:"You chose your own path.",mem:"You did not take any of the four options — you wrote your own. That instinct, to look at a situation and think there is another way, is exactly how the best ideas begin.",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">There was no single right answer here — and you refused to be limited to the choices in front of you. <strong>Thinking beyond the options you are given is one of the rarest and most valuable habits there is.</strong> Every real breakthrough started with someone who would not just pick from the menu. Hold on to that. Now let us see how the situation unfolds.</div><span class=\"skill-tag\">🔵 Independent thinking · You wrote your own path</span></div>"};
+  var OWN2={title:"You chose your own path again.",mem:"",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">Once again you looked past the options and thought for yourself. <strong>People who consistently generate their own answers — rather than only choosing between the ones offered — are the ones who end up changing how things are done.</strong> That is a genuine strength, and it is worth developing wherever your path takes you.</div><span class=\"skill-tag\">🔵 Independent thinking · Your own path, twice</span></div>"};
+
+  function show(id){document.querySelectorAll('.scene').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+  function goS1A(){show('scene-1a');}
+  function s1(c){c1=c;var o=S1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-1b');}
+  function s1own(){var t=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(!t){var h=document.getElementById('hint-s1');if(h)h.classList.add('show');return;}c1='E';document.getElementById('o1-title').textContent=OWN1.title;document.getElementById('o1-body').innerHTML=OWN1.body;show('scene-1b');}
+  function goS2A(){var o=(c1==='E')?OWN1:S1[c1];document.getElementById('mem-badge').innerHTML='<strong>Where you are:</strong> '+(o.mem||'');show('scene-2a');}
+  function s2(c){c2=c;var o=S2[c];document.getElementById('o2-title').textContent=o.title;document.getElementById('o2-body').innerHTML=o.body;show('scene-2b');}
+  function s2own(){var t=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(!t){var h=document.getElementById('hint-s2');if(h)h.classList.add('show');return;}c2='E';document.getElementById('o2-title').textContent=OWN2.title;document.getElementById('o2-body').innerHTML=OWN2.body;show('scene-2b');}
+  function ownSummary(){
+    if(c1==='E'&&c2==='E')return 'You wrote your own path at every turn — refusing both times to be limited to the options in front of you. That is the instinct of an inventor, a founder, a leader: the belief that the best answer might be one nobody has offered yet. Keep thinking like that.';
+    if(c1==='E'||c2==='E')return 'At one of the two decisions, you looked past every option offered and wrote your own. That willingness to think beyond the menu is rare and valuable — it is where original ideas come from. Hold on to it wherever your path leads.';
+    return '';
+  }
+  function goComplete(){var os=ownSummary();document.getElementById('c-summary').textContent=os||summaries[c1+c2]||'';var _r=document.getElementById('path-rarity');if(_r){var p=(c1||'')+(c2||'');_r.textContent=(c1==='E'||c2==='E')?('Your path: '+p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+p+' — one of 16 possible journeys. Replay to discover another.');}show('scene-complete');}
+
+  function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(function(t){t.value='';});show('scene-intro');document.getElementById('pbar').style.width='6%';}
+
+  function showJourney(){
+    var jr=document.getElementById('journey-review');
+    var a1=(document.getElementById('dq1')||{value:''}).value.trim();
+    var a2=(document.getElementById('dq2')||{value:''}).value.trim();
+    var a3=(document.getElementById('dq3')||{value:''}).value.trim();
+    var h='<div class="ob ob-blue"><div class="ob-label"><span class="ob-dot"></span> Your full journey</div>';
+    h+='<p style="margin-bottom:10px;"><strong>Scene 1:</strong> '+((c1==='E')?OWN1.title:(S1[c1]?S1[c1].title:''))+'</p>';var f1=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(f1)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 1 idea:</strong> '+f1+'</p>';
+    h+='<p style="margin-bottom:10px;"><strong>Scene 2:</strong> '+((c2==='E')?OWN2.title:(S2[c2]?S2[c2].title:''))+'</p>';var f2=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(f2)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 2 idea:</strong> '+f2+'</p>';
+    h+='<p style="margin-bottom:10px;"><strong>What this revealed:</strong> '+(ownSummary()||summaries[c1+c2]||'')+'</p>';
+    if(a1||a2||a3){h+='<p style="margin-top:12px;opacity:0.85;"><strong>Your reflections:</strong></p>';if(a1)h+='<p style="font-size:14px;margin-top:6px;">• '+a1+'</p>';if(a2)h+='<p style="font-size:14px;margin-top:6px;">• '+a2+'</p>';if(a3)h+='<p style="font-size:14px;margin-top:6px;">• '+a3+'</p>';}
+    h+='<p style="margin-top:12px;font-size:13px;opacity:0.7;">📸 Screenshot this to keep or share your journey.</p></div>';
+    jr.innerHTML=h;jr.style.display='block';jr.scrollIntoView({behavior:'smooth'});
+  }
+
+  async function saveDebrief(simulationName){
+    var a1=(document.getElementById('dq1')||{value:''}).value.trim();
+    var a2=(document.getElementById('dq2')||{value:''}).value.trim();
+    var a3=(document.getElementById('dq3')||{value:''}).value.trim();
+    var sessionId='session-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
+    try{
+      await fetch('https://backend-q4b2.onrender.com/api/v1/debrief',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({simulationName:simulationName,sessionId:sessionId,answer1:a1||'no answer provided',answer2:a2||'no answer provided',answer3:a3||'no answer provided'})
+      });
+    }catch(e){console.log('Debrief save failed silently',e);}
+  }
+
+  async function goFinish(){
+    await saveDebrief('career-the-pour');
+    showJourney();
+    var btn=document.querySelector('.final-btn');
+    if(btn){btn.textContent='Saved ✓ — thank you';}
+  }
+
+  setTimeout(function(){document.getElementById('pbar').style.width='8%';},400);
+</script>
+</body>
+</html>
