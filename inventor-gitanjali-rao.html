@@ -188,6 +188,9 @@ body::before{content:'';position:fixed;inset:0;
 .parent-feedback{margin-top:1.5rem;padding:1rem 1.25rem;background:var(--surface);border:2px solid var(--border);border-radius:12px;text-align:center}
 
 @media(max-width:480px){.story-title{font-size:1.85rem}.careers-grid{grid-template-columns:1fr 1fr}}
+
+.choice-btn:active{transform:scale(0.96);transition:transform 0.08s ease}
+.choice-btn{-webkit-tap-highlight-color:transparent}
 </style>
 </head>
 <body>
@@ -208,19 +211,11 @@ body::before{content:'';position:fixed;inset:0;
 <h1 class="story-title">The <em>Water</em> Detective</h1>
 <p class="story-sub">Gitanjali Rao · Age 10 · STEM School Highlands Ranch</p>
 
-<p class="narrative">Gitanjali Rao was ten years old when she first heard about Flint, Michigan. She was watching the news with her parents when a story came on about a water crisis — <strong>thousands of families had been drinking water contaminated with lead for years without knowing it.</strong></p>
-<p class="narrative">Lead in drinking water is invisible. You cannot smell it, taste it, or see it. But it causes brain damage in children — the kind of damage that cannot be undone. In Flint, children were getting sick. <em>Children her age.</em></p>
-<p class="narrative">That night Gitanjali could not sleep. She kept thinking about how unfair it was that children in Flint had no way of knowing if their water was safe.</p>
+<p class="narrative">Gitanjali Rao is ten years old, watching the news with her parents. A city called Flint, Michigan has been drinking water full of lead for years — invisible, tasteless, and <strong>causing brain damage in children her age.</strong></p>
 
-<div class="news-card">
-  <div class="news-label">What Gitanjali was reading about</div>
-  <div class="news-headline">The Flint Water Crisis: 40% of homes receiving dangerously contaminated water</div>
-  <div class="news-body">Residents suffered rashes, hair loss, and — worst of all — brain damage in children. The most shocking part: the current tests were unreliable, expensive, or took weeks to get results. <strong>Families had no fast, affordable way to know if their water was safe.</strong></div>
-</div>
+<p class="narrative">Then one evening she watches her own parents dip test strips into their tap water. The results are vague. Inconclusive. Are they safe? <em>They do not actually know.</em></p>
 
-<p class="narrative">Then one evening Gitanjali watched her own parents try to test the water in their home using test strips — thin pieces of paper you dip in water that are supposed to change colour if there is lead. The results were vague. Inconclusive. Were they safe? They did not really know.</p>
-<p class="narrative"><em>"This is not a reliable process,"</em> Gitanjali thought. <em>"And I've got to do something to change this."</em></p>
-<p class="narrative">She was ten years old. She had no laboratory, no funding, and no scientific degree. What she had was a question and a stubborn refusal to accept that the question was too big for her to answer.</p>
+<p class="narrative"><em>"This is not a reliable process,"</em> she thinks. <em>"And I've got to do something to change this."</em> She is ten. No lab, no funding, no degree. What she has is a question that will not leave her alone.</p>
 
 <button class="continue-btn" onclick="goS1A()">What did she do next? →</button>
 </div>
@@ -233,22 +228,20 @@ body::before{content:'';position:fixed;inset:0;
 <h2 style="font-family:var(--sans);font-size:clamp(1.5rem,4vw,2.25rem);font-weight:900;color:var(--ink);margin-bottom:0.35rem;">The MIT Website</h2>
 <p class="story-sub">Where the idea came from</p>
 
-<p class="narrative">Gitanjali spent weeks researching. She read everything she could find about lead contamination, water testing, and the science of detection. One evening she was browsing the MIT research website when something stopped her.</p>
-<p class="narrative">MIT researchers had developed carbon nanotubes — microscopic cylindrical structures — that could detect <strong>hazardous gases in the air</strong> by measuring how their electrical resistance changed when gas molecules attached to them.</p>
-<p class="narrative">Gitanjali read it twice. Then she asked a question nobody else had asked: <em>Why can't this work for water?</em></p>
+<p class="narrative">Weeks of reading later, Gitanjali finds something on the MIT research website: <strong>carbon nanotubes</strong> — microscopic tubes that detect hazardous gases by changing their electrical resistance when molecules attach to them.</p>
+
+<p class="narrative">She reads it twice. Then she asks the question nobody else has asked: <em>why can't this work for water?</em></p>
 
 <div class="fact-card">
   <div class="fact-icon">🔬</div>
   <div>
     <div class="fact-label">The science idea</div>
-    <div class="fact-body">Carbon nanotubes are tiny hollow tubes made of carbon atoms. When certain molecules attach to them, their electrical resistance changes — measurably and accurately. MIT used this for gas detection. Gitanjali's insight: the same principle could work for detecting lead dissolved in water instead of gas floating in air.</div>
+    <div class="fact-body">If lead molecules attach to treated nanotubes the same way gas molecules do, a tiny sensor could test water in seconds — for a few dollars, not a few weeks.</div>
   </div>
 </div>
 
-<p class="narrative">She had found the idea. But she had a problem. She was ten years old. She had never worked with carbon nanotubes. She did not have access to a chemistry laboratory. The materials involved were hazardous. And her family had just moved across the country from Tennessee to Colorado — she knew nobody at her new school yet.</p>
-
 <div class="tension">
-  <p>Gitanjali has an idea that might work. But she cannot test it alone, in her bedroom. She needs equipment, chemicals, and expertise she does not have.</p>
+  <p>She has the idea. But she is ten, her family has just moved cross-country to Colorado, she knows nobody at her new school — and the chemicals involved are hazardous. She cannot do this in her bedroom.</p>
   <p><strong>What does she do?</strong></p>
 </div>
 
@@ -257,7 +250,7 @@ body::before{content:'';position:fixed;inset:0;
   <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Email the chemistry teacher at her new school — she has never met them — and ask to use the school labs</div><div class="csub">It feels scary to email a stranger. But the labs and chemicals are right there.</div></div></button>
   <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Enter the Discovery Education 3M Young Scientist Challenge and use the competition structure to get access to expert mentors</div><div class="csub">The competition connects finalists with 3M scientists who can actually help build the device.</div></div></button>
   <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Contact MIT directly — the researchers whose work inspired the idea might be willing to help</div><div class="csub">The original scientists know the technology best. Going to the source makes sense.</div></div></button>
-  <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Research more before asking anyone for help — make sure the idea is solid before putting it in front of experts</div><div class="csub">Do not waste people's time with a half-formed idea. Understand it better first.</div></div></button>
+  <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Drop it — you are ten, and water testing is for scientists with laboratories</div><div class="csub">Nobody would blame you. You do not even know anyone at your new school yet.</div></div></button>
 </div>
 <div class="fifth-option">
   <span class="fifth-label">💡 I'd do something different —</span>
@@ -352,6 +345,7 @@ body::before{content:'';position:fixed;inset:0;
   <h2>Water detective: case closed!</h2>
   <p>You just lived through two of the most important decisions made by an eleven-year-old who changed how we think about who gets to solve the world's biggest problems.</p>
   <p id="c-summary" style="color:var(--accent);font-weight:800;font-size:1rem;"></p>
+  <p id="path-rarity" style="font-size:12px;opacity:0.65;margin-top:8px;"></p>
 
   <div class="epilogue-card">
     <div class="ep-label">What happened next</div>
@@ -420,11 +414,11 @@ const O1 = {
     <div class="ob ob-blue"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Going to the most expert source first was ambitious and specific. The redirect was actually valuable — it pointed to a path better suited to where Gitanjali actually was. <strong>Sometimes the wrong door opens the right one.</strong> The willingness to aim high, combined with the flexibility to follow the redirect, is its own kind of intelligence.</div><span class="skill-tag">🔵 Aimed high · Followed the redirect wisely</span></div>`
   },
   D: {
-    title: "You researched more first.",
-    mem: "You spent six more weeks reading before asking anyone for help. By the time you reached out, you could explain the chemistry precisely. Scientists took you more seriously because you already understood the fundamentals.",
-    body: `<p class="narrative">Gitanjali spent six more weeks reading before contacting anyone. She read every paper she could find on carbon nanotubes, lead detection, and water chemistry. She filled a notebook with questions and answers.</p>
-    <p class="narrative">When she finally reached out to the competition organisers and her school chemistry teacher, she could explain exactly what she wanted to do and why — in scientific language, with precision.</p>
-    <div class="ob ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">The extra preparation meant scientists took her more seriously from the first conversation. <strong>But six weeks passed while Flint families were still drinking contaminated water.</strong> Preparation before action is valuable. The question is always: how much preparation is wisdom, and at what point does it become delay?</div><span class="skill-tag">🟡 Prepared thoroughly · Six weeks cost something</span></div>`
+    title: "You almost dropped it.",
+    mem: "You told yourself it was too big for a ten-year-old. For two weeks you believed it. Then Flint kept appearing on the news — and one evening you opened your laptop and started typing an email.",
+    body: `<p class="narrative">Gitanjali decided to let it go. She was ten. She had just moved. She did not know anyone. It was a nice idea, but nice ideas are for people with laboratories.</p>
+    <p class="narrative">For two weeks it worked. Then Flint appeared on the news again. And again. Children her age, still drinking that water.</p>
+    <div class="ob ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">Here is the honest truth: <strong>this is the choice almost everyone makes.</strong> Not because they are lazy or afraid — because the world quietly teaches young people that big problems belong to somebody else. What pulled Gitanjali back was not confidence. It was that the problem refused to leave her alone. One evening she opened her laptop and began typing an email to a chemistry teacher she had never met. The idea survived because she gave it a second chance.</div><span class="skill-tag">🟡 The choice almost everyone makes · You came back</span></div>`
   }
 };
 
@@ -473,10 +467,10 @@ const summaries = {
   CB: "You tried the highest door first and then demonstrated the device working. Two instances of going directly to the strongest version of your case.",
   CC: "You went straight to MIT and then laid out the problem systematically. Both moves show someone who trusts rigour — go to the best source, argue from the clearest structure.",
   CD: "You aimed high and then told the simplest truth. The authenticity of your story complemented the ambition of your approach.",
-  DA: "You prepared thoroughly before asking for help, then made the judges feel the human cost before the technical solution. Careful preparation followed by human connection.",
-  DB: "You understood the science completely before sharing it, then let the device speak for itself. Two kinds of confidence — in the idea and in the demonstration.",
-  DC: "You built a solid foundation of knowledge and then argued systematically from the problem. Thorough in preparation and thorough in presentation.",
-  DD: "You prepared carefully and told your honest story. Both moves show someone who respects the work enough to understand it deeply before sharing it — and then shares it as truthfully as possible."
+  DA: "You almost dropped the idea — then came back and led your presentation with a child's name from Flint. The person who nearly walked away became the person who made a room feel why it mattered. That arc is the whole story of how change actually happens.",
+  DB: "You nearly let it go, then let the device speak for itself on stage. Quiet doubt became quiet proof. People who return from almost-quitting often build the most convincingly — they have already answered every doubt privately.",
+  DC: "You almost gave up, then opened with the scale of the problem. Having argued yourself out of the idea once, you knew exactly which numbers made it undeniable. Your doubt became your evidence.",
+  DD: "You nearly dropped it — and then told the judges the honest story of the night you almost did. There is no more powerful opening than the truth. The most persuasive person in any room is the one who almost was not there."
 };
 
 function s1(c){
@@ -515,6 +509,7 @@ async function goComplete(){
   await saveDebrief('inventor-gitanjali-rao');
   const key=c1+c2;
   document.getElementById('c-summary').textContent=summaries[key]||'';
+  var _r=document.getElementById('path-rarity');if(_r){_r.textContent='Your path: '+(c1||'')+(c2||'')+' — one of 16 possible journeys. Replay to discover another.';}
   show('scene-complete');
   document.getElementById('pbar').style.width='100%';
   const btn = document.querySelector('.final-btn');

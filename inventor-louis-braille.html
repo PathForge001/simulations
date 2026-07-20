@@ -178,6 +178,9 @@ body::before{content:'';position:fixed;inset:0;
 .parent-feedback{margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(255,255,255,0.04);border-radius:10px;text-align:center;border:1px solid rgba(255,255,255,0.08)}
 
 @media(max-width:480px){.story-title{font-size:2.25rem}}
+
+.choice-btn:active{transform:scale(0.96);transition:transform 0.08s ease}
+.choice-btn{-webkit-tap-highlight-color:transparent}
 </style>
 </head>
 <body>
@@ -200,22 +203,13 @@ body::before{content:'';position:fixed;inset:0;
 <h1 class="story-title">The Boy Who Read<br>With His <em>Fingers</em></h1>
 <p class="story-sub">Louis Braille · Age 12 · Royal Institute for Blind Youth</p>
 
-<p class="narrative">Louis Braille was born in 1809 in a small village outside Paris. When he was three years old, he was playing with a stitching awl in his father's harness workshop. The tool slipped. <strong>By age five, he was completely blind.</strong></p>
+<p class="narrative">Paris, 1812. A three-year-old boy is playing with a stitching awl in his father's harness workshop. <strong>The tool slips.</strong> By five, Louis Braille is completely blind.</p>
 
-<p class="narrative">At ten, he received a scholarship to the Royal Institute for Blind Youth in Paris — one of the first schools in the world built for the blind. He arrived eager to learn. Then he discovered the truth: the school's library contained just three books. <em>Three books.</em> Because making books for the blind required carving each letter into wooden blocks and pressing them into thick wax paper. It cost a fortune and took months per book.</p>
+<p class="narrative">At ten he wins a scholarship to the Royal Institute for Blind Youth — one of the only schools on Earth built for blind children. He arrives desperate to read. Then he discovers the truth: <em>the library has three books.</em> Making a book for the blind takes months of carving letters into wax paper. A brilliant mind, and almost nothing to read.</p>
 
-<p class="narrative">Louis was trapped. A brilliant mind with almost nothing to read and no way to write.</p>
+<p class="narrative">Then, in 1821, a soldier walks into the school carrying something that will change everything.</p>
 
-<div class="world-card">
-  <div class="wc-label">The world Louis was born into</div>
-  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>Blind people could not read or write independently.</strong> The only system was embossed print — enormous raised letters that took years to learn and could not be written at all.</div></div>
-  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>Most blind people never received any education.</strong> Louis was one of the lucky ones — and his school had three books.</div></div>
-  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>The world assumed blind people could not contribute to society.</strong> Louis would spend his entire life proving otherwise.</div></div>
-</div>
-
-<p class="narrative">Then, in 1821, something arrived at the Institute that would change Louis Braille's life — and eventually the lives of millions of people he would never meet.</p>
-
-<button class="continue-btn" onclick="goS1A()">What arrived? <span class="arrow">→</span></button>
+<button class="continue-btn" onclick="goS1A()">What did the soldier bring? <span class="arrow">→</span></button>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════
@@ -228,21 +222,15 @@ body::before{content:'';position:fixed;inset:0;
 <h2 style="font-family:var(--serif);font-size:clamp(1.5rem,4vw,2.25rem);font-weight:700;color:var(--text);margin-bottom:0.35rem;letter-spacing:-0.01em;">Night Writing</h2>
 <p class="story-sub">A French Army captain brings something unexpected</p>
 
-<p class="narrative">A retired French Army captain named Charles Barbier arrived at the Institute. He had invented a system called <strong>"night writing"</strong> — a code of raised dots punched into thick paper that soldiers could read by touch in complete darkness, without making a sound or striking a light that might alert the enemy.</p>
-<p class="narrative">Barbier believed this system could help the blind. He demonstrated it to the students. The room was completely silent as fingers moved across paper covered in raised dots.</p>
-<p class="narrative">Louis, aged twelve, felt the dots under his fingertips. His heart began to race.</p>
-<p class="narrative">But as he explored the system, his excitement curdled into something more complicated. <em>This is the idea. But this is not the right version of the idea.</em></p>
+<p class="narrative">Captain Charles Barbier demonstrates <strong>"night writing"</strong> — raised dots punched into paper that soldiers read by touch in total darkness, without striking a light the enemy might see. He believes it could help the blind.</p>
 
-<div class="world-card">
-  <div class="wc-label">What Louis noticed immediately</div>
-  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>The grid was 12 dots</strong> — two columns of six. It required as many as 100 dots for a single word. His finger had to move too far to read a single letter.</div></div>
-  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>It represented sounds, not letters.</strong> A blind student using Barbier's system could never learn to spell correctly. There was no punctuation. No numbers. No music notation.</div></div>
-  <div class="wc-stat"><div class="wc-dot"></div><div class="wc-text"><strong>Barbier was proud of his system.</strong> He had donated it to the school. He was not expecting a twelve-year-old to tell him it was flawed.</div></div>
-</div>
+<p class="narrative">Twelve-year-old Louis runs his fingertips across the dots. His heart races. <em>Then it sinks.</em></p>
+
+<p class="narrative">The grid is twelve dots — too big for one fingertip, up to 100 dots for a single word. It codes <strong>sounds, not letters</strong> — no spelling, no numbers, no music. The idea is right. The execution is wrong.</p>
 
 <div class="tension">
-  <p>Louis could feel the potential and the problem simultaneously. Barbier's system was a door — but it was the wrong size, the wrong shape. The idea was there. The execution was not.</p>
-  <p><strong>Louis is twelve years old. Barbier is a distinguished retired army officer. What does Louis do?</strong></p>
+  <p>Louis is twelve. Barbier is a decorated officer who donated this system expecting gratitude — not corrections from a blind child.</p>
+  <p><strong>What does Louis do?</strong></p>
 </div>
 
 <div class="dp">— Scene 1 — What does Louis do? —</div>
@@ -250,7 +238,7 @@ body::before{content:'';position:fixed;inset:0;
   <button class="choice-btn" onclick="s1('A')"><span class="cletter">A</span><div><div class="ctext">Tell Barbier directly — explain the flaws clearly and ask if they can work on it together</div><div class="csub">The problems are real. An adult who cares about the blind should want to know.</div></div></button>
   <button class="choice-btn" onclick="s1('B')"><span class="cletter">B</span><div><div class="ctext">Say nothing to Barbier — start working privately on his own improved version</div><div class="csub">Barbier won't listen to a child. The way to prove the idea is to build a better one.</div></div></button>
   <button class="choice-btn" onclick="s1('C')"><span class="cletter">C</span><div><div class="ctext">Ask the headmaster to bring Barbier back for another session so Louis can study the system more</div><div class="csub">Understand it completely before trying to improve it.</div></div></button>
-  <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Write Barbier a letter after the demonstration, listing the specific problems he found</div><div class="csub">More respectful than confronting him in the room. Gives Barbier time to think.</div></div></button>
+  <button class="choice-btn" onclick="s1('D')"><span class="cletter">D</span><div><div class="ctext">Let it go — Barbier is the expert, and you are a blind twelve-year-old</div><div class="csub">Everyone would understand. Nobody expects you to fix a soldier's code.</div></div></button>
 </div>
 <div class="fifth-option">
   <span class="fifth-label">💡 I'd do something different —</span>
@@ -354,6 +342,7 @@ body::before{content:'';position:fixed;inset:0;
   <h2>Story complete.</h2>
   <p>You just lived through two of the most important decisions in the history of literacy — made by a fifteen-year-old who could not see, but could imagine something nobody else could.</p>
   <p id="c-summary" style="color:var(--accent);font-weight:500;font-family:var(--serif);font-style:italic;font-size:1.05rem;"></p>
+  <p id="path-rarity" style="font-size:12px;opacity:0.65;margin-top:8px;"></p>
 
   <div class="careers-box">
     <div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:0.85rem;">Careers this story connects to</div>
@@ -415,11 +404,11 @@ const O1 = {
     <div class="ob ob-green"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">By the time Louis began building his own system, he understood Barbier's so thoroughly that he could see exactly where each improvement needed to happen. <strong>The extra weeks of study compressed the three years of work that followed.</strong> Understanding something completely before trying to improve it is not delay — it is precision.</div><span class="skill-tag">💚 Thorough understanding before action · Mapped the problem precisely</span></div>`
   },
   D: {
-    title: "You wrote Barbier a letter.",
-    mem: "You wrote to Barbier listing the specific problems you found. He never replied. But writing them down forced you to be precise — and that list became the exact blueprint for what you built next.",
-    body: `<p class="narrative">That evening, Louis wrote a careful letter. He listed six specific problems with the night-writing system. He was respectful but precise. He did not tell Barbier the system was bad — he explained exactly where it fell short of what blind people actually needed.</p>
-    <p class="narrative">Barbier never replied.</p>
-    <div class="ob ob-amber"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">The letter was never answered. But writing it forced Louis to name every problem precisely — and that list became the exact specification for what he built over the next three years. <strong>Sometimes you write not to communicate with someone else, but to clarify something for yourself.</strong> The letter was really a blueprint.</div><span class="skill-tag">🟡 Written clarity · Turned frustration into specification</span></div>`
+    title: "You almost let it go.",
+    mem: "You told yourself it wasn't your problem. For three weeks you believed it. Then the dots kept returning under your fingertips at night — and you picked up the stylus.",
+    body: `<p class="narrative">Louis decided it was not his place. Barbier was an officer. He was a child. He went back to his lessons.</p>
+    <p class="narrative">For three weeks it worked. Then, at night, his fingers kept tracing dot patterns on the blanket. The flaw would not leave him alone.</p>
+    <div class="ob ob-red"><div class="ob-label"><span class="ob-dot"></span> What happened</div><div class="ob-text">This is the honest truth: <strong>this is where most world-changing ideas die.</strong> Not in failure — in the quiet decision that it is someone else's job. Nearly everyone who has ever noticed a fixable problem has made this exact choice. Louis made it too — for three weeks. What saved the future of literacy was not that he never doubted. It was that the problem mattered to him more than the doubt did. He picked up the stylus.</div><span class="skill-tag">🔴 The temptation everyone faces · You came back</span></div>`
   }
 };
 
@@ -468,10 +457,10 @@ const summaries = {
   CB: "You mapped every flaw before building, then submitted a complete written system. The intellectual rigour was exceptional. Adding a physical demonstration would have made it unstoppable.",
   CC: "You understood the system completely before improving it, then built a community of practitioners before presenting. Two instances of deep preparation. By the time anyone saw the result, it was already proven.",
   CD: "You studied the problem carefully, then prepared for every institutional objection. Two layers of preparation — technical and political. You did not just build the right thing. You built it for the right audience.",
-  DA: "You were respectful and precise with Barbier, then proved everything in a single live moment with Pignier. Written clarity followed by physical truth. Both together are more powerful than either alone.",
-  DB: "You documented the problems carefully for Barbier and the solution carefully for Pignier. Consistent in your commitment to written precision. The physical demonstration would have accelerated what your writing described perfectly.",
-  DC: "You wrote the specification and then built a community before presenting it. Precision in diagnosis, patience in proof. By the time you presented, the idea was already living in other people's hands.",
-  DD: "You used writing to clarify the problem and formal process to address institutional resistance. Consistently respectful, consistently thorough. You built something that was designed to survive — not just to impress."
+  DA: "You almost walked away — then came back and proved everything in one live demonstration. The most honest path of all sixteen: doubt first, evidence later. Most world-changing work belongs to people who almost didn't.",
+  DB: "You nearly let the idea go, then built it anyway and submitted it in writing. Quiet doubt turned into quiet thoroughness. The people who come back from almost-quitting often build the most carefully — because they know exactly what it cost to continue.",
+  DC: "You almost gave up alone — and ended up teaching five classmates. That arc matters: the person who once doubted themselves became the person who made others believe. Doubt that turns into community is doubt that changed sides.",
+  DD: "You nearly walked away, then faced the decision-makers directly with every objection answered. Nobody prepares harder than someone who has already argued against their own idea and lost. Your doubt became your armour."
 };
 
 function s1(c){
@@ -510,6 +499,7 @@ async function goComplete(){
   await saveDebrief('inventor-louis-braille');
   const key=c1+c2;
   document.getElementById('c-summary').textContent=summaries[key]||'';
+  var _r=document.getElementById('path-rarity');if(_r){_r.textContent='Your path: '+(c1||'')+(c2||'')+' — one of 16 possible journeys. Replay to discover another.';}
   show('scene-complete');
   document.getElementById('pbar').style.width='100%';
   const btn = document.querySelector('.final-btn');

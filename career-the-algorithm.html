@@ -168,6 +168,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .fifth-input{width:100%;background:transparent;border:none;outline:none;font-family:inherit;font-size:13px;color:var(--text,#111);resize:none;min-height:52px;line-height:1.6;}
 .fifth-input::placeholder{color:var(--text-dim,#aaa);}
 
+
+.choice-btn:active{transform:scale(0.96);transition:transform 0.08s ease}
+.choice-btn{-webkit-tap-highlight-color:transparent}
 </style>
 </head>
 <body>
@@ -296,6 +299,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <h2>Simulation complete.</h2>
   <p>You just navigated one of the defining challenges of working in technology in 2026 — what to do when a system you helped build is causing harm, and the commercial pressure says to look away.</p>
   <p id="c-summary" style="color:var(--accent);font-weight:500;"></p>
+  <p id="path-rarity" style="font-size:12px;opacity:0.65;margin-top:8px;"></p>
   <div class="careers-box">
     <div class="sp-label" style="margin-bottom:0.85rem;">Careers this simulation connects to</div>
     <div class="career-row"><span class="career-icon">→</span><div><div class="career-title">AI Ethics Researcher</div><div class="career-desc">Studies how AI systems produce bias and harm, and designs frameworks to prevent it. One of the fastest-growing roles in UK tech.</div></div></div>
@@ -398,7 +402,8 @@ function s1(c){c1=c;const o=O1[c];document.getElementById('o1-title').textConten
 function goS2(){const o=O1[c1];document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>🖥️</span><span><strong>Context:</strong> ${o.mem}</span></div>`;show('scene-2')}
 function s2(c){c2=c;const o=O2[c];document.getElementById('final-title').textContent=o.title;document.getElementById('final-body').innerHTML=o.body;show('scene-final')}
 function goDebrief(){const k=c1+c2;document.getElementById('skills-panel').innerHTML=`<div class="sp-label">Your profile from this simulation</div><div class="sp-text">${summaries[k]||''}</div>`;show('scene-debrief')}
-async function goComplete(){await saveDebrief('the-algorithm');document.getElementById('c-summary').textContent=summaries[c1+c2]||'';show('scene-complete')}
+async function goComplete(){await saveDebrief('the-algorithm');document.getElementById('c-summary').textContent=summaries[c1+c2]||'';
+  var _r=document.getElementById('path-rarity');if(_r){_r.textContent='Your path: '+(c1||'')+(c2||'')+' — one of 16 possible journeys. Replay to discover another.';}show('scene-complete')}
 function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(t=>t.value='');show('scene-intro')}
 function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);

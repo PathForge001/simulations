@@ -127,6 +127,9 @@ body::before{content:'';position:fixed;inset:0;background-image:repeating-linear
 .fifth-input{width:100%;background:transparent;border:none;outline:none;font-family:inherit;font-size:13px;color:var(--text,#111);resize:none;min-height:52px;line-height:1.6;}
 .fifth-input::placeholder{color:var(--text-dim,#aaa);}
 
+
+.choice-btn:active{transform:scale(0.96);transition:transform 0.08s ease}
+.choice-btn{-webkit-tap-highlight-color:transparent}
 </style>
     <!-- Open Graph / Social Preview Tags -->
     <meta property="og:title" content="The New Kid — Making a friend in a world without social media" />
@@ -276,6 +279,7 @@ body::before{content:'';position:fixed;inset:0;background-image:repeating-linear
   <h2>Simulation Complete.</h2>
   <p>You helped someone belong. Then you helped a group of people with different ideas find a way through. Both of those things are harder in person than online — and more real.</p>
   <p id="c-summary" style="color:var(--accent);font-weight:500;"></p>
+  <p id="path-rarity" style="font-size:12px;opacity:0.65;margin-top:8px;"></p>
   <div class="tested-box">
     <div class="sp-label" style="margin-bottom:0.85rem;">What this simulation was really testing</div>
     <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">Noticing people</div><div class="tested-desc">Amara laughed at her book and looked up to see if anyone noticed. You noticed. That is the first step in community psychology — paying attention to the person who is slightly on the edge.</div></div></div>
@@ -375,7 +379,8 @@ function s1(c){c1=c;const o=O1[c];document.getElementById('o1-title').textConten
 function goS2(){const o=O1[c1];document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>🧠</span><span><strong>Carrying forward:</strong> ${o.mem}</span></div>`;show('scene-2')}
 function s2(c){c2=c;const o=O2[c];document.getElementById('final-title').textContent=o.title;document.getElementById('final-body').innerHTML=o.body;show('scene-final')}
 function goDebrief(){const k=c1+c2;document.getElementById('skills-panel').innerHTML=`<div class="sp-label">Your path through this simulation</div><div class="sp-text">${summaries[k]||''}</div>`;show('scene-debrief')}
-async function goComplete(){await saveDebrief('the-new-kid');document.getElementById('c-summary').textContent=summaries[c1+c2]||'';show('scene-complete')}
+async function goComplete(){await saveDebrief('the-new-kid');document.getElementById('c-summary').textContent=summaries[c1+c2]||'';
+  var _r=document.getElementById('path-rarity');if(_r){_r.textContent='Your path: '+(c1||'')+(c2||'')+' — one of 16 possible journeys. Replay to discover another.';}show('scene-complete')}
 function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(t=>t.value='');show('scene-intro')}
 function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
