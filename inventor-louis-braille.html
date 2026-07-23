@@ -181,6 +181,12 @@ body::before{content:'';position:fixed;inset:0;
 
 .choice-btn:active{transform:scale(0.96);transition:transform 0.08s ease}
 .choice-btn{-webkit-tap-highlight-color:transparent}
+.fifth-continue{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:transparent;border:1px solid var(--accent2);color:var(--accent2);border-radius:8px;padding:9px 16px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all 0.2s;}
+.fifth-continue:hover{background:var(--accent2);color:var(--bg);}
+.fifth-continue:active{transform:scale(0.96);}
+.fifth-hint{font-size:0.78rem;color:var(--text-dim);margin-top:8px;opacity:0;transition:opacity 0.2s;}
+.fifth-hint.show{opacity:1;}
+
 </style>
 </head>
 <body>
@@ -243,6 +249,8 @@ body::before{content:'';position:fixed;inset:0;
 <div class="fifth-option">
   <span class="fifth-label">💡 I'd do something different —</span>
   <textarea class="fifth-input" id="fifth-s1" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+  <div><button class="fifth-continue" onclick="s1own()">Continue with my own idea <span class="arrow">→</span></button></div>
+  <div class="fifth-hint" id="hint-s1">Write your idea above, or pick one of the options.</div>
 </div>
 </div>
 
@@ -287,6 +295,8 @@ body::before{content:'';position:fixed;inset:0;
 <div class="fifth-option">
   <span class="fifth-label">💡 I'd do something different —</span>
   <textarea class="fifth-input" id="fifth-s2" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+  <div><button class="fifth-continue" onclick="s2own()">Continue with my own idea <span class="arrow">→</span></button></div>
+  <div class="fifth-hint" id="hint-s2">Write your idea above, or pick one of the options.</div>
 </div>
 </div>
 
@@ -343,6 +353,14 @@ body::before{content:'';position:fixed;inset:0;
   <p>You just lived through two of the most important decisions in the history of literacy — made by a fifteen-year-old who could not see, but could imagine something nobody else could.</p>
   <p id="c-summary" style="color:var(--accent);font-weight:500;font-family:var(--serif);font-style:italic;font-size:1.05rem;"></p>
   <p id="path-rarity" style="font-size:12px;opacity:0.65;margin-top:8px;"></p>
+
+  <div class="ob ob-blue" style="text-align:left;margin-top:1.5rem;">
+    <div class="ob-label"><span class="ob-dot"></span> What made this possible</div>
+    <div class="ob-text"><strong>Primary factor: Boldness.</strong> Louis was twelve, blind, and correcting a decorated army officer to his face. The idea already existed &mdash; Barbier had built it. What Louis added was the courage to say "this is wrong, and I know how to fix it," in a room where almost anyone would simply have been grateful for what they were given.</div>
+    <div class="ob-text" style="margin-top:0.6rem;"><strong>Secondary factor: Timing, through institutional access.</strong> Louis was not born wealthy or connected. His access came from a scholarship to one of the only schools on Earth built for blind children &mdash; an institution, not inherited privilege, that put him in exactly the right room at exactly the right moment.</div>
+    <div class="ob-text" style="margin-top:0.9rem;padding-top:0.7rem;border-top:1px solid rgba(255,255,255,0.12);"><strong>His own core value: Precision under humiliation.</strong> Louis never raised his voice or postured to be believed. He corrected a captain\'s invention with total technical exactness and total respect &mdash; proving that being right and being gracious were never in competition.</div>
+    <span class="skill-tag" style="margin-top:0.75rem;">🔵 Part of the PathForge Success Factors Framework</span>
+  </div>
 
   <div class="careers-box">
     <div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:0.85rem;">Careers this story connects to</div>
@@ -463,6 +481,28 @@ const summaries = {
   DD: "You nearly walked away, then faced the decision-makers directly with every objection answered. Nobody prepares harder than someone who has already argued against their own idea and lost. Your doubt became your armour."
 };
 
+var OWN1={title:"You chose your own path.",mem:"You did not take any of the four options — you wrote your own. That instinct, to look at a situation and think there is another way, is exactly how the best ideas begin.",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">There was no single right answer here — and you refused to be limited to the choices in front of you. <strong>Thinking beyond the options you are given is one of the rarest and most valuable habits there is.</strong> Every real breakthrough started with someone who would not just pick from the menu. Hold on to that. Now let us see how the situation unfolds.</div><span class=\"skill-tag\">🔵 Independent thinking · You wrote your own path</span></div>"};
+var OWN2={title:"You chose your own path again.",mem:"",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">Once again you looked past the options and thought for yourself. <strong>People who consistently generate their own answers — rather than only choosing between the ones offered — are the ones who end up changing how things are done.</strong> That is a genuine strength, and it is worth developing wherever your path takes you.</div><span class=\"skill-tag\">🔵 Independent thinking · Your own path, twice</span></div>"};
+
+function s1own(){
+  const t=(document.getElementById('fifth-s1')||{value:''}).value.trim();
+  if(!t){const h=document.getElementById('hint-s1');if(h)h.classList.add('show');return;}
+  c1='E';
+  document.getElementById('o1-title').textContent=OWN1.title;
+  document.getElementById('o1-body').innerHTML=OWN1.body;
+  show('scene-out1');
+  document.getElementById('pbar').style.width='32%';
+}
+function s2own(){
+  const t=(document.getElementById('fifth-s2')||{value:''}).value.trim();
+  if(!t){const h=document.getElementById('hint-s2');if(h)h.classList.add('show');return;}
+  c2='E';
+  document.getElementById('final-title').textContent=OWN2.title;
+  document.getElementById('final-body').innerHTML=OWN2.body;
+  show('scene-final');
+  document.getElementById('pbar').style.width='72%';
+}
+
 function s1(c){
   c1=c;
   const o=O1[c];
@@ -473,7 +513,7 @@ function s1(c){
 }
 
 function goS2(){
-  const o=O1[c1];
+  const o=(c1==='E')?OWN1:O1[c1];
   document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>✦</span><span><strong>You remember:</strong> ${o.mem}</span></div>`;
   show('scene-2');
   document.getElementById('pbar').style.width='50%';
@@ -488,9 +528,16 @@ function s2(c){
   document.getElementById('pbar').style.width='72%';
 }
 
+function ownSummary(){
+  if(c1==='E'&&c2==='E')return 'You wrote your own path at every turn — refusing both times to be limited to the options in front of you. That is the instinct of an inventor: the belief that the best answer might be one nobody has offered yet.';
+  if(c1==='E'||c2==='E')return 'At one of the two decisions, you looked past every option offered and wrote your own. That willingness to think beyond the menu is rare and valuable — it is exactly the instinct that let Louis question an army officer\'s invention in the first place.';
+  return '';
+}
+
 function goDebrief(){
   const key=c1+c2;
-  document.getElementById('skills-panel').innerHTML=`<div class="sp-label">What your choices say about you</div><div class="sp-text">${summaries[key]||''}</div>`;
+  const os=ownSummary();
+  document.getElementById('skills-panel').innerHTML=`<div class="sp-label">What your choices say about you</div><div class="sp-text">${os||summaries[key]||''}</div>`;
   show('scene-debrief');
   document.getElementById('pbar').style.width='88%';
 }
@@ -498,8 +545,9 @@ function goDebrief(){
 async function goComplete(){
   await saveDebrief('inventor-louis-braille');
   const key=c1+c2;
-  document.getElementById('c-summary').textContent=summaries[key]||'';
-  var _r=document.getElementById('path-rarity');if(_r){_r.textContent='Your path: '+(c1||'')+(c2||'')+' — one of 16 possible journeys. Replay to discover another.';}
+  const os2=ownSummary();
+  document.getElementById('c-summary').textContent=os2||summaries[key]||'';
+  var _r=document.getElementById('path-rarity');if(_r){var _p=(c1||'')+(c2||'');_r.textContent=(c1==='E'||c2==='E')?('Your path: '+_p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+_p+' — one of 16 possible journeys. Replay to discover another.');}
   show('scene-complete');
   document.getElementById('pbar').style.width='100%';
   const btn = document.querySelector('.final-btn');
@@ -530,8 +578,10 @@ function showJourney(){
   const a2 = document.getElementById('dq2') ? document.getElementById('dq2').value.trim() : (textareas[1] ? textareas[1].value.trim() : '');
   const a3 = document.getElementById('dq3') ? document.getElementById('dq3').value.trim() : (textareas[2] ? textareas[2].value.trim() : '');
   const key = (c1||'') + (c2||'');
-  const o1 = c1 && O1[c1] ? O1[c1] : null;
-  const o2 = c2 && O2[c2] ? O2[c2] : null;
+  const o1 = (c1==='E') ? OWN1 : (c1 && O1[c1] ? O1[c1] : null);
+  const o2 = (c2==='E') ? OWN2 : (c2 && O2[c2] ? O2[c2] : null);
+  const f1 = (document.getElementById('fifth-s1')||{value:''}).value.trim();
+  const f2 = (document.getElementById('fifth-s2')||{value:''}).value.trim();
 
   let html = '';
 
@@ -549,6 +599,7 @@ function showJourney(){
       <div class="jr-choice">${o1.title||''}</div>
       <div class="jr-mem" style="margin-top:6px;">${o1.mem||''}</div>
     </div>`;
+    if(f1){html += `<div class="journey-review-scene" style="opacity:0.85;"><div class="jr-label">Your own Scene 1 idea</div><div class="jr-mem">${f1}</div></div>`;}
   }
 
   // Scene 2
@@ -557,6 +608,7 @@ function showJourney(){
       <div class="jr-label">Scene 2 — You chose: ${c2||''}</div>
       <div class="jr-choice">${o2.title||''}</div>
     </div>`;
+    if(f2){html += `<div class="journey-review-scene" style="opacity:0.85;"><div class="jr-label">Your own Scene 2 idea</div><div class="jr-mem">${f2}</div></div>`;}
   }
 
   // Debrief answers
@@ -576,7 +628,7 @@ function showJourney(){
   }
 
   // Skills summary
-  const sum = summaries[key]||'';
+  const sum = ownSummary()||summaries[key]||'';
   if(sum){
     html += `<div class="jr-summary-box">
       <div class="jr-label" style="margin-bottom:5px;">What your choices say about you</div>
