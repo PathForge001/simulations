@@ -589,6 +589,12 @@
 
 .choice-btn:active{transform:scale(0.96);transition:transform 0.08s ease}
 .choice-btn{-webkit-tap-highlight-color:transparent}
+.fifth-continue{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:transparent;border:1px solid var(--accent2);color:var(--accent2);border-radius:8px;padding:9px 16px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;}
+.fifth-continue:hover{background:var(--accent2);color:var(--bg);}
+.fifth-continue:active{transform:scale(0.96);}
+.fifth-hint{font-size:0.78rem;color:var(--text-dim,#888);margin-top:8px;opacity:0;transition:opacity 0.2s;}
+.fifth-hint.show{opacity:1;}
+
 </style>
     <!-- Open Graph / Social Preview Tags -->
     <meta property="og:title" content="The Missing Post — What do you do when a friend goes quiet?" />
@@ -703,6 +709,9 @@
 <div class="fifth-option">
   <span class="fifth-label">💡 I'd do something different —</span>
   <textarea class="fifth-input" id="fifth-s1" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+
+  <div><button class="fifth-continue" onclick="s1own()">Continue with my own idea <span>→</span></button></div>
+  <div class="fifth-hint" id="hint-s1">Write your idea above, or pick one of the options.</div>
 </div>
 </div>
 
@@ -804,6 +813,9 @@
 <div class="fifth-option">
   <span class="fifth-label">💡 I'd do something different —</span>
   <textarea class="fifth-input" id="fifth-s2" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+
+  <div><button class="fifth-continue" onclick="s2own()">Continue with my own idea <span>→</span></button></div>
+  <div class="fifth-hint" id="hint-s2">Write your idea above, or pick one of the options.</div>
 </div>
 </div>
 
@@ -888,6 +900,8 @@
     <p>You just navigated one of the hardest situations a young person can face: noticing someone who's struggling and deciding what to do about it.</p>
     <p id="c-summary" style="color:var(--accent);font-weight:500;"></p>
   <p id="path-rarity" style="font-size:12px;opacity:0.65;margin-top:8px;"></p>
+
+    <div id="what-reveals" class="ob ob-blue" style="text-align:left;margin:1.5rem 0;"></div>
 
     <div class="what-tested">
       <div class="sp-label" style="margin-bottom:0.85rem;">What this simulation was really testing</div>
@@ -1039,6 +1053,38 @@ const summaries = {
   DD:"You escalated for safety, then asked Jay for a real conversation when it mattered most. These two instincts — protect and connect — sit in tension with each other. The best support workers hold both."
 };
 
+var OWN1={title:"You chose your own path.",mem:"You did not take any of the four options — you wrote your own. That instinct, to look at a worrying moment and think there is another way to respond, is exactly what a good friend does.",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">There was no single right answer here — and you refused to be limited to the choices in front of you. <strong>Thinking beyond the options you are given is one of the rarest and most valuable habits there is.</strong> Now let us see how the situation unfolds.</div><span class=\"skill-tag\">🔵 Independent thinking · You wrote your own path</span></div>"};
+var OWN2={title:"You chose your own path again.",mem:"",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">Once again you looked past the options and thought for yourself. <strong>People who consistently generate their own response rather than only choosing between the ones offered are often the ones a friend needs most.</strong></div><span class=\"skill-tag\">🔵 Independent thinking · Your own path, twice</span></div>"};
+function s1own(){const t=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(!t){const h=document.getElementById('hint-s1');if(h)h.classList.add('show');return;}c1='E';document.getElementById('out1-title').textContent=OWN1.title;document.getElementById('out1-content').innerHTML=OWN1.body;show('scene-out1');}
+function s2own(){const t=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(!t){const h=document.getElementById('hint-s2');if(h)h.classList.add('show');return;}c2='E';document.getElementById('final-title').textContent=OWN2.title;document.getElementById('final-content').innerHTML=OWN2.body;show('scene-final');}
+function ownSummary(){
+  if(c1==='E'&&c2==='E')return 'You wrote your own path at every turn — refusing both times to be limited to the options in front of you.';
+  if(c1==='E'||c2==='E')return 'At one of the two decisions, you looked past every option offered and wrote your own.';
+  return '';
+}
+var TRAIT1={
+  A:{trait:"Boldness",text:"You messaged Jay directly, right now — direct and uncomfortable, exactly what real concern for a friend looks like."},
+  B:{trait:"Judgment — the shadow side",text:"You reacted with a heart and kept scrolling. Easy in the moment — but a worrying post rarely gets better because it was acknowledged and passed by."},
+  C:{trait:"Collaboration",text:"You texted your mutual friend Priya first — gathering more context before deciding how to respond."},
+  D:{trait:"Integrity",text:"You screenshotted it and sent it to a trusted adult — recognising this might be bigger than something you should carry alone."}
+};
+var TRAIT2={
+  A:{trait:"Communication",text:"You replied honestly and directly — giving Jay something real to respond to instead of silence or small talk."},
+  B:{trait:"Judgment — the shadow side",text:"You went quiet because you didn't know what to say. A very human reaction — but silence can feel like absence to someone who is struggling."},
+  C:{trait:"Boldness",text:"You defended whoever told Jay's mum — standing up for a decision that protected Jay even though it might not have felt welcome to him."},
+  D:{trait:"Collaboration",text:"You asked to call or meet after school — choosing a conversation with more room for nuance than text ever allows."}
+};
+function renderWhatReveals(){
+  var wr=document.getElementById('what-reveals');if(!wr)return;
+  var t1=(c1==='E')?{trait:"Independent Thinking",text:"You looked past every option offered and wrote your own approach."}:TRAIT1[c1];
+  var t2=(c2==='E')?{trait:"Independent Thinking",text:"Once again you thought beyond the choices in front of you."}:TRAIT2[c2];
+  if(!t1&&!t2)return;
+  var h='<div class="ob-label"><span class="ob-dot"></span> What this reveals about you</div>';
+  if(t1)h+='<div class="ob-text"><strong>Scene 1 — '+t1.trait+'.</strong> '+t1.text+'</div>';
+  if(t2)h+='<div class="ob-text" style="margin-top:0.6rem;"><strong>Scene 2 — '+t2.trait+'.</strong> '+t2.text+'</div>';
+  h+='<span class="skill-tag" style="margin-top:0.75rem;display:inline-block;">🔵 Part of the PathForge Success Factors Framework</span>';
+  wr.innerHTML=h;
+}
 function s1Choose(c){
   c1=c;
   const o=O1[c];
@@ -1048,7 +1094,7 @@ function s1Choose(c){
 }
 
 function goS2(){
-  const o=O1[c1];
+  const o=(c1==='E')?OWN1:O1[c1];
   document.getElementById('s2-memory').innerHTML=`
     <div class="memory-badge">
       <span>🧠</span>
@@ -1067,7 +1113,8 @@ function s2Choose(c){
 
 function goDebrief(){
   const key=c1+c2;
-  const s=summaries[key]||'';
+  const os=ownSummary();
+  const s=os||summaries[key]||'';
   document.getElementById('skills-panel').innerHTML=`
     <div class="sp-label">Your path through this simulation</div>
     <div class="sp-text">${s}</div>`;
@@ -1077,8 +1124,10 @@ function goDebrief(){
 async function goComplete(){
   await saveDebrief('the-missing-post');
   const key=c1+c2;
-  document.getElementById('c-summary').textContent=summaries[key]||'';
-  var _r=document.getElementById('path-rarity');if(_r){_r.textContent='Your path: '+(c1||'')+(c2||'')+' — one of 16 possible journeys. Replay to discover another.';}
+  const os=ownSummary();
+  document.getElementById('c-summary').textContent=os||summaries[key]||'';
+  renderWhatReveals();
+  var _r=document.getElementById('path-rarity');if(_r){var _p=(c1||'')+(c2||'');_r.textContent=(c1==='E'||c2==='E')?('Your path: '+_p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+_p+' — one of 16 possible journeys. Replay to discover another.');}
   show('scene-complete');
 }
 
@@ -1097,13 +1146,14 @@ function show(id){
 setTimeout(()=>{ document.getElementById('pbar').style.width='8%'; },400);
 
 function showJourney(){
-  const textareas = document.querySelectorAll('textarea');
-  const a1 = textareas[0] ? textareas[0].value.trim() : '';
-  const a2 = textareas[1] ? textareas[1].value.trim() : '';
-  const a3 = textareas[2] ? textareas[2].value.trim() : '';
+  const a1 = (document.getElementById('dq1')||{value:''}).value.trim();
+  const a2 = (document.getElementById('dq2')||{value:''}).value.trim();
+  const a3 = (document.getElementById('dq3')||{value:''}).value.trim();
   const key = (c1||'') + (c2||'');
-  const o1 = c1 && O1[c1] ? O1[c1] : null;
-  const o2 = c2 && O2[c2] ? O2[c2] : null;
+  const o1 = (c1==='E')?OWN1:(c1 && O1[c1] ? O1[c1] : null);
+  const o2 = (c2==='E')?OWN2:(c2 && O2[c2] ? O2[c2] : null);
+  const f1 = (document.getElementById('fifth-s1')||{value:''}).value.trim();
+  const f2 = (document.getElementById('fifth-s2')||{value:''}).value.trim();
 
   let html = '';
 
@@ -1113,24 +1163,30 @@ function showJourney(){
       <div class="jr-choice">${o1.title||''}</div>
       <div class="jr-mem">${o1.mem||''}</div>
     </div>`;
+    if(f1){html += `<div class="journey-review-scene" style="opacity:0.85;"><div class="jr-label">Your own Scene 1 idea</div><div class="jr-mem">${f1}</div></div>`;}
   }
   if(o2){
     html += `<div class="journey-review-scene">
       <div class="jr-label">Scene 2 — Your choice: ${c2||''}</div>
       <div class="jr-choice">${o2.title||''}</div>
     </div>`;
+    if(f2){html += `<div class="journey-review-scene" style="opacity:0.85;"><div class="jr-label">Your own Scene 2 idea</div><div class="jr-mem">${f2}</div></div>`;}
   }
 
   if(a1||a2||a3){
     html += '<div style="font-size:12px;font-weight:600;color:var(--text-dim,#888);text-transform:uppercase;letter-spacing:0.08em;margin:1rem 0 0.5rem;">Your debrief answers</div>';
-    if(a1) html += `<div class="jr-debrief-block"><div class="jr-q">Question 1</div><div class="jr-a">"${a1}"</div></div>`;
-    if(a2) html += `<div class="jr-debrief-block"><div class="jr-q">Question 2</div><div class="jr-a">"${a2}"</div></div>`;
-    if(a3) html += `<div class="jr-debrief-block"><div class="jr-q">Question 3</div><div class="jr-a">"${a3}"</div></div>`;
+    var qTexts=document.querySelectorAll('.dq-text');
+    var q1=(qTexts[0]?qTexts[0].textContent:'Question 1');
+    var q2=(qTexts[1]?qTexts[1].textContent:'Question 2');
+    var q3=(qTexts[2]?qTexts[2].textContent:'Question 3');
+    if(a1) html += `<div class="jr-debrief-block"><div class="jr-q">${q1}</div><div class="jr-a">"${a1}"</div></div>`;
+    if(a2) html += `<div class="jr-debrief-block"><div class="jr-q">${q2}</div><div class="jr-a">"${a2}"</div></div>`;
+    if(a3) html += `<div class="jr-debrief-block"><div class="jr-q">${q3}</div><div class="jr-a">"${a3}"</div></div>`;
   } else {
     html += '<div class="jr-debrief-block" style="opacity:0.5;"><div class="jr-q">Debrief</div><div class="jr-a">No answers recorded for this session.</div></div>';
   }
 
-  const sum = summaries[key] || '';
+  const sum = ownSummary()||summaries[key] || '';
   if(sum){
     html += `<div class="jr-summary-box"><div class="jr-label" style="margin-bottom:6px;">What your choices say about you</div><div class="jr-summary-text">${sum}</div></div>`;
   }

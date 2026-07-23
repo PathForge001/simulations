@@ -130,6 +130,12 @@ body::before{content:'';position:fixed;inset:0;background-image:repeating-linear
 
 .choice-btn:active{transform:scale(0.96);transition:transform 0.08s ease}
 .choice-btn{-webkit-tap-highlight-color:transparent}
+.fifth-continue{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:transparent;border:1px solid var(--accent2);color:var(--accent2);border-radius:8px;padding:9px 16px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;}
+.fifth-continue:hover{background:var(--accent2);color:var(--bg);}
+.fifth-continue:active{transform:scale(0.96);}
+.fifth-hint{font-size:0.78rem;color:var(--text-dim);margin-top:8px;opacity:0;transition:opacity 0.2s;}
+.fifth-hint.show{opacity:1;}
+
 </style>
     <!-- Open Graph / Social Preview Tags -->
     <meta property="og:title" content="The New Kid — Making a friend in a world without social media" />
@@ -197,6 +203,9 @@ body::before{content:'';position:fixed;inset:0;background-image:repeating-linear
 <div class="fifth-option">
   <span class="fifth-label">💡 I'd do something different —</span>
   <textarea class="fifth-input" id="fifth-s1" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+
+  <div><button class="fifth-continue" onclick="s1own()">Continue with my own idea <span>→</span></button></div>
+  <div class="fifth-hint" id="hint-s1">Write your idea above, or pick one of the options.</div>
 </div>
 </div>
 
@@ -240,6 +249,9 @@ body::before{content:'';position:fixed;inset:0;background-image:repeating-linear
 <div class="fifth-option">
   <span class="fifth-label">💡 I'd do something different —</span>
   <textarea class="fifth-input" id="fifth-s2" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+
+  <div><button class="fifth-continue" onclick="s2own()">Continue with my own idea <span>→</span></button></div>
+  <div class="fifth-hint" id="hint-s2">Write your idea above, or pick one of the options.</div>
 </div>
 </div>
 
@@ -280,7 +292,8 @@ body::before{content:'';position:fixed;inset:0;background-image:repeating-linear
   <p>You helped someone belong. Then you helped a group of people with different ideas find a way through. Both of those things are harder in person than online — and more real.</p>
   <p id="c-summary" style="color:var(--accent);font-weight:500;"></p>
   <p id="path-rarity" style="font-size:12px;opacity:0.65;margin-top:8px;"></p>
-  <div class="tested-box">
+<div id="what-reveals" class="ob ob-blue" style="text-align:left;margin:1.5rem 0;"></div>
+<div class="tested-box">
     <div class="sp-label" style="margin-bottom:0.85rem;">What this simulation was really testing</div>
     <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">Noticing people</div><div class="tested-desc">Amara laughed at her book and looked up to see if anyone noticed. You noticed. That is the first step in community psychology — paying attention to the person who is slightly on the edge.</div></div></div>
     <div class="tested-row"><span class="tested-arrow">→</span><div><div class="tested-title">Facilitation</div><div class="tested-desc">Moving a group from stuck to moving is one of the most valuable skills in youth work, community organising, teaching, and management. It requires you to care more about the group's outcome than about being right.</div></div></div>
@@ -375,24 +388,57 @@ const summaries={
   DC:"You waited, then asked the most important question. The quality of the second choice almost makes up for the first.",
   DD:"You waited both times. Amara found her people. Marcus felt dismissed. Both outcomes were available to be changed — and both required only a small action."
 };
+var OWN1={title:"You chose your own path.",mem:"You did not take any of the four options — you wrote your own. That instinct is exactly how the kindest, most original ideas begin.",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">There was no single right answer here — and you refused to be limited to the choices in front of you. <strong>Thinking beyond the options you are given is one of the rarest and most valuable habits there is.</strong> Now let us see how the situation unfolds.</div><span class=\"skill-tag\">🔵 Independent thinking · You wrote your own path</span></div>"};
+var OWN2={title:"You chose your own path again.",mem:"",body:"<div class=\"ob ob-blue\"><div class=\"ob-label\"><span class=\"ob-dot\"></span> Your own idea</div><div class=\"ob-text\">Once again you looked past the options and thought for yourself. <strong>People who consistently generate their own answers are the ones who end up changing how things are done.</strong> That is worth developing.</div><span class=\"skill-tag\">🔵 Independent thinking · Your own path, twice</span></div>"};
+function s1own(){const t=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(!t){const h=document.getElementById('hint-s1');if(h)h.classList.add('show');return;}c1='E';document.getElementById('o1-title').textContent=OWN1.title;document.getElementById('o1-body').innerHTML=OWN1.body;show('scene-out1');}
+function s2own(){const t=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(!t){const h=document.getElementById('hint-s2');if(h)h.classList.add('show');return;}c2='E';document.getElementById('final-title').textContent=OWN2.title;document.getElementById('final-body').innerHTML=OWN2.body;show('scene-final');}
+function ownSummary(){
+  if(c1==='E'&&c2==='E')return 'You wrote your own path at every turn — refusing both times to be limited to the options in front of you.';
+  if(c1==='E'||c2==='E')return 'At one of the two decisions, you looked past every option offered and wrote your own. That willingness to think beyond the menu is rare and valuable.';
+  return '';
+}
+var TRAIT1={
+  A:{trait:"Boldness",text:"You went over and said something about her drawing — direct, a little uncomfortable, exactly what real inclusion takes."},
+  B:{trait:"Communication",text:"You sat at the same table without saying anything — a quieter, gentler kind of presence that still says 'you're not alone here.'"},
+  C:{trait:"Collaboration",text:"You brought a friend over with you — making the first move easier by not doing it alone."},
+  D:{trait:"Resilience",text:"You almost let the moment pass, telling yourself you'd find a better one later. Noticing that and coming back to it anyway is the whole skill."}
+};
+var TRAIT2={
+  A:{trait:"Collaboration",text:"You suggested combining all three ideas — finding the version where everyone's idea survives."},
+  B:{trait:"Communication",text:"You argued for Amara's idea specifically — using your voice to make sure the new person's idea got a fair hearing."},
+  C:{trait:"Judgment",text:"You asked everyone to explain why their idea mattered before deciding — understanding the people, not just the pitches."},
+  D:{trait:"Judgment — the shadow side",text:"You suggested voting and going with the majority. Quick and fair on paper — but voting can skip the harder, more valuable work of actually understanding why an idea matters to someone."}
+};
+function renderWhatReveals(){
+  var wr=document.getElementById('what-reveals');if(!wr)return;
+  var t1=(c1==='E')?{trait:"Independent Thinking",text:"You looked past every option offered and wrote your own approach."}:TRAIT1[c1];
+  var t2=(c2==='E')?{trait:"Independent Thinking",text:"Once again you thought beyond the choices in front of you."}:TRAIT2[c2];
+  if(!t1&&!t2)return;
+  var h='<div class="ob-label"><span class="ob-dot"></span> What this reveals about you</div>';
+  if(t1)h+='<div class="ob-text"><strong>Scene 1 — '+t1.trait+'.</strong> '+t1.text+'</div>';
+  if(t2)h+='<div class="ob-text" style="margin-top:0.6rem;"><strong>Scene 2 — '+t2.trait+'.</strong> '+t2.text+'</div>';
+  h+='<span class="skill-tag" style="margin-top:0.75rem;display:inline-block;">🔵 Part of the PathForge Success Factors Framework</span>';
+  wr.innerHTML=h;
+}
 function s1(c){c1=c;const o=O1[c];document.getElementById('o1-title').textContent=o.title;document.getElementById('o1-body').innerHTML=o.body;show('scene-out1')}
-function goS2(){const o=O1[c1];document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>🧠</span><span><strong>Carrying forward:</strong> ${o.mem}</span></div>`;show('scene-2')}
+function goS2(){const o=(c1==='E')?OWN1:O1[c1];document.getElementById('s2-memory').innerHTML=`<div class="memory-badge"><span>🧠</span><span><strong>Carrying forward:</strong> ${o.mem}</span></div>`;show('scene-2')}
 function s2(c){c2=c;const o=O2[c];document.getElementById('final-title').textContent=o.title;document.getElementById('final-body').innerHTML=o.body;show('scene-final')}
-function goDebrief(){const k=c1+c2;document.getElementById('skills-panel').innerHTML=`<div class="sp-label">Your path through this simulation</div><div class="sp-text">${summaries[k]||''}</div>`;show('scene-debrief')}
-async function goComplete(){await saveDebrief('the-new-kid');document.getElementById('c-summary').textContent=summaries[c1+c2]||'';
-  var _r=document.getElementById('path-rarity');if(_r){_r.textContent='Your path: '+(c1||'')+(c2||'')+' — one of 16 possible journeys. Replay to discover another.';}show('scene-complete')}
+function goDebrief(){const k=c1+c2;const os=ownSummary();document.getElementById('skills-panel').innerHTML=`<div class="sp-label">Your path through this simulation</div><div class="sp-text">${os||summaries[k]||''}</div>`;show('scene-debrief')}
+async function goComplete(){await saveDebrief('the-new-kid');const os=ownSummary();document.getElementById('c-summary').textContent=os||summaries[c1+c2]||'';renderWhatReveals();
+  var _r=document.getElementById('path-rarity');if(_r){var _p=(c1||'')+(c2||'');_r.textContent=(c1==='E'||c2==='E')?('Your path: '+_p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+_p+' — one of 16 possible journeys. Replay to discover another.');}show('scene-complete')}
 function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(t=>t.value='');show('scene-intro')}
 function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 setTimeout(()=>{document.getElementById('pbar').style.width='8%'},400);
 
 function showJourney(){
-  const textareas = document.querySelectorAll('textarea');
-  const a1 = textareas[0] ? textareas[0].value.trim() : '';
-  const a2 = textareas[1] ? textareas[1].value.trim() : '';
-  const a3 = textareas[2] ? textareas[2].value.trim() : '';
+  const a1 = (document.getElementById('dq1')||{value:''}).value.trim();
+  const a2 = (document.getElementById('dq2')||{value:''}).value.trim();
+  const a3 = (document.getElementById('dq3')||{value:''}).value.trim();
   const key = (c1||'') + (c2||'');
-  const o1 = c1 && O1[c1] ? O1[c1] : null;
-  const o2 = c2 && O2[c2] ? O2[c2] : null;
+  const o1 = (c1==='E')?OWN1:(c1 && O1[c1] ? O1[c1] : null);
+  const o2 = (c2==='E')?OWN2:(c2 && O2[c2] ? O2[c2] : null);
+  const f1 = (document.getElementById('fifth-s1')||{value:''}).value.trim();
+  const f2 = (document.getElementById('fifth-s2')||{value:''}).value.trim();
 
   let html = '';
 
@@ -402,24 +448,30 @@ function showJourney(){
       <div class="jr-choice">${o1.title||''}</div>
       <div class="jr-mem">${o1.mem||''}</div>
     </div>`;
+    if(f1){html += `<div class="journey-review-scene" style="opacity:0.85;"><div class="jr-label">Your own Scene 1 idea</div><div class="jr-mem">${f1}</div></div>`;}
   }
   if(o2){
     html += `<div class="journey-review-scene">
       <div class="jr-label">Scene 2 — Your choice: ${c2||''}</div>
       <div class="jr-choice">${o2.title||''}</div>
     </div>`;
+    if(f2){html += `<div class="journey-review-scene" style="opacity:0.85;"><div class="jr-label">Your own Scene 2 idea</div><div class="jr-mem">${f2}</div></div>`;}
   }
 
   if(a1||a2||a3){
     html += '<div style="font-size:12px;font-weight:600;color:var(--text-dim,#888);text-transform:uppercase;letter-spacing:0.08em;margin:1rem 0 0.5rem;">Your debrief answers</div>';
-    if(a1) html += `<div class="jr-debrief-block"><div class="jr-q">Question 1</div><div class="jr-a">"${a1}"</div></div>`;
-    if(a2) html += `<div class="jr-debrief-block"><div class="jr-q">Question 2</div><div class="jr-a">"${a2}"</div></div>`;
-    if(a3) html += `<div class="jr-debrief-block"><div class="jr-q">Question 3</div><div class="jr-a">"${a3}"</div></div>`;
+    var qTexts=document.querySelectorAll('.dq-text');
+    var q1=(qTexts[0]?qTexts[0].textContent:'Question 1');
+    var q2=(qTexts[1]?qTexts[1].textContent:'Question 2');
+    var q3=(qTexts[2]?qTexts[2].textContent:'Question 3');
+    if(a1) html += `<div class="jr-debrief-block"><div class="jr-q">${q1}</div><div class="jr-a">"${a1}"</div></div>`;
+    if(a2) html += `<div class="jr-debrief-block"><div class="jr-q">${q2}</div><div class="jr-a">"${a2}"</div></div>`;
+    if(a3) html += `<div class="jr-debrief-block"><div class="jr-q">${q3}</div><div class="jr-a">"${a3}"</div></div>`;
   } else {
     html += '<div class="jr-debrief-block" style="opacity:0.5;"><div class="jr-q">Debrief</div><div class="jr-a">No answers recorded for this session.</div></div>';
   }
 
-  const sum = summaries[key] || '';
+  const sum = ownSummary()||summaries[key] || '';
   if(sum){
     html += `<div class="jr-summary-box"><div class="jr-label" style="margin-bottom:6px;">What your choices say about you</div><div class="jr-summary-text">${sum}</div></div>`;
   }

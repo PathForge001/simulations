@@ -625,6 +625,13 @@
 
 .choice-btn:active{transform:scale(0.96);transition:transform 0.08s ease}
 .choice-btn{-webkit-tap-highlight-color:transparent}
+
+.fifth-continue-br{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:transparent;border:1px solid var(--accent2);color:var(--accent2);border-radius:8px;padding:9px 16px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;}
+.fifth-continue-br:hover{background:var(--accent2);color:var(--bg);}
+.fifth-continue-br:active{transform:scale(0.96);}
+.fifth-hint-br{font-size:0.78rem;color:var(--text-dim);margin-top:8px;opacity:0;transition:opacity 0.2s;}
+.fifth-hint-br.show{opacity:1;}
+.choice-btn:active{transform:scale(0.96);}
 </style>
     <!-- Open Graph / Social Preview Tags -->
     <meta property="og:title" content="The Bridge That Shook — Can you prevent the collapse?" />
@@ -720,6 +727,8 @@
 <div class="fifth-option-br">
   <span class="fifth-label-br">💡 I'd do something different —</span>
   <textarea class="fifth-input-br" id="fifth-s1-br" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+  <div><button class="fifth-continue-br" onclick="s1ownBridge()">Continue with my own idea <span>→</span></button></div>
+  <div class="fifth-hint-br" id="hint-s1-br">Write your idea above, or pick one of the options.</div>
 </div>
   </div>
 
@@ -810,6 +819,9 @@
 <div class="fifth-option-br">
   <span class="fifth-label-br">💡 I'd do something different —</span>
   <textarea class="fifth-input-br" id="fifth-s2-br" placeholder="Optional: tell us your own idea here..." rows="2"></textarea>
+
+  <div><button class="fifth-continue-br" onclick="s2ownBridge()">Continue with my own idea <span>→</span></button></div>
+  <div class="fifth-hint-br" id="hint-s2-br">Write your idea above, or pick one of the options.</div>
 </div>
   </div>
 
@@ -896,6 +908,8 @@
       <p id="path-rarity" style="font-size:12px;opacity:0.65;margin-top:6px;"></p>
       <p>You made real decisions under pressure — and faced their consequences. That's exactly what engineers, safety officers, and problem-solvers do every day.</p>
       <p id="completion-skills-text" style="color:var(--accent); font-weight:600;"></p>
+
+      <div id="what-reveals-br" style="text-align:left;margin:1.5rem 0;padding:1.1rem 1.35rem;border-radius:12px;border:1px solid var(--border);background:var(--surface);"></div>
 
       <div style="margin: 2rem 0; background: var(--surface); border: 1px solid var(--border); border-radius:10px; padding:1.5rem; text-align:left;">
         <div class="skills-title" style="margin-bottom:1rem;">What this simulation tested</div>
@@ -1091,7 +1105,27 @@
     DD: 'You reported immediately, then cleared the area. Consistently cautious, consistently people-first. That is exactly the mindset safety culture is built on.',
   };
 
-  function scene1Choose(choice) {
+  var OWN1_BR={title:"You chose your own path.",memory:"You did not take any of the four options — you wrote your own. That instinct, to look at a situation and think there is another way, is exactly how the best engineers spot problems nobody else saw.",content:"<div class=\"outcome-block\"><div class=\"outcome-label\">Your own idea</div><p class=\"narrative\">There was no single right answer here — and you refused to be limited to the choices in front of you. <strong>Thinking beyond the options you are given is one of the rarest and most valuable habits there is.</strong> Every real engineering catch started with someone who would not just walk past a strange sound. Hold on to that. Now let us see how the situation unfolds.</p></div>"};
+var OWN2_BR={title:"You chose your own path again.",content:"<div class=\"outcome-block\"><div class=\"outcome-label\">Your own idea</div><p class=\"narrative\">Once again you looked past the options and thought for yourself. <strong>People who consistently generate their own answers — rather than only choosing between the ones offered — are the ones who end up preventing disasters nobody else predicted.</strong> That is a genuine strength, worth developing wherever your path takes you.</p></div>"};
+
+function s1ownBridge(){
+  var t=(document.getElementById('fifth-s1-br')||{value:''}).value.trim();
+  if(!t){var h=document.getElementById('hint-s1-br');if(h)h.classList.add('show');return;}
+  choice1='E';
+  document.getElementById('outcome1-title').textContent=OWN1_BR.title;
+  document.getElementById('outcome1-content').innerHTML=OWN1_BR.content;
+  showScene('scene-outcome1');
+}
+function s2ownBridge(){
+  var t=(document.getElementById('fifth-s2-br')||{value:''}).value.trim();
+  if(!t){var h=document.getElementById('hint-s2-br');if(h)h.classList.add('show');return;}
+  choice2='E';
+  document.getElementById('final-outcome-title').textContent=OWN2_BR.title;
+  document.getElementById('final-outcome-content').innerHTML=OWN2_BR.content;
+  showScene('scene-final-outcome');
+}
+
+function scene1Choose(choice) {
     choice1 = choice;
     const outcome = outcomes1[choice];
 
@@ -1103,7 +1137,7 @@
   }
 
   function goToScene2() {
-    const outcome = outcomes1[choice1];
+    const outcome = (choice1==='E') ? OWN1_BR : outcomes1[choice1];
 
     // Set memory badge
     document.getElementById('scene2-memory').innerHTML = `
@@ -1139,12 +1173,38 @@
     showScene('scene-debrief');
   }
 
-  async function finish() {
+  var TRAIT1_BR={
+  A:{trait:"Judgment",text:"You knelt down and checked the beams and bolts &mdash; investigating before reacting, rather than assuming."},
+  B:{trait:"Caution &mdash; the shadow side",text:"You kept walking and looked away. Understandable under pressure to finish the job &mdash; but this is the choice that lets small problems become disasters. Worth reflecting on what made looking closer feel like it could wait."},
+  C:{trait:"Collaboration",text:"You asked the workers nearby if they felt it too &mdash; seeking other perspectives before deciding what the sound meant."},
+  D:{trait:"Boldness",text:"You went straight to the supervisor &mdash; escalating immediately rather than waiting to be certain first."}
+};
+var TRAIT2_BR={
+  A:{trait:"Boldness",text:"You shouted for everyone to stop the machinery &mdash; decisive emergency action when every second mattered."},
+  B:{trait:"Judgment &mdash; the shadow side",text:"You grabbed a wrench and tried to fix it yourself. Brave, but acting outside your training in a live emergency put you and others at real risk &mdash; worth reflecting on the line between courage and overconfidence."},
+  C:{trait:"Judgment",text:"You stepped back and documented the evidence &mdash; giving the supervisor exactly what they needed to act correctly."},
+  D:{trait:"Collaboration",text:"You cleared the area and sprinted for the supervisor &mdash; prioritising everyone's safety over trying to solve it alone."}
+};
+function renderWhatRevealsBridge(){
+  var wr=document.getElementById('what-reveals-br');
+  if(!wr)return;
+  var t1=(choice1==='E')?{trait:"Independent Thinking",text:"You looked past every option offered and wrote your own approach."}:TRAIT1_BR[choice1];
+  var t2=(choice2==='E')?{trait:"Independent Thinking",text:"Once again you thought beyond the choices in front of you."}:TRAIT2_BR[choice2];
+  if(!t1&&!t2)return;
+  var h='<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:8px;">What this reveals about you</div>';
+  if(t1)h+='<div style="font-size:0.92rem;line-height:1.65;"><strong>Scene 1 &mdash; '+t1.trait+'.</strong> '+t1.text+'</div>';
+  if(t2)h+='<div style="font-size:0.92rem;line-height:1.65;margin-top:0.6rem;"><strong>Scene 2 &mdash; '+t2.trait+'.</strong> '+t2.text+'</div>';
+  h+='<div style="margin-top:0.75rem;font-size:11px;font-weight:700;color:var(--accent);">🔵 Part of the PathForge Success Factors Framework</div>';
+  wr.innerHTML=h;
+}
+async function finish() {
     await saveDebrief('bridge-that-shook');
     const key = choice1 + choice2;
-    const skillText = skillSummaries[key] || '';
+    const os = ownSummaryBridge();
+    const skillText = os || skillSummaries[key] || '';
     document.getElementById('completion-skills-text').textContent = skillText;
-    var _r=document.getElementById('path-rarity');if(_r){_r.textContent='Your path: '+(choice1||'')+(choice2||'')+' — one of 16 possible journeys. Replay to discover another.';}
+    renderWhatRevealsBridge();
+    var _r=document.getElementById('path-rarity');if(_r){var _p=(choice1||'')+(choice2||'');_r.textContent=(choice1==='E'||choice2==='E')?('Your path: '+_p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+_p+' — one of 16 possible journeys. Replay to discover another.');}
     showScene('scene-complete');
   }
 
@@ -1177,13 +1237,18 @@
     document.getElementById('progress-bar').style.width = '10%';
   }, 300);
 
+function ownSummaryBridge(){
+  if(choice1==='E'&&choice2==='E')return 'You wrote your own path at every turn — refusing both times to be limited to the options in front of you. That is exactly the instinct that catches engineering failures nobody else predicted.';
+  if(choice1==='E'||choice2==='E')return 'At one of the two decisions, you looked past every option offered and wrote your own. That willingness to think beyond the menu is exactly what it takes to notice a problem before it becomes a disaster.';
+  return '';
+}
 function showJourneyBridge(){
   const a1 = (document.getElementById('answer1')||{}).value||'';
   const a2 = (document.getElementById('answer2')||{}).value||'';
   const a3 = (document.getElementById('answer3')||{}).value||'';
   const key = (choice1||'')+(choice2||'');
-  const o1 = choice1 && outcomes1[choice1] ? outcomes1[choice1] : null;
-  const o2 = choice2 && outcomes2[choice2] ? outcomes2[choice2] : null;
+  const o1 = (choice1==='E') ? OWN1_BR : (choice1 && outcomes1[choice1] ? outcomes1[choice1] : null);
+  const o2 = (choice2==='E') ? OWN2_BR : (choice2 && outcomes2[choice2] ? outcomes2[choice2] : null);
 
   let html = '';
   if(o1){
@@ -1200,11 +1265,15 @@ function showJourneyBridge(){
   }
   if(a1||a2||a3){
     html += '<div style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin:0.85rem 0 0.5rem;">Your debrief answers</div>';
-    if(a1) html += `<div class="jr-debrief-block"><div class="jr-q">Question 1</div><div class="jr-a">"${a1}"</div></div>`;
-    if(a2) html += `<div class="jr-debrief-block"><div class="jr-q">Question 2</div><div class="jr-a">"${a2}"</div></div>`;
-    if(a3) html += `<div class="jr-debrief-block"><div class="jr-q">Question 3</div><div class="jr-a">"${a3}"</div></div>`;
+    var qTexts=document.querySelectorAll('.debrief-q-text');
+    var q1=(qTexts[0]?qTexts[0].textContent:'Question 1');
+    var q2=(qTexts[1]?qTexts[1].textContent:'Question 2');
+    var q3=(qTexts[2]?qTexts[2].textContent:'Question 3');
+    if(a1) html += `<div class="jr-debrief-block"><div class="jr-q">${q1}</div><div class="jr-a">"${a1}"</div></div>`;
+    if(a2) html += `<div class="jr-debrief-block"><div class="jr-q">${q2}</div><div class="jr-a">"${a2}"</div></div>`;
+    if(a3) html += `<div class="jr-debrief-block"><div class="jr-q">${q3}</div><div class="jr-a">"${a3}"</div></div>`;
   }
-  const sum = skillSummaries[key]||'';
+  const sum = ownSummaryBridge()||skillSummaries[key]||'';
   if(sum){
     html += `<div class="jr-summary-box"><div class="jr-label" style="margin-bottom:5px;">What your choices say about you</div><div class="jr-summary-text">${sum}</div></div>`;
   }

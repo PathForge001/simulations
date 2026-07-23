@@ -196,6 +196,8 @@
     <p id="c-summary"></p>
     <p id="path-rarity"></p>
 
+    <div id="what-reveals" class="ob ob-blue" style="text-align:left;margin:1.5rem 0;"></div>
+
     <div class="career-reveal">
       <h3>Careers this connects to</h3>
       <div class="career-card"><div class="career-icon">🏗️</div><div><div class="career-title">Site Manager</div><div class="career-desc">Runs the whole build, balancing safety, cost, and time — the person who held the truck for you.</div></div></div>
@@ -299,7 +301,31 @@
     if(c1==='E'||c2==='E')return 'At one of the two decisions, you looked past every option offered and wrote your own. That willingness to think beyond the menu is rare and valuable — it is where original ideas come from. Hold on to it wherever your path leads.';
     return '';
   }
-  function goComplete(){var os=ownSummary();document.getElementById('c-summary').textContent=os||summaries[c1+c2]||'';var _r=document.getElementById('path-rarity');if(_r){var p=(c1||'')+(c2||'');_r.textContent=(c1==='E'||c2==='E')?('Your path: '+p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+p+' — one of 16 possible journeys. Replay to discover another.');}show('scene-complete');}
+  var TRAIT1={
+  A:{trait:"Boldness",text:"You stopped the pour immediately &mdash; halting something irreversible, even knowing it was inconvenient and might turn out to be wrong."},
+  B:{trait:"Judgment",text:"You checked the drawings first &mdash; building proof before raising an alarm that would halt the whole site."},
+  C:{trait:"Communication",text:"You raised it with the worker respectfully rather than going over their head &mdash; right and diplomatic at once."},
+  D:{trait:"Resilience",text:"You almost said nothing out of fear of looking foolish, then couldn't stay quiet. You spoke up anyway."}
+};
+var TRAIT2={
+  A:{trait:"Integrity",text:"You stayed modest about being right &mdash; protecting someone's dignity instead of making the moment about you."},
+  B:{trait:"Communication",text:"You credited the people who trained you &mdash; turning an awkward moment into trust rather than rivalry."},
+  C:{trait:"Collaboration",text:"You stayed in the learner's seat and kept a mentor onside &mdash; protecting the relationship over the credit."},
+  D:{trait:"Boldness &mdash; the shadow side",text:"You enjoyed the credit loudly. You earned it, but being right and being trusted are not always the same thing on a site &mdash; how you win a moment shapes whether people want to work with you for years."}
+};
+function renderWhatReveals(){
+  var wr=document.getElementById('what-reveals');
+  if(!wr)return;
+  var t1=(c1==='E')?{trait:"Independent Thinking",text:"You looked past every option offered and wrote your own approach."}:TRAIT1[c1];
+  var t2=(c2==='E')?{trait:"Independent Thinking",text:"Once again you thought beyond the choices in front of you."}:TRAIT2[c2];
+  if(!t1&&!t2)return;
+  var h='<div class="ob-label"><span class="ob-dot"></span> What this reveals about you</div>';
+  if(t1)h+='<div class="ob-text"><strong>Scene 1 &mdash; '+t1.trait+'.</strong> '+t1.text+'</div>';
+  if(t2)h+='<div class="ob-text" style="margin-top:0.6rem;"><strong>Scene 2 &mdash; '+t2.trait+'.</strong> '+t2.text+'</div>';
+  h+='<span class="skill-tag" style="margin-top:0.75rem;display:inline-block;">🔵 Part of the PathForge Success Factors Framework</span>';
+  wr.innerHTML=h;
+}
+function goComplete(){var os=ownSummary();renderWhatReveals();document.getElementById('c-summary').textContent=os||summaries[c1+c2]||'';var _r=document.getElementById('path-rarity');if(_r){var p=(c1||'')+(c2||'');_r.textContent=(c1==='E'||c2==='E')?('Your path: '+p+' — including a route you invented yourself. Replay to explore the others.'):('Your path: '+p+' — one of 16 possible journeys. Replay to discover another.');}show('scene-complete');}
 
   function resetAll(){c1=null;c2=null;document.querySelectorAll('textarea').forEach(function(t){t.value='';});show('scene-intro');document.getElementById('pbar').style.width='6%';}
 
@@ -312,7 +338,16 @@
     h+='<p style="margin-bottom:10px;"><strong>Scene 1:</strong> '+((c1==='E')?OWN1.title:(S1[c1]?S1[c1].title:''))+'</p>';var f1=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(f1)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 1 idea:</strong> '+f1+'</p>';
     h+='<p style="margin-bottom:10px;"><strong>Scene 2:</strong> '+((c2==='E')?OWN2.title:(S2[c2]?S2[c2].title:''))+'</p>';var f2=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(f2)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 2 idea:</strong> '+f2+'</p>';
     h+='<p style="margin-bottom:10px;"><strong>What this revealed:</strong> '+(ownSummary()||summaries[c1+c2]||'')+'</p>';
-    if(a1||a2||a3){h+='<p style="margin-top:12px;opacity:0.85;"><strong>Your reflections:</strong></p>';if(a1)h+='<p style="font-size:14px;margin-top:6px;">• '+a1+'</p>';if(a2)h+='<p style="font-size:14px;margin-top:6px;">• '+a2+'</p>';if(a3)h+='<p style="font-size:14px;margin-top:6px;">• '+a3+'</p>';}
+    if(a1||a2||a3){
+      h+='<p style="margin-top:12px;opacity:0.85;"><strong>Your reflections:</strong></p>';
+      var qLabels=document.querySelectorAll('.debrief-q label');
+      var q1=(qLabels[0]?qLabels[0].textContent:'Question 1');
+      var q2=(qLabels[1]?qLabels[1].textContent:'Question 2');
+      var q3=(qLabels[2]?qLabels[2].textContent:'Question 3');
+      if(a1)h+='<div style="margin-top:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,0.08);"><div style="font-size:12px;font-weight:700;color:var(--accent2);margin-bottom:4px;">'+q1+'</div><div style="font-size:14px;font-style:italic;">"'+a1+'"</div></div>';
+      if(a2)h+='<div style="margin-top:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,0.08);"><div style="font-size:12px;font-weight:700;color:var(--accent2);margin-bottom:4px;">'+q2+'</div><div style="font-size:14px;font-style:italic;">"'+a2+'"</div></div>';
+      if(a3)h+='<div style="margin-top:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,0.08);"><div style="font-size:12px;font-weight:700;color:var(--accent2);margin-bottom:4px;">'+q3+'</div><div style="font-size:14px;font-style:italic;">"'+a3+'"</div></div>';
+    }
     h+='<p style="margin-top:12px;font-size:13px;opacity:0.7;">📸 Screenshot this to keep or share your journey.</p></div>';
     jr.innerHTML=h;jr.style.display='block';jr.scrollIntoView({behavior:'smooth'});
   }

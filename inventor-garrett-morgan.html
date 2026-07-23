@@ -196,6 +196,14 @@
     <p id="c-summary"></p>
     <p id="path-rarity"></p>
 
+    <div class="ob ob-blue" style="text-align:left;margin:1.5rem 0;">
+      <div class="ob-label"><span class="ob-dot"></span> What made this possible</div>
+      <div class="ob-text"><strong>Primary factor: Boldness.</strong> Garrett had already been burned once for inventing while Black &mdash; fire departments cancelled orders for his life-saving safety hood the moment they learned who made it. He built the traffic signal anyway, and patented it under his own name anyway, refusing to let prejudice decide what he was allowed to create.</div>
+      <div class="ob-text" style="margin-top:0.6rem;"><strong>Secondary factor: Market understanding.</strong> When General Electric offered to buy the patent, Garrett chose the scale of impact over the safety of staying small and unnoticed &mdash; understanding that a national company could put his invention on corners he would never personally reach.</div>
+      <div class="ob-text" style="margin-top:0.9rem;padding-top:0.7rem;border-top:1px solid rgba(255,255,255,0.12);"><strong>His own core value: Building anyway.</strong> Garrett never let one rejection become the final answer. He kept inventing, kept patenting, kept trying &mdash; treating every closed door as information, not as a verdict on his worth.</div>
+      <span class="skill-tag" style="margin-top:0.75rem;">🔵 Part of the PathForge Success Factors Framework</span>
+    </div>
+
     <div class="career-reveal">
       <h3>Careers this connects to</h3>
       <div class="career-card"><div class="career-icon">⚙️</div><div><div class="career-title">Mechanical Engineer</div><div class="career-desc">Designs machines and systems that solve real-world problems — the way Garrett redesigned the traffic signal.</div></div></div>
@@ -312,7 +320,16 @@
     h+='<p style="margin-bottom:10px;"><strong>Scene 1:</strong> '+((c1==='E')?OWN1.title:(S1[c1]?S1[c1].title:''))+'</p>';var f1=(document.getElementById('fifth-s1')||{value:''}).value.trim();if(f1)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 1 idea:</strong> '+f1+'</p>';
     h+='<p style="margin-bottom:10px;"><strong>Scene 2:</strong> '+((c2==='E')?OWN2.title:(S2[c2]?S2[c2].title:''))+'</p>';var f2=(document.getElementById('fifth-s2')||{value:''}).value.trim();if(f2)h+='<p style="margin-bottom:10px;font-size:14px;opacity:0.85;"><strong>Your Scene 2 idea:</strong> '+f2+'</p>';
     h+='<p style="margin-bottom:10px;"><strong>What this revealed:</strong> '+(ownSummary()||summaries[c1+c2]||'')+'</p>';
-    if(a1||a2||a3){h+='<p style="margin-top:12px;opacity:0.85;"><strong>Your reflections:</strong></p>';if(a1)h+='<p style="font-size:14px;margin-top:6px;">• '+a1+'</p>';if(a2)h+='<p style="font-size:14px;margin-top:6px;">• '+a2+'</p>';if(a3)h+='<p style="font-size:14px;margin-top:6px;">• '+a3+'</p>';}
+    if(a1||a2||a3){
+      h+='<p style="margin-top:12px;opacity:0.85;"><strong>Your reflections:</strong></p>';
+      var qLabels=document.querySelectorAll('.debrief-q label');
+      var q1=(qLabels[0]?qLabels[0].textContent:'Question 1');
+      var q2=(qLabels[1]?qLabels[1].textContent:'Question 2');
+      var q3=(qLabels[2]?qLabels[2].textContent:'Question 3');
+      if(a1)h+='<div style="margin-top:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,0.08);"><div style="font-size:12px;font-weight:700;color:var(--accent2);margin-bottom:4px;">'+q1+'</div><div style="font-size:14px;font-style:italic;">"'+a1+'"</div></div>';
+      if(a2)h+='<div style="margin-top:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,0.08);"><div style="font-size:12px;font-weight:700;color:var(--accent2);margin-bottom:4px;">'+q2+'</div><div style="font-size:14px;font-style:italic;">"'+a2+'"</div></div>';
+      if(a3)h+='<div style="margin-top:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,0.08);"><div style="font-size:12px;font-weight:700;color:var(--accent2);margin-bottom:4px;">'+q3+'</div><div style="font-size:14px;font-style:italic;">"'+a3+'"</div></div>';
+    }
     h+='<p style="margin-top:12px;font-size:13px;opacity:0.7;">📸 Screenshot this to keep or share your journey.</p></div>';
     jr.innerHTML=h;jr.style.display='block';jr.scrollIntoView({behavior:'smooth'});
   }
